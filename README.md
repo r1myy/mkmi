@@ -35,9 +35,10 @@ Rôles : *Administrateur* (tout), *Éditeur* (contenus publics), *Équipe pastor
 
 ## Informations à confirmer
 
-Conformément au cahier des charges, aucune information officielle n’est inventée. Tant que
-MKMI Québec ne les a pas fournies, le site affiche des placeholders : adresse, heure du culte,
-téléphone, courriel, réseaux sociaux, logo officiel, photos, zones de mission. Tout se modifie
+Conformément au cahier des charges, aucune information officielle n’est inventée. L’adresse
+(4635, 1re Avenue, local 20, G1H 2T1), le téléphone et la description viennent de la fiche Google
+de MKMI Québec. Restent en placeholders : jour et heure du culte, courriel, réseaux sociaux,
+logo officiel, photos, zones de mission. Tout se modifie
 dans l’administration, sans toucher au code.
 
 ## Production

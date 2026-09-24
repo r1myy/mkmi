@@ -43,14 +43,20 @@ export function Footer({ settings }: { settings: SiteSetting }) {
             <li className="flex gap-3">
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />
               <span>
-                {settings.city}
-                <br />
                 {settings.address}
+                <br />
+                {settings.city} {settings.postalCode}
               </span>
             </li>
             <li className="flex gap-3">
               <Phone className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />
-              <span>{settings.phone}</span>
+              {/\d{3}.*\d{4}/.test(settings.phone ?? '') ? (
+                <a href={`tel:+1${(settings.phone ?? '').replace(/\D/g, '').slice(-10)}`} className="hover:text-gold-400">
+                  {settings.phone}
+                </a>
+              ) : (
+                <span>{settings.phone}</span>
+              )}
             </li>
             <li className="flex gap-3">
               <Mail className="mt-0.5 h-4 w-4 shrink-0 text-gold-400" aria-hidden="true" />

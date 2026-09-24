@@ -907,14 +907,13 @@ export interface SiteSetting {
   id: number;
   name?: string | null;
   tagline?: string | null;
+  description?: string | null;
   logo?: (number | null) | Media;
   serviceDay?: string | null;
   serviceTime?: string | null;
   city?: string | null;
   address?: string | null;
-  /**
-   * Laisser vide tant que l’adresse n’est pas confirmée.
-   */
+  postalCode?: string | null;
   directionsUrl?: string | null;
   phone?: string | null;
   email?: string | null;
@@ -1021,11 +1020,13 @@ export interface HomePageSelect<T extends boolean = true> {
 export interface SiteSettingsSelect<T extends boolean = true> {
   name?: T;
   tagline?: T;
+  description?: T;
   logo?: T;
   serviceDay?: T;
   serviceTime?: T;
   city?: T;
   address?: T;
+  postalCode?: T;
   directionsUrl?: T;
   phone?: T;
   email?: T;

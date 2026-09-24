@@ -16,7 +16,7 @@ export const metadata: Metadata = {
     template: '%s — MKMI Québec',
   },
   description:
-    'MKMI Québec est une communauté chrétienne à Québec où nous grandissons dans la foi, vivons la communion fraternelle et annonçons l’Évangile à notre génération.',
+    'MKMI Québec (Messianic Kingdom Miracles International) : église chrétienne charismatique à Charlesbourg, Québec. Communion, prière et croissance spirituelle.',
   openGraph: { type: 'website', locale: 'fr_CA', siteName: 'MKMI Québec' },
   alternates: { canonical: '/' },
 }

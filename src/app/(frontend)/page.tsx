@@ -24,9 +24,17 @@ export default async function HomePage() {
     '@context': 'https://schema.org',
     '@type': 'Church',
     name: settings.name,
-    description: home.hero?.subtitle,
+    description: settings.description,
     url: process.env.NEXT_PUBLIC_SITE_URL,
-    address: { '@type': 'PostalAddress', addressLocality: 'Québec', addressRegion: 'QC', addressCountry: 'CA' },
+    telephone: settings.phone,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: settings.address,
+      postalCode: settings.postalCode,
+      addressLocality: 'Québec',
+      addressRegion: 'QC',
+      addressCountry: 'CA',
+    },
   }
 
   return (

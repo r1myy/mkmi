@@ -21,6 +21,13 @@ export const SiteSettings: GlobalConfig = {
               type: 'textarea',
               defaultValue: 'Une communauté.\nUne foi.\nUne mission.',
             },
+            {
+              name: 'description',
+              label: 'Description (moteurs de recherche)',
+              type: 'textarea',
+              defaultValue:
+                'MKMI (Messianic Kingdom Miracles International) Québec est une église chrétienne charismatique fondée sur la foi, située à Charlesbourg. Un espace de communion, de prière et de croissance spirituelle.',
+            },
             { name: 'logo', label: 'Logo officiel', type: 'upload', relationTo: 'media' },
           ],
         },
@@ -30,19 +37,20 @@ export const SiteSettings: GlobalConfig = {
             { name: 'serviceDay', label: 'Jour du culte', type: 'text', defaultValue: 'Dimanche' },
             { name: 'serviceTime', label: 'Heure du culte', type: 'text', defaultValue: 'Heure à confirmer' },
             { name: 'city', label: 'Ville affichée', type: 'text', defaultValue: 'Québec, Québec' },
-            { name: 'address', label: 'Adresse complète', type: 'text', defaultValue: '(Adresse à confirmer)' },
+            { name: 'address', label: 'Adresse complète', type: 'text', defaultValue: '4635, 1re Avenue, local 20' },
+            { name: 'postalCode', label: 'Code postal', type: 'text', defaultValue: 'G1H 2T1' },
             {
               name: 'directionsUrl',
               label: 'Lien d’itinéraire (Google Maps)',
               type: 'text',
-              admin: { description: 'Laisser vide tant que l’adresse n’est pas confirmée.' },
+              defaultValue: 'https://www.google.com/maps/search/?api=1&query=MKMI+Quebec+4635+1re+Avenue+Quebec+QC+G1H+2T1',
             },
           ],
         },
         {
           label: 'Contact',
           fields: [
-            { name: 'phone', label: 'Téléphone', type: 'text', defaultValue: 'Téléphone à confirmer' },
+            { name: 'phone', label: 'Téléphone', type: 'text', defaultValue: '(418) 261-4988' },
             { name: 'email', label: 'Courriel', type: 'text', defaultValue: 'Email à confirmer' },
             { name: 'donateUrl', label: 'Lien de don', type: 'text' },
           ],
