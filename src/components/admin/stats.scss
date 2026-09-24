@@ -1,0 +1,124 @@
+.mkmi-stats {
+  margin-bottom: calc(var(--base) * 2);
+
+  h2 {
+    margin-bottom: var(--base);
+  }
+
+  &__tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: calc(var(--base) * 0.75);
+  }
+
+  &__tile {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: var(--base);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: 10px;
+    background: var(--theme-elevation-0);
+    text-decoration: none;
+    color: inherit;
+    transition: border-color 0.15s;
+
+    &:hover,
+    &:focus-visible {
+      border-color: #e8b64c;
+    }
+  }
+
+  &__value {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+  }
+
+  &__label {
+    font-size: 13px;
+    color: var(--theme-elevation-650);
+  }
+
+  &__sub {
+    font-size: 12px;
+    color: var(--theme-elevation-500);
+  }
+
+  &__panels {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: calc(var(--base) * 0.75);
+    margin-top: calc(var(--base) * 0.75);
+
+    @media (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  &__panel {
+    padding: var(--base);
+    border: 1px solid var(--theme-elevation-150);
+    border-radius: 10px;
+
+    h3 {
+      font-size: 14px;
+      margin: 0 0 var(--base);
+    }
+  }
+
+  &__chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 3px;
+    height: 140px;
+  }
+
+  &__bar {
+    flex: 1;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+
+    span {
+      display: block;
+      width: 100%;
+      min-height: 2px;
+      border-radius: 3px 3px 0 0;
+      background: #e8b64c;
+    }
+  }
+
+  &__axis {
+    display: flex;
+    justify-content: space-between;
+    font-size: 11px;
+    color: var(--theme-elevation-500);
+    margin-top: 6px;
+  }
+
+  &__top {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+
+    li {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      padding: 6px 0;
+      border-bottom: 1px solid var(--theme-elevation-100);
+      font-size: 13px;
+    }
+  }
+
+  &__empty,
+  &__note {
+    font-size: 12px;
+    color: var(--theme-elevation-500);
+  }
+
+  &__note {
+    margin-top: 8px;
+  }
+}
