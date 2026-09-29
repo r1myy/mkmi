@@ -4,7 +4,7 @@ import { isEditor } from '../access'
 export const Testimonials: CollectionConfig = {
   slug: 'testimonials',
   labels: { singular: 'Témoignage', plural: 'Témoignages' },
-  admin: { useAsTitle: 'firstName', group: 'Communauté', defaultColumns: ['firstName', 'approved', 'createdAt'] },
+  admin: { useAsTitle: 'firstName', group: 'Gestion', defaultColumns: ['firstName', 'approved', 'createdAt'] },
   access: {
     // Seuls les témoignages approuvés et consentis sont publics. Les soumissions passeront par un formulaire serveur (phase 6).
     read: ({ req: { user } }) => {

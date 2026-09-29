@@ -23,8 +23,11 @@ import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { SectionFocus as SectionFocus_35357f70f2939b9fc7ec19d6a5088193 } from '@/components/admin/SectionFocus'
 import { HelpText as HelpText_05e5518b200e435040c0de946eb64f8b } from '@/components/admin/HelpText'
-import { default as default_66d3d5ecd8fc70b94a8c81e83a16d308 } from '@/components/admin/EditorShortcuts'
-import { default as default_b469bda1035c576489d87f08951070a6 } from '@/components/admin/StatsDashboard'
+import { AdminIcon as AdminIcon_47aa48da0e11e9bbac3155f33546fa78 } from '@/components/admin/NavBrand'
+import { AdminLogo as AdminLogo_47aa48da0e11e9bbac3155f33546fa78 } from '@/components/admin/NavBrand'
+import { NavFooter as NavFooter_47aa48da0e11e9bbac3155f33546fa78 } from '@/components/admin/NavBrand'
+import { NavBrand as NavBrand_47aa48da0e11e9bbac3155f33546fa78 } from '@/components/admin/NavBrand'
+import { default as default_0e7b23c75ea046975e1784ba01f82886 } from '@/components/admin/Dashboard'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -54,7 +57,10 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/components/admin/SectionFocus#SectionFocus": SectionFocus_35357f70f2939b9fc7ec19d6a5088193,
   "@/components/admin/HelpText#HelpText": HelpText_05e5518b200e435040c0de946eb64f8b,
-  "@/components/admin/EditorShortcuts#default": default_66d3d5ecd8fc70b94a8c81e83a16d308,
-  "@/components/admin/StatsDashboard#default": default_b469bda1035c576489d87f08951070a6,
+  "@/components/admin/NavBrand#AdminIcon": AdminIcon_47aa48da0e11e9bbac3155f33546fa78,
+  "@/components/admin/NavBrand#AdminLogo": AdminLogo_47aa48da0e11e9bbac3155f33546fa78,
+  "@/components/admin/NavBrand#NavFooter": NavFooter_47aa48da0e11e9bbac3155f33546fa78,
+  "@/components/admin/NavBrand#NavBrand": NavBrand_47aa48da0e11e9bbac3155f33546fa78,
+  "@/components/admin/Dashboard#default": default_0e7b23c75ea046975e1784ba01f82886,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

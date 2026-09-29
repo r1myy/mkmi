@@ -4,7 +4,7 @@ import { isPastoral } from '../access'
 export const VisitPlans: CollectionConfig = {
   slug: 'visit-plans',
   labels: { singular: 'Visite planifiée', plural: 'Visites planifiées' },
-  admin: { useAsTitle: 'name', group: 'Communauté', defaultColumns: ['name', 'visitDate', 'people', 'createdAt'] },
+  admin: { useAsTitle: 'name', group: 'Gestion', defaultColumns: ['name', 'visitDate', 'people', 'createdAt'] },
   access: { read: isPastoral, create: isPastoral, update: isPastoral, delete: isPastoral },
   fields: [
     { name: 'name', label: 'Nom', type: 'text', required: true },

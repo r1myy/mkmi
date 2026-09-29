@@ -68,18 +68,18 @@ export interface Config {
   blocks: {};
   collections: {
     events: Event;
-    sermons: Sermon;
+    'event-registrations': EventRegistration;
+    'contact-messages': ContactMessage;
+    'prayer-requests': PrayerRequest;
+    'visit-plans': VisitPlan;
     ministries: Ministry;
     missions: Mission;
-    media: Media;
+    sermons: Sermon;
     testimonials: Testimonial;
-    'prayer-requests': PrayerRequest;
-    'contact-messages': ContactMessage;
-    'visit-plans': VisitPlan;
-    'event-registrations': EventRegistration;
     'newsletter-subscribers': NewsletterSubscriber;
-    'page-views': PageView;
+    media: Media;
     users: User;
+    'page-views': PageView;
     'payload-kv': PayloadKv;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
@@ -88,18 +88,18 @@ export interface Config {
   collectionsJoins: {};
   collectionsSelect: {
     events: EventsSelect<false> | EventsSelect<true>;
-    sermons: SermonsSelect<false> | SermonsSelect<true>;
+    'event-registrations': EventRegistrationsSelect<false> | EventRegistrationsSelect<true>;
+    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
+    'prayer-requests': PrayerRequestsSelect<false> | PrayerRequestsSelect<true>;
+    'visit-plans': VisitPlansSelect<false> | VisitPlansSelect<true>;
     ministries: MinistriesSelect<false> | MinistriesSelect<true>;
     missions: MissionsSelect<false> | MissionsSelect<true>;
-    media: MediaSelect<false> | MediaSelect<true>;
+    sermons: SermonsSelect<false> | SermonsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
-    'prayer-requests': PrayerRequestsSelect<false> | PrayerRequestsSelect<true>;
-    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
-    'visit-plans': VisitPlansSelect<false> | VisitPlansSelect<true>;
-    'event-registrations': EventRegistrationsSelect<false> | EventRegistrationsSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
-    'page-views': PageViewsSelect<false> | PageViewsSelect<true>;
+    media: MediaSelect<false> | MediaSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
+    'page-views': PageViewsSelect<false> | PageViewsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
     'payload-locked-documents': PayloadLockedDocumentsSelect<false> | PayloadLockedDocumentsSelect<true>;
     'payload-preferences': PayloadPreferencesSelect<false> | PayloadPreferencesSelect<true>;
@@ -251,49 +251,66 @@ export interface Media {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sermons".
+ * via the `definition` "event-registrations".
  */
-export interface Sermon {
+export interface EventRegistration {
   id: number;
-  title: string;
-  preacher?: string | null;
-  date: string;
-  series?: string | null;
-  category?: string | null;
-  /**
-   * Affiché sur la page d’accueil (sinon, le plus récent).
-   */
-  featured?: boolean | null;
-  thumbnail?: (number | null) | Media;
-  preacherPhoto?: (number | null) | Media;
-  /**
-   * Si aucune miniature n’est fournie, celle de YouTube est utilisée.
-   */
-  youtubeUrl?: string | null;
-  podcastUrl?: string | null;
-  audioFile?: (number | null) | Media;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Adresse de la page. Générée automatiquement à partir du titre si vide.
-   */
-  slug?: string | null;
+  event: number | Event;
+  name: string;
+  email: string;
+  seats?: number | null;
+  consent: boolean;
   updatedAt: string;
   createdAt: string;
-  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages".
+ */
+export interface ContactMessage {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+  subject: string;
+  message: string;
+  newsletter?: boolean | null;
+  status?: ('new' | 'answered' | 'archived') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prayer-requests".
+ */
+export interface PrayerRequest {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+  request: string;
+  wantsReply?: boolean | null;
+  confidential?: boolean | null;
+  status?: ('new' | 'praying' | 'answered' | 'archived') | null;
+  internalNotes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "visit-plans".
+ */
+export interface VisitPlan {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+  visitDate?: string | null;
+  people?: number | null;
+  withChildren?: boolean | null;
+  consent: boolean;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -363,6 +380,52 @@ export interface Mission {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sermons".
+ */
+export interface Sermon {
+  id: number;
+  title: string;
+  preacher?: string | null;
+  date: string;
+  series?: string | null;
+  category?: string | null;
+  /**
+   * Affiché sur la page d’accueil (sinon, le plus récent).
+   */
+  featured?: boolean | null;
+  thumbnail?: (number | null) | Media;
+  preacherPhoto?: (number | null) | Media;
+  /**
+   * Si aucune miniature n’est fournie, celle de YouTube est utilisée.
+   */
+  youtubeUrl?: string | null;
+  podcastUrl?: string | null;
+  audioFile?: (number | null) | Media;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Adresse de la page. Générée automatiquement à partir du titre si vide.
+   */
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -378,69 +441,6 @@ export interface Testimonial {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "prayer-requests".
- */
-export interface PrayerRequest {
-  id: number;
-  name: string;
-  email: string;
-  phone?: string | null;
-  request: string;
-  wantsReply?: boolean | null;
-  confidential?: boolean | null;
-  status?: ('new' | 'praying' | 'answered' | 'archived') | null;
-  internalNotes?: string | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-messages".
- */
-export interface ContactMessage {
-  id: number;
-  name: string;
-  email: string;
-  phone?: string | null;
-  subject: string;
-  message: string;
-  newsletter?: boolean | null;
-  status?: ('new' | 'answered' | 'archived') | null;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "visit-plans".
- */
-export interface VisitPlan {
-  id: number;
-  name: string;
-  email: string;
-  phone?: string | null;
-  visitDate?: string | null;
-  people?: number | null;
-  withChildren?: boolean | null;
-  consent: boolean;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "event-registrations".
- */
-export interface EventRegistration {
-  id: number;
-  event: number | Event;
-  name: string;
-  email: string;
-  seats?: number | null;
-  consent: boolean;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "newsletter-subscribers".
  */
 export interface NewsletterSubscriber {
@@ -448,18 +448,6 @@ export interface NewsletterSubscriber {
   email: string;
   name?: string | null;
   consent: boolean;
-  updatedAt: string;
-  createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "page-views".
- */
-export interface PageView {
-  id: number;
-  day: string;
-  path: string;
-  count: number;
   updatedAt: string;
   createdAt: string;
 }
@@ -496,6 +484,18 @@ export interface User {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-views".
+ */
+export interface PageView {
+  id: number;
+  day: string;
+  path: string;
+  count: number;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-kv".
  */
 export interface PayloadKv {
@@ -523,8 +523,20 @@ export interface PayloadLockedDocument {
         value: number | Event;
       } | null)
     | ({
-        relationTo: 'sermons';
-        value: number | Sermon;
+        relationTo: 'event-registrations';
+        value: number | EventRegistration;
+      } | null)
+    | ({
+        relationTo: 'contact-messages';
+        value: number | ContactMessage;
+      } | null)
+    | ({
+        relationTo: 'prayer-requests';
+        value: number | PrayerRequest;
+      } | null)
+    | ({
+        relationTo: 'visit-plans';
+        value: number | VisitPlan;
       } | null)
     | ({
         relationTo: 'ministries';
@@ -535,40 +547,28 @@ export interface PayloadLockedDocument {
         value: number | Mission;
       } | null)
     | ({
-        relationTo: 'media';
-        value: number | Media;
+        relationTo: 'sermons';
+        value: number | Sermon;
       } | null)
     | ({
         relationTo: 'testimonials';
         value: number | Testimonial;
       } | null)
     | ({
-        relationTo: 'prayer-requests';
-        value: number | PrayerRequest;
-      } | null)
-    | ({
-        relationTo: 'contact-messages';
-        value: number | ContactMessage;
-      } | null)
-    | ({
-        relationTo: 'visit-plans';
-        value: number | VisitPlan;
-      } | null)
-    | ({
-        relationTo: 'event-registrations';
-        value: number | EventRegistration;
-      } | null)
-    | ({
         relationTo: 'newsletter-subscribers';
         value: number | NewsletterSubscriber;
       } | null)
     | ({
-        relationTo: 'page-views';
-        value: number | PageView;
+        relationTo: 'media';
+        value: number | Media;
       } | null)
     | ({
         relationTo: 'users';
         value: number | User;
+      } | null)
+    | ({
+        relationTo: 'page-views';
+        value: number | PageView;
       } | null);
   globalSlug?: string | null;
   user: {
@@ -638,25 +638,62 @@ export interface EventsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sermons_select".
+ * via the `definition` "event-registrations_select".
  */
-export interface SermonsSelect<T extends boolean = true> {
-  title?: T;
-  preacher?: T;
-  date?: T;
-  series?: T;
-  category?: T;
-  featured?: T;
-  thumbnail?: T;
-  preacherPhoto?: T;
-  youtubeUrl?: T;
-  podcastUrl?: T;
-  audioFile?: T;
-  description?: T;
-  slug?: T;
+export interface EventRegistrationsSelect<T extends boolean = true> {
+  event?: T;
+  name?: T;
+  email?: T;
+  seats?: T;
+  consent?: T;
   updatedAt?: T;
   createdAt?: T;
-  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages_select".
+ */
+export interface ContactMessagesSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  subject?: T;
+  message?: T;
+  newsletter?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "prayer-requests_select".
+ */
+export interface PrayerRequestsSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  request?: T;
+  wantsReply?: T;
+  confidential?: T;
+  status?: T;
+  internalNotes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "visit-plans_select".
+ */
+export interface VisitPlansSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  visitDate?: T;
+  people?: T;
+  withChildren?: T;
+  consent?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -690,6 +727,53 @@ export interface MissionsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "sermons_select".
+ */
+export interface SermonsSelect<T extends boolean = true> {
+  title?: T;
+  preacher?: T;
+  date?: T;
+  series?: T;
+  category?: T;
+  featured?: T;
+  thumbnail?: T;
+  preacherPhoto?: T;
+  youtubeUrl?: T;
+  podcastUrl?: T;
+  audioFile?: T;
+  description?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "testimonials_select".
+ */
+export interface TestimonialsSelect<T extends boolean = true> {
+  firstName?: T;
+  email?: T;
+  text?: T;
+  photo?: T;
+  consent?: T;
+  approved?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "newsletter-subscribers_select".
+ */
+export interface NewsletterSubscribersSelect<T extends boolean = true> {
+  email?: T;
+  name?: T;
+  consent?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -735,101 +819,6 @@ export interface MediaSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "testimonials_select".
- */
-export interface TestimonialsSelect<T extends boolean = true> {
-  firstName?: T;
-  email?: T;
-  text?: T;
-  photo?: T;
-  consent?: T;
-  approved?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "prayer-requests_select".
- */
-export interface PrayerRequestsSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  phone?: T;
-  request?: T;
-  wantsReply?: T;
-  confidential?: T;
-  status?: T;
-  internalNotes?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-messages_select".
- */
-export interface ContactMessagesSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  phone?: T;
-  subject?: T;
-  message?: T;
-  newsletter?: T;
-  status?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "visit-plans_select".
- */
-export interface VisitPlansSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  phone?: T;
-  visitDate?: T;
-  people?: T;
-  withChildren?: T;
-  consent?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "event-registrations_select".
- */
-export interface EventRegistrationsSelect<T extends boolean = true> {
-  event?: T;
-  name?: T;
-  email?: T;
-  seats?: T;
-  consent?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "newsletter-subscribers_select".
- */
-export interface NewsletterSubscribersSelect<T extends boolean = true> {
-  email?: T;
-  name?: T;
-  consent?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "page-views_select".
- */
-export interface PageViewsSelect<T extends boolean = true> {
-  day?: T;
-  path?: T;
-  count?: T;
-  updatedAt?: T;
-  createdAt?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users_select".
  */
 export interface UsersSelect<T extends boolean = true> {
@@ -852,6 +841,17 @@ export interface UsersSelect<T extends boolean = true> {
         createdAt?: T;
         expiresAt?: T;
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-views_select".
+ */
+export interface PageViewsSelect<T extends boolean = true> {
+  day?: T;
+  path?: T;
+  count?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

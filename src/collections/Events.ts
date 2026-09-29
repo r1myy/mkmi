@@ -7,7 +7,7 @@ export const Events: CollectionConfig = {
   labels: { singular: 'Événement', plural: 'Événements' },
   admin: {
     useAsTitle: 'title',
-    group: 'Contenu',
+    group: 'Gestion',
     defaultColumns: ['title', 'startsAt', 'location', '_status'],
   },
   versions: { drafts: true },

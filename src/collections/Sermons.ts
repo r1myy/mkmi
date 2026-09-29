@@ -4,10 +4,10 @@ import { slugField } from '../fields/slug'
 
 export const Sermons: CollectionConfig = {
   slug: 'sermons',
-  labels: { singular: 'Message', plural: 'Messages (prédications)' },
+  labels: { singular: 'Prédication', plural: 'Prédications' },
   admin: {
     useAsTitle: 'title',
-    group: 'Contenu',
+    group: 'Gestion',
     defaultColumns: ['title', 'preacher', 'date', 'featured', '_status'],
   },
   versions: { drafts: true },

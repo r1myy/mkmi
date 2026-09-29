@@ -4,7 +4,7 @@ import { isEditor, publishedOrAuthenticated } from '../access'
 export const Missions: CollectionConfig = {
   slug: 'missions',
   labels: { singular: 'Mission', plural: 'Missions' },
-  admin: { useAsTitle: 'project', group: 'Contenu', defaultColumns: ['project', 'zone', 'status'] },
+  admin: { useAsTitle: 'project', group: 'Gestion', defaultColumns: ['project', 'zone', 'status'] },
   versions: { drafts: true },
   access: { read: publishedOrAuthenticated, create: isEditor, update: isEditor, delete: isEditor },
   fields: [

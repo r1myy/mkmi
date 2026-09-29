@@ -11,7 +11,7 @@ export const PrayerRequests: CollectionConfig = {
   labels: { singular: 'Demande de prière', plural: 'Demandes de prière' },
   admin: {
     useAsTitle: 'name',
-    group: 'Communauté',
+    group: 'Gestion',
     defaultColumns: ['name', 'status', 'confidential', 'createdAt'],
   },
   access: { read: isPastoral, create: isPastoral, update: isPastoral, delete: isPastoral },

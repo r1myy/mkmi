@@ -8,7 +8,7 @@ import { isAdmin, isEditor } from '../access'
 export const PageViews: CollectionConfig = {
   slug: 'page-views',
   labels: { singular: 'Visite (statistique)', plural: 'Visites (statistiques)' },
-  admin: { group: 'Statistiques', defaultColumns: ['day', 'path', 'count'], useAsTitle: 'path' },
+  admin: { group: 'Paramètres', defaultColumns: ['day', 'path', 'count'], useAsTitle: 'path' },
   access: { read: isEditor, create: isAdmin, update: isAdmin, delete: isAdmin },
   indexes: [{ fields: ['day', 'path'], unique: true }],
   fields: [

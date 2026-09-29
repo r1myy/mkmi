@@ -4,7 +4,7 @@ import { isEditor } from '../access'
 export const EventRegistrations: CollectionConfig = {
   slug: 'event-registrations',
   labels: { singular: 'Inscription', plural: 'Inscriptions' },
-  admin: { useAsTitle: 'name', group: 'Communauté', defaultColumns: ['name', 'event', 'seats', 'createdAt'] },
+  admin: { useAsTitle: 'name', group: 'Gestion', defaultColumns: ['name', 'event', 'seats', 'createdAt'] },
   access: { read: isEditor, create: isEditor, update: isEditor, delete: isEditor },
   fields: [
     { name: 'event', label: 'Événement', type: 'relationship', relationTo: 'events', required: true },

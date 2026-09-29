@@ -4,10 +4,10 @@ import { isPastoral } from '../access'
 /** Messages envoyés depuis la page « Nous contacter ». Jamais publics (Loi 25). */
 export const ContactMessages: CollectionConfig = {
   slug: 'contact-messages',
-  labels: { singular: 'Message de contact', plural: 'Messages de contact' },
+  labels: { singular: 'Message reçu', plural: 'Messages reçus' },
   admin: {
     useAsTitle: 'name',
-    group: 'Communauté',
+    group: 'Gestion',
     defaultColumns: ['name', 'subject', 'status', 'createdAt'],
   },
   access: { read: isPastoral, create: isPastoral, update: isPastoral, delete: isPastoral },
