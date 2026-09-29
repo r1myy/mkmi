@@ -9,6 +9,7 @@ export const ContactMessages: CollectionConfig = {
     useAsTitle: 'name',
     group: 'Gestion',
     defaultColumns: ['name', 'subject', 'status', 'createdAt'],
+    components: { views: { list: { Component: '@/components/admin/MessagesInbox' } } },
   },
   access: { read: isPastoral, create: isPastoral, update: isPastoral, delete: isPastoral },
   fields: [
@@ -31,5 +32,9 @@ export const ContactMessages: CollectionConfig = {
       ],
       admin: { position: 'sidebar' },
     },
+    { name: 'important', label: 'Important', type: 'checkbox', defaultValue: false, admin: { position: 'sidebar' } },
+    { name: 'readAt', label: 'Lu le', type: 'date', admin: { position: 'sidebar', date: { pickerAppearance: 'dayAndTime' } } },
+    { name: 'answeredAt', label: 'Répondu le', type: 'date', admin: { position: 'sidebar', date: { pickerAppearance: 'dayAndTime' } } },
+    { name: 'internalNotes', label: 'Notes internes', type: 'textarea' },
   ],
 }

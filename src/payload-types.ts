@@ -278,6 +278,10 @@ export interface ContactMessage {
   message: string;
   newsletter?: boolean | null;
   status?: ('new' | 'answered' | 'archived') | null;
+  important?: boolean | null;
+  readAt?: string | null;
+  answeredAt?: string | null;
+  internalNotes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -665,6 +669,10 @@ export interface ContactMessagesSelect<T extends boolean = true> {
   message?: T;
   newsletter?: T;
   status?: T;
+  important?: T;
+  readAt?: T;
+  answeredAt?: T;
+  internalNotes?: T;
   updatedAt?: T;
   createdAt?: T;
 }
