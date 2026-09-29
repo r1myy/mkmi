@@ -47,8 +47,9 @@ export function Photo({
   }
   return (
     <div
-      role="img"
-      aria-label={alt ?? placeholder}
+      {...(alt ?? placeholder
+        ? { role: 'img', 'aria-label': alt ?? placeholder }
+        : { 'aria-hidden': true })}
       className={clsx(
         'relative flex items-center justify-center overflow-hidden',
         tone === 'dark'
