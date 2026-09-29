@@ -78,6 +78,8 @@ export interface Config {
     sermons: Sermon;
     testimonials: Testimonial;
     announcements: Announcement;
+    'email-campaigns': EmailCampaign;
+    'social-posts': SocialPost;
     'newsletter-subscribers': NewsletterSubscriber;
     media: Media;
     documents: Document;
@@ -102,6 +104,8 @@ export interface Config {
     sermons: SermonsSelect<false> | SermonsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     announcements: AnnouncementsSelect<false> | AnnouncementsSelect<true>;
+    'email-campaigns': EmailCampaignsSelect<false> | EmailCampaignsSelect<true>;
+    'social-posts': SocialPostsSelect<false> | SocialPostsSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
@@ -516,6 +520,59 @@ export interface Announcement {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-campaigns".
+ */
+export interface EmailCampaign {
+  id: number;
+  subject: string;
+  preheader?: string | null;
+  body: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  };
+  audience: 'newsletter' | 'event' | 'contacts';
+  event?: (number | null) | Event;
+  status?: ('draft' | 'scheduled' | 'sent') | null;
+  scheduledAt?: string | null;
+  sentAt?: string | null;
+  recipients?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-posts".
+ */
+export interface SocialPost {
+  id: number;
+  title: string;
+  caption?: string | null;
+  image?: (number | null) | Media;
+  platforms: ('facebook' | 'instagram' | 'youtube' | 'tiktok' | 'whatsapp')[];
+  format?: ('photo' | 'video' | 'carousel' | 'story' | 'live' | 'link') | null;
+  link?: string | null;
+  status?: ('draft' | 'scheduled' | 'published') | null;
+  scheduledAt?: string | null;
+  postUrl?: string | null;
+  reach?: number | null;
+  likes?: number | null;
+  comments?: number | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "newsletter-subscribers".
  */
 export interface NewsletterSubscriber {
@@ -694,6 +751,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'announcements';
         value: number | Announcement;
+      } | null)
+    | ({
+        relationTo: 'email-campaigns';
+        value: number | EmailCampaign;
+      } | null)
+    | ({
+        relationTo: 'social-posts';
+        value: number | SocialPost;
       } | null)
     | ({
         relationTo: 'newsletter-subscribers';
@@ -957,6 +1022,43 @@ export interface AnnouncementsSelect<T extends boolean = true> {
   status?: T;
   publishAt?: T;
   featured?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "email-campaigns_select".
+ */
+export interface EmailCampaignsSelect<T extends boolean = true> {
+  subject?: T;
+  preheader?: T;
+  body?: T;
+  audience?: T;
+  event?: T;
+  status?: T;
+  scheduledAt?: T;
+  sentAt?: T;
+  recipients?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "social-posts_select".
+ */
+export interface SocialPostsSelect<T extends boolean = true> {
+  title?: T;
+  caption?: T;
+  image?: T;
+  platforms?: T;
+  format?: T;
+  link?: T;
+  status?: T;
+  scheduledAt?: T;
+  postUrl?: T;
+  reach?: T;
+  likes?: T;
+  comments?: T;
   updatedAt?: T;
   createdAt?: T;
 }
