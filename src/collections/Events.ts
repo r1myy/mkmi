@@ -9,6 +9,7 @@ export const Events: CollectionConfig = {
     useAsTitle: 'title',
     group: 'Gestion',
     defaultColumns: ['title', 'startsAt', 'location', '_status'],
+    components: { views: { list: { Component: '@/components/admin/EventsList' } } },
   },
   versions: { drafts: true },
   access: { read: publishedOrAuthenticated, create: isEditor, update: isEditor, delete: isEditor },

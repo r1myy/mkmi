@@ -5,6 +5,7 @@ import React from 'react'
 import { categoryLabels, eventDate } from '@/lib/events'
 import type { Event, Media } from '@/payload-types'
 import './dashboard.scss'
+import { Icon, type IconName } from './ui'
 
 type Props = {
   payload?: Payload
@@ -23,30 +24,6 @@ async function safe<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
     return fallback
   }
 }
-
-/* ---------- petites icônes (traits, 24 × 24) ---------- */
-const paths: Record<string, string> = {
-  calendar: 'M8 2v4M16 2v4M3 10h18M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z',
-  clipboard: 'M9 2h6a1 1 0 0 1 1 1v2H8V3a1 1 0 0 1 1-1zM8 4H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2M9 12l2 2 4-4',
-  eye: 'M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12zM12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
-  heart: 'M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z',
-  mail: 'M4 4h16a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2zM22 6l-10 7L2 6',
-  users: 'M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8',
-  send: 'M22 2 11 13M22 2l-7 20-4-9-9-4 20-7z',
-  pen: 'M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z',
-  mic: 'M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3zM19 10v2a7 7 0 0 1-14 0v-2M12 19v3',
-  plus: 'M12 5v14M5 12h14',
-  arrow: 'M5 12h14M13 6l6 6-6 6',
-  clock: 'M12 22a10 10 0 1 0 0-20 10 10 0 0 0 0 20zM12 6v6l4 2',
-  pin: 'M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0zM12 13a3 3 0 1 0 0-6 3 3 0 0 0 0 6z',
-  up: 'M12 19V5M5 12l7-7 7 7',
-  down: 'M12 5v14M19 12l-7 7-7-7',
-}
-const Icon = ({ name, size = 22 }: { name: keyof typeof paths; size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-    <path d={paths[name]} />
-  </svg>
-)
 
 function Trend({ now, before, label }: { now: number; before: number; label: string }) {
   if (!before && !now) return <span className="mk-kpi__sub">{label}</span>
@@ -301,7 +278,7 @@ export default async function Dashboard(props: Props) {
   }))
 
   // Activité récente
-  type Item = { at: string; title: string; text: string; tone: string; icon: keyof typeof paths; href: string }
+  type Item = { at: string; title: string; text: string; tone: string; icon: IconName; href: string }
   const activity: Item[] = [
     ...latestRegs.map((r) => ({
       at: r.createdAt,
