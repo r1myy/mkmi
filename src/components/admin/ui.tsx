@@ -25,6 +25,8 @@ const paths = {
   left: 'M15 18l-6-6 6-6',
   right: 'M9 18l6-6-6-6',
   radio: 'M4.9 19.1a10 10 0 0 1 0-14.2M19.1 4.9a10 10 0 0 1 0 14.2M7.8 16.2a6 6 0 0 1 0-8.4M16.2 7.8a6 6 0 0 1 0 8.4M12 13a1 1 0 1 0 0-2 1 1 0 0 0 0 2z',
+  check: 'M20 6 9 17l-5-5',
+  x: 'M18 6 6 18M6 6l12 12',
   tag: 'M20.6 13.4 13.4 20.6a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8zM7 7h.01',
 }
 export type IconName = keyof typeof paths
@@ -75,3 +77,56 @@ export function Kpi({ icon, tone = 'navy', label, value, extra, href }: { icon: 
     <div className="mk-card mk-kpi">{body}</div>
   )
 }
+
+const fmtN = new Intl.NumberFormat('fr-CA')
+
+/** Anneau de répartition avec légende. */
+export function Donut({ parts, total, caption, colors }: { parts: { label: string; value: number }[]; total: number; caption: string; colors?: string[] }) {
+  const palette = colors ?? ['#1d4fa3', '#f5bf4f', '#2bb58a', '#7c8db0', '#c9d3e6']
+  const r = 58,
+    c = 2 * Math.PI * r
+  let offset = 0
+  return (
+    <div className="mk-donut">
+      <svg viewBox="0 0 160 160" width="160" height="160" role="img" aria-label={caption}>
+        <circle cx="80" cy="80" r={r} fill="none" stroke="var(--mk-line)" strokeWidth="22" />
+        {total > 0 &&
+          parts.map((p, i) => {
+            const len = (p.value / total) * c
+            const el = (
+              <circle
+                key={p.label}
+                cx="80"
+                cy="80"
+                r={r}
+                fill="none"
+                stroke={palette[i % palette.length]}
+                strokeWidth="22"
+                strokeDasharray={`${len} ${c - len}`}
+                strokeDashoffset={-offset}
+                transform="rotate(-90 80 80)"
+              />
+            )
+            offset += len
+            return el
+          })}
+        <text x="80" y="78" textAnchor="middle" className="mk-donut__value">
+          {fmtN.format(total)}
+        </text>
+        <text x="80" y="98" textAnchor="middle" className="mk-axis">
+          {caption}
+        </text>
+      </svg>
+      <ul>
+        {parts.map((p, i) => (
+          <li key={p.label}>
+            <span className="mk-swatch" style={{ background: palette[i % palette.length] }} />
+            <span className="mk-donut__label">{p.label}</span>
+            <strong>{total ? Math.round((p.value / total) * 100) : 0} %</strong>
+          </li>
+        ))}
+      </ul>
+    </div>
+  )
+}
+

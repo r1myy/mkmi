@@ -260,6 +260,8 @@ export interface EventRegistration {
   email: string;
   seats?: number | null;
   consent: boolean;
+  status?: ('confirmed' | 'pending' | 'cancelled') | null;
+  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -646,6 +648,8 @@ export interface EventRegistrationsSelect<T extends boolean = true> {
   email?: T;
   seats?: T;
   consent?: T;
+  status?: T;
+  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

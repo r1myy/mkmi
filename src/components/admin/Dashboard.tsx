@@ -5,7 +5,7 @@ import React from 'react'
 import { categoryLabels, eventDate } from '@/lib/events'
 import type { Event, Media } from '@/payload-types'
 import './dashboard.scss'
-import { Icon, type IconName } from './ui'
+import { Donut, Icon, type IconName } from './ui'
 
 type Props = {
   payload?: Payload
@@ -105,55 +105,6 @@ function BarChart({ data }: { data: { label: string; value: number }[] }) {
         </g>
       ))}
     </svg>
-  )
-}
-
-function Donut({ parts, total, caption }: { parts: { label: string; value: number }[]; total: number; caption: string }) {
-  const colors = ['#1d4fa3', '#f5bf4f', '#2bb58a', '#7c8db0', '#c9d3e6']
-  const r = 58,
-    c = 2 * Math.PI * r
-  let offset = 0
-  return (
-    <div className="mk-donut">
-      <svg viewBox="0 0 160 160" width="160" height="160" role="img" aria-label={caption}>
-        <circle cx="80" cy="80" r={r} fill="none" stroke="var(--mk-line)" strokeWidth="22" />
-        {total > 0 &&
-          parts.map((p, i) => {
-            const len = (p.value / total) * c
-            const el = (
-              <circle
-                key={p.label}
-                cx="80"
-                cy="80"
-                r={r}
-                fill="none"
-                stroke={colors[i % colors.length]}
-                strokeWidth="22"
-                strokeDasharray={`${len} ${c - len}`}
-                strokeDashoffset={-offset}
-                transform="rotate(-90 80 80)"
-              />
-            )
-            offset += len
-            return el
-          })}
-        <text x="80" y="78" textAnchor="middle" className="mk-donut__value">
-          {fmt.format(total)}
-        </text>
-        <text x="80" y="98" textAnchor="middle" className="mk-axis">
-          {caption}
-        </text>
-      </svg>
-      <ul>
-        {parts.map((p, i) => (
-          <li key={p.label}>
-            <span className="mk-swatch" style={{ background: colors[i % colors.length] }} />
-            <span className="mk-donut__label">{p.label}</span>
-            <strong>{total ? Math.round((p.value / total) * 100) : 0} %</strong>
-          </li>
-        ))}
-      </ul>
-    </div>
   )
 }
 

@@ -4,6 +4,7 @@ import * as migration_20260929_030944_pages_interieures from './20260929_030944_
 import * as migration_20260929_041733_evenements from './20260929_041733_evenements';
 import * as migration_20260929_043837_page_don from './20260929_043837_page_don';
 import * as migration_20260929_053234_editeur_pages from './20260929_053234_editeur_pages';
+import * as migration_20260929_071211_inscriptions_statut from './20260929_071211_inscriptions_statut';
 
 export const migrations = [
   {
@@ -34,6 +35,11 @@ export const migrations = [
   {
     up: migration_20260929_053234_editeur_pages.up,
     down: migration_20260929_053234_editeur_pages.down,
-    name: '20260929_053234_editeur_pages'
+    name: '20260929_053234_editeur_pages',
+  },
+  {
+    up: migration_20260929_071211_inscriptions_statut.up,
+    down: migration_20260929_071211_inscriptions_statut.down,
+    name: '20260929_071211_inscriptions_statut'
   },
 ];

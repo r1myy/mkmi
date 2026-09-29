@@ -148,7 +148,7 @@ export async function registerForEvent(_prev: FormState, formData: FormData): Pr
     if (typeof event.capacity === 'number' && event.capacity > 0) {
       const existing = await payload.find({
         collection: 'event-registrations',
-        where: { event: { equals: eventId } },
+        where: { and: [{ event: { equals: eventId } }, { status: { not_equals: 'cancelled' } }] },
         limit: 1000,
         depth: 0,
         overrideAccess: true,
