@@ -153,6 +153,27 @@ export const getEventBySlug = cache(async (slug: string): Promise<Event | null> 
   }, null),
 )
 
+/** Annonce « À la une » publiée (bandeau de la page d’accueil). */
+export const getFeaturedAnnouncement = cache(async () =>
+  safe(async () => {
+    const res = await (await payloadClient()).find({
+      collection: 'announcements',
+      where: {
+        and: [
+          { status: { equals: 'published' } },
+          { featured: { equals: true } },
+          { publishAt: { less_than_equal: new Date().toISOString() } },
+        ],
+      },
+      sort: '-publishAt',
+      limit: 1,
+      depth: 0,
+      overrideAccess: false,
+    })
+    return res.docs[0] ?? null
+  }, null),
+)
+
 /** Tous les messages publiés (les filtres de la page Messages s’appliquent ensuite). */
 export const getSermons = cache(async (): Promise<Sermon[]> =>
   safe(async () => {

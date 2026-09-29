@@ -77,6 +77,7 @@ export interface Config {
     missions: Mission;
     sermons: Sermon;
     testimonials: Testimonial;
+    announcements: Announcement;
     'newsletter-subscribers': NewsletterSubscriber;
     media: Media;
     documents: Document;
@@ -100,6 +101,7 @@ export interface Config {
     missions: MissionsSelect<false> | MissionsSelect<true>;
     sermons: SermonsSelect<false> | SermonsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    announcements: AnnouncementsSelect<false> | AnnouncementsSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     documents: DocumentsSelect<false> | DocumentsSelect<true>;
@@ -493,6 +495,27 @@ export interface Testimonial {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcements".
+ */
+export interface Announcement {
+  id: number;
+  title: string;
+  summary: string;
+  image?: (number | null) | Media;
+  link?: string | null;
+  linkLabel?: string | null;
+  category?: ('evenement' | 'priere' | 'formation' | 'missions' | 'enseignement' | 'familles' | 'eglise') | null;
+  /**
+   * Une annonce publiée avec une date future est « planifiée ».
+   */
+  status?: ('draft' | 'pending' | 'published' | 'archived') | null;
+  publishAt: string;
+  featured?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "newsletter-subscribers".
  */
 export interface NewsletterSubscriber {
@@ -667,6 +690,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'testimonials';
         value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'announcements';
+        value: number | Announcement;
       } | null)
     | ({
         relationTo: 'newsletter-subscribers';
@@ -913,6 +940,23 @@ export interface TestimonialsSelect<T extends boolean = true> {
   photo?: T;
   consent?: T;
   approved?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "announcements_select".
+ */
+export interface AnnouncementsSelect<T extends boolean = true> {
+  title?: T;
+  summary?: T;
+  image?: T;
+  link?: T;
+  linkLabel?: T;
+  category?: T;
+  status?: T;
+  publishAt?: T;
+  featured?: T;
   updatedAt?: T;
   createdAt?: T;
 }

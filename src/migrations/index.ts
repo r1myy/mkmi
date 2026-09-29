@@ -9,6 +9,7 @@ import * as migration_20260929_071734_messages_boite from './20260929_071734_mes
 import * as migration_20260929_072427_registre_dons from './20260929_072427_registre_dons';
 import * as migration_20260929_073203_missions_suivi from './20260929_073203_missions_suivi';
 import * as migration_20260929_073805_medias_documents_liens from './20260929_073805_medias_documents_liens';
+import * as migration_20260929_074201_annonces from './20260929_074201_annonces';
 
 export const migrations = [
   {
@@ -64,6 +65,11 @@ export const migrations = [
   {
     up: migration_20260929_073805_medias_documents_liens.up,
     down: migration_20260929_073805_medias_documents_liens.down,
-    name: '20260929_073805_medias_documents_liens'
+    name: '20260929_073805_medias_documents_liens',
+  },
+  {
+    up: migration_20260929_074201_annonces.up,
+    down: migration_20260929_074201_annonces.down,
+    name: '20260929_074201_annonces'
   },
 ];

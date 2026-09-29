@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import {
+  Announcements,
   ContactMessages,
   Documents,
   Donations,
@@ -64,6 +65,7 @@ export default buildConfig({
     Missions,
     Sermons,
     Testimonials,
+    Announcements,
     NewsletterSubscribers,
     Media,
     Documents,

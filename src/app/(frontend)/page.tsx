@@ -8,9 +8,10 @@ import { Prayer } from '@/components/home/Prayer'
 import { Welcome } from '@/components/home/Welcome'
 import type { Metadata } from 'next'
 
+import { AnnouncementBar } from '@/components/home/AnnouncementBar'
 import { EditZone } from '@/components/site/EditZone'
 import { JsonLd } from '@/components/site/JsonLd'
-import { asMedia, getFeaturedSermon, getHomePage, getMinistries, getSettings, getUpcomingEvents } from '@/lib/content'
+import { asMedia, getFeaturedAnnouncement, getFeaturedSermon, getHomePage, getMinistries, getSettings, getUpcomingEvents } from '@/lib/content'
 import { ogImageUrl, siteUrl } from '@/lib/seo'
 
 // Contenu géré dans l’administration : régénéré au plus toutes les 60 s.
@@ -39,12 +40,13 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const [home, settings, events, sermon, ministries] = await Promise.all([
+  const [home, settings, events, sermon, ministries, announcement] = await Promise.all([
     getHomePage(),
     getSettings(),
     getUpcomingEvents(),
     getFeaturedSermon(),
     getMinistries(),
+    getFeaturedAnnouncement(),
   ])
 
   // Aucune valeur provisoire (« à confirmer ») n’est envoyée aux moteurs de recherche.
@@ -95,6 +97,7 @@ export default async function HomePage() {
       <EditZone page="home-page" section="Haut de page">
         <Hero hero={home.hero!} settings={settings} />
       </EditZone>
+      {announcement && <AnnouncementBar announcement={announcement} />}
       <EditZone page="home-page" section="Nouveau ici ?">
         <Welcome welcome={home.welcome!} />
       </EditZone>
