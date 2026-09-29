@@ -60,6 +60,12 @@ dans l’administration, sans toucher au code.
 - Les médias sont stockés localement par défaut ; sur Vercel, il faudra brancher un stockage
   (Supabase Storage / S3 via `@payloadcms/storage-s3`).
 
+## Sauvegarde et transfert du contenu
+
+- `node scripts/export-data.mjs sauvegarde.json` : exporte tout le contenu de la base (lit `DATABASE_URL`).
+- `node scripts/import-data.mjs sauvegarde.json` : le restaure dans une base dont le schéma existe
+  (`npx pnpm@10 payload migrate` d’abord). Copier aussi le dossier `media/` (photos).
+
 ## Scripts
 
 `pnpm dev` · `pnpm build` · `pnpm lint` · `pnpm typecheck` · `pnpm seed` · `pnpm migrate` · `pnpm test`
