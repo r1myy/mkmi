@@ -8,9 +8,11 @@ import sharp from 'sharp'
 
 import {
   ContactMessages,
+  Documents,
   Donations,
   EventRegistrations,
   Events,
+  Links,
   Media,
   Ministries,
   Missions,
@@ -64,6 +66,8 @@ export default buildConfig({
     Testimonials,
     NewsletterSubscribers,
     Media,
+    Documents,
+    Links,
     Users,
     PageViews,
   ],

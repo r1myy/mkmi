@@ -79,6 +79,8 @@ export interface Config {
     testimonials: Testimonial;
     'newsletter-subscribers': NewsletterSubscriber;
     media: Media;
+    documents: Document;
+    links: Link;
     users: User;
     'page-views': PageView;
     'payload-kv': PayloadKv;
@@ -100,6 +102,8 @@ export interface Config {
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
+    documents: DocumentsSelect<false> | DocumentsSelect<true>;
+    links: LinksSelect<false> | LinksSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
     'page-views': PageViewsSelect<false> | PageViewsSelect<true>;
     'payload-kv': PayloadKvSelect<false> | PayloadKvSelect<true>;
@@ -212,6 +216,8 @@ export interface Event {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Photos, vidéos et fichiers publics du site. Pour les documents internes, utilisez « Documents ».
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "media".
  */
@@ -221,6 +227,19 @@ export interface Media {
    * Décrivez l’image pour les personnes malvoyantes (accessibilité).
    */
   alt: string;
+  folder?:
+    | (
+        | 'ministeres'
+        | 'missions'
+        | 'evenements'
+        | 'communications'
+        | 'formations'
+        | 'administration'
+        | 'modeles'
+        | 'site'
+        | 'autres'
+      )
+    | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -486,6 +505,64 @@ export interface NewsletterSubscriber {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents".
+ */
+export interface Document {
+  id: number;
+  title: string;
+  description?: string | null;
+  folder?:
+    | (
+        | 'ministeres'
+        | 'missions'
+        | 'evenements'
+        | 'communications'
+        | 'formations'
+        | 'administration'
+        | 'modeles'
+        | 'site'
+        | 'autres'
+      )
+    | null;
+  updatedAt: string;
+  createdAt: string;
+  url?: string | null;
+  thumbnailURL?: string | null;
+  filename?: string | null;
+  mimeType?: string | null;
+  filesize?: number | null;
+  width?: number | null;
+  height?: number | null;
+  focalX?: number | null;
+  focalY?: number | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "links".
+ */
+export interface Link {
+  id: number;
+  title: string;
+  url: string;
+  description?: string | null;
+  folder?:
+    | (
+        | 'ministeres'
+        | 'missions'
+        | 'evenements'
+        | 'communications'
+        | 'formations'
+        | 'administration'
+        | 'modeles'
+        | 'site'
+        | 'autres'
+      )
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "users".
  */
 export interface User {
@@ -598,6 +675,14 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'media';
         value: number | Media;
+      } | null)
+    | ({
+        relationTo: 'documents';
+        value: number | Document;
+      } | null)
+    | ({
+        relationTo: 'links';
+        value: number | Link;
       } | null)
     | ({
         relationTo: 'users';
@@ -848,6 +933,7 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
  */
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
+  folder?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -883,6 +969,38 @@ export interface MediaSelect<T extends boolean = true> {
               filename?: T;
             };
       };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "documents_select".
+ */
+export interface DocumentsSelect<T extends boolean = true> {
+  title?: T;
+  description?: T;
+  folder?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  url?: T;
+  thumbnailURL?: T;
+  filename?: T;
+  mimeType?: T;
+  filesize?: T;
+  width?: T;
+  height?: T;
+  focalX?: T;
+  focalY?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "links_select".
+ */
+export interface LinksSelect<T extends boolean = true> {
+  title?: T;
+  url?: T;
+  description?: T;
+  folder?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

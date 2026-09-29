@@ -24,6 +24,11 @@ const eslintConfig = [
     },
   },
   {
+    // Écrans de l’administration Payload : liens et formulaires vers l’admin et les routes API, navigation classique voulue.
+    files: ['src/components/admin/**'],
+    rules: { '@next/next/no-html-link-for-pages': 'off' },
+  },
+  {
     ignores: ['.next/', 'next-env.d.ts', 'src/app/(payload)/**', 'src/payload-types.ts', 'src/migrations/**', 'src/payload-generated-schema.ts'],
   },
 ]

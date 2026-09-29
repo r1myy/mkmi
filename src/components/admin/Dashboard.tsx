@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-html-link-for-pages -- liens de l’administration et route API du mode édition : navigation classique voulue. */
 import type { Payload, PayloadRequest } from 'payload'
 import React from 'react'
 

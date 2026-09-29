@@ -1416,3 +1416,68 @@ html[data-theme='dark'] {
     color: #8a5a00;
   }
 }
+
+// ---------- Médias et ressources ----------
+.mk-tag--red {
+  background: #fde8e6;
+  color: #c0392b;
+}
+.mk-tag--violet {
+  background: #efe8fb;
+  color: #6b3fc4;
+}
+.mk-tag--green {
+  background: #e3f5ec;
+  color: #1f7a4d;
+}
+.mk-tile__icon {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: rgba(255, 255, 255, 0.85);
+}
+.mk-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.mk-stack {
+  display: grid;
+  gap: 16px;
+}
+.mk-folders {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  a {
+    display: grid;
+    gap: 4px;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid var(--mk-line);
+    background: var(--theme-elevation-0);
+    &:hover,
+    &.is-active {
+      border-color: var(--mk-blue);
+    }
+    strong {
+      font-size: 14px;
+    }
+  }
+}
+.mk-folder-icon svg {
+  fill: currentColor;
+  fill-opacity: 0.2;
+}
+.mk-file-icon {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 36px;
+  height: 36px;
+  border-radius: 9px;
+}

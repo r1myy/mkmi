@@ -1,4 +1,3 @@
-/* eslint-disable @next/next/no-html-link-for-pages -- liens de l’administration et export CSV : navigation classique voulue. */
 import type { Payload } from 'payload'
 import React from 'react'
 
