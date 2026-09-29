@@ -550,8 +550,13 @@ export default async function SermonsList({ payload, searchParams = {} }: Props)
               <a href="/admin/globals/page-messages?section=Balado" className="mk-tone-green">
                 <Icon name="link" size={20} /> Liens du balado
               </a>
-              <a href="/admin/collections/social-posts/create" className="mk-tone-violet">
-                <Icon name="send" size={20} /> Partager sur les réseaux
+              <a
+                href={`${BASE}/create`}
+                className="mk-tone-violet"
+                title="Publication automatique à une date choisie : à venir. Pour l’instant, créez le message en brouillon."
+              >
+                <Icon name="clock" size={20} /> Planifier une publication
+                <span className="mk-tag mk-tag--gold">Bientôt</span>
               </a>
             </div>
           </section>
