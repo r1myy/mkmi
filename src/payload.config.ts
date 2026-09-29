@@ -5,6 +5,7 @@ import path from 'path'
 import { buildConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 import {
   Announcements,
@@ -97,5 +98,24 @@ export default buildConfig({
     prodMigrations: migrations,
   }),
   sharp,
-  plugins: [],
+  plugins: [
+    // En ligne (Vercel), les fichiers sont stockés dans Supabase Storage (compatible S3).
+    // Le bucket reste privé : Payload sert les fichiers et applique les droits d’accès (documents internes).
+    s3Storage({
+      enabled: Boolean(process.env.S3_BUCKET),
+      // Envoi direct du navigateur vers le stockage : évite la limite de 4,5 Mo des fonctions Vercel.
+      clientUploads: true,
+      collections: { media: { prefix: 'media' }, documents: { prefix: 'documents' } },
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        endpoint: process.env.S3_ENDPOINT,
+        region: process.env.S3_REGION || 'ca-central-1',
+        forcePathStyle: true,
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+        },
+      },
+    }),
+  ],
 })
