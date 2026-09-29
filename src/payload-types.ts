@@ -648,6 +648,13 @@ export interface Link {
 export interface User {
   id: number;
   name?: string | null;
+  title?: string | null;
+  phone?: string | null;
+  /**
+   * Décocher pour suspendre l’accès sans supprimer le compte.
+   */
+  active?: boolean | null;
+  lastLoginAt?: string | null;
   /**
    * Administrateur : tout. Éditeur : contenus publics. Équipe pastorale : demandes de prière et visites.
    */
@@ -1154,6 +1161,10 @@ export interface LinksSelect<T extends boolean = true> {
  */
 export interface UsersSelect<T extends boolean = true> {
   name?: T;
+  title?: T;
+  phone?: T;
+  active?: T;
+  lastLoginAt?: T;
   role?: T;
   updatedAt?: T;
   createdAt?: T;

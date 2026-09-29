@@ -32,6 +32,7 @@ import { default as default_2715d5d74bfe9711e9050e1b9e036fd6 } from '@/component
 import { default as default_a39a9a31285810b9405d0ca18615832b } from '@/components/admin/SocialPlanner'
 import { default as default_767e88c223142d236f24e2740265c80e } from '@/components/admin/MediaLibrary'
 import { default as default_92cb9324efe4bfe2d2bdd706849d2975 } from '@/components/admin/ResourcesLibrary'
+import { default as default_f2ad13a7955034ba090e24368a804cc5 } from '@/components/admin/UsersList'
 import { SectionFocus as SectionFocus_35357f70f2939b9fc7ec19d6a5088193 } from '@/components/admin/SectionFocus'
 import { HelpText as HelpText_05e5518b200e435040c0de946eb64f8b } from '@/components/admin/HelpText'
 import { AdminIcon as AdminIcon_47aa48da0e11e9bbac3155f33546fa78 } from '@/components/admin/NavBrand'
@@ -78,6 +79,7 @@ export const importMap = {
   "@/components/admin/SocialPlanner#default": default_a39a9a31285810b9405d0ca18615832b,
   "@/components/admin/MediaLibrary#default": default_767e88c223142d236f24e2740265c80e,
   "@/components/admin/ResourcesLibrary#default": default_92cb9324efe4bfe2d2bdd706849d2975,
+  "@/components/admin/UsersList#default": default_f2ad13a7955034ba090e24368a804cc5,
   "@/components/admin/SectionFocus#SectionFocus": SectionFocus_35357f70f2939b9fc7ec19d6a5088193,
   "@/components/admin/HelpText#HelpText": HelpText_05e5518b200e435040c0de946eb64f8b,
   "@/components/admin/NavBrand#AdminIcon": AdminIcon_47aa48da0e11e9bbac3155f33546fa78,

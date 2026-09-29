@@ -11,6 +11,7 @@ import * as migration_20260929_073203_missions_suivi from './20260929_073203_mis
 import * as migration_20260929_073805_medias_documents_liens from './20260929_073805_medias_documents_liens';
 import * as migration_20260929_074201_annonces from './20260929_074201_annonces';
 import * as migration_20260929_074952_courriels_reseaux from './20260929_074952_courriels_reseaux';
+import * as migration_20260929_075314_utilisateurs_statut from './20260929_075314_utilisateurs_statut';
 
 export const migrations = [
   {
@@ -76,6 +77,11 @@ export const migrations = [
   {
     up: migration_20260929_074952_courriels_reseaux.up,
     down: migration_20260929_074952_courriels_reseaux.down,
-    name: '20260929_074952_courriels_reseaux'
+    name: '20260929_074952_courriels_reseaux',
+  },
+  {
+    up: migration_20260929_075314_utilisateurs_statut.up,
+    down: migration_20260929_075314_utilisateurs_statut.down,
+    name: '20260929_075314_utilisateurs_statut'
   },
 ];

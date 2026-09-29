@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import { APIError, type CollectionConfig } from 'payload'
 import { isAdmin, isAdminField } from '../access'
 
 export const Users: CollectionConfig = {
@@ -8,6 +8,23 @@ export const Users: CollectionConfig = {
     useAsTitle: 'email',
     group: 'Paramètres',
     defaultColumns: ['name', 'email', 'role'],
+    components: { views: { list: { Component: '@/components/admin/UsersList' } } },
+  },
+  hooks: {
+    beforeLogin: [
+      ({ user }) => {
+        if (user?.active === false) throw new APIError('Ce compte est suspendu. Contactez un administrateur.', 403)
+        return user
+      },
+    ],
+    afterLogin: [
+      async ({ req, user }) => {
+        // Date de dernière connexion (affichée dans l’écran Utilisateurs).
+        await req.payload
+          .update({ collection: 'users', id: user.id, data: { lastLoginAt: new Date().toISOString() }, overrideAccess: true, req })
+          .catch(() => null)
+      },
+    ],
   },
   auth: {
     maxLoginAttempts: 5,
@@ -29,6 +46,17 @@ export const Users: CollectionConfig = {
   },
   fields: [
     { name: 'name', label: 'Nom', type: 'text' },
+    { name: 'title', label: 'Fonction (ex. Responsable jeunesse)', type: 'text' },
+    { name: 'phone', label: 'Téléphone', type: 'text' },
+    {
+      name: 'active',
+      label: 'Compte actif',
+      type: 'checkbox',
+      defaultValue: true,
+      access: { update: isAdminField, create: isAdminField },
+      admin: { position: 'sidebar', description: 'Décocher pour suspendre l’accès sans supprimer le compte.' },
+    },
+    { name: 'lastLoginAt', label: 'Dernière connexion', type: 'date', admin: { position: 'sidebar', readOnly: true, date: { pickerAppearance: 'dayAndTime' } } },
     {
       name: 'role',
       label: 'Rôle',

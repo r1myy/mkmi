@@ -1614,3 +1614,25 @@ html[data-theme='dark'] {
     }
   }
 }
+
+// ---------- Utilisateurs ----------
+.mk-roles {
+  display: grid;
+  gap: 14px;
+  ul {
+    display: grid;
+    gap: 4px;
+    margin: 8px 0 0;
+    padding: 0;
+    list-style: none;
+    font-size: 13px;
+  }
+  li {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    svg {
+      color: #1f9d63;
+    }
+  }
+}
