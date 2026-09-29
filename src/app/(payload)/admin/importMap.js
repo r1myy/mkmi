@@ -37,6 +37,7 @@ import { AdminLogo as AdminLogo_47aa48da0e11e9bbac3155f33546fa78 } from '@/compo
 import { NavFooter as NavFooter_47aa48da0e11e9bbac3155f33546fa78 } from '@/components/admin/NavBrand'
 import { NavBrand as NavBrand_47aa48da0e11e9bbac3155f33546fa78 } from '@/components/admin/NavBrand'
 import { default as default_0e7b23c75ea046975e1784ba01f82886 } from '@/components/admin/Dashboard'
+import { default as default_55d95e80ceb696c6f2694e0c812cb82e } from '@/components/admin/CommunicationsHub'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
@@ -80,5 +81,6 @@ export const importMap = {
   "@/components/admin/NavBrand#NavFooter": NavFooter_47aa48da0e11e9bbac3155f33546fa78,
   "@/components/admin/NavBrand#NavBrand": NavBrand_47aa48da0e11e9bbac3155f33546fa78,
   "@/components/admin/Dashboard#default": default_0e7b23c75ea046975e1784ba01f82886,
+  "@/components/admin/CommunicationsHub#default": default_55d95e80ceb696c6f2694e0c812cb82e,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

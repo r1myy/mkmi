@@ -46,7 +46,10 @@ export default buildConfig({
       beforeNavLinks: ['@/components/admin/NavBrand#NavBrand'],
       afterNavLinks: ['@/components/admin/NavBrand#NavFooter'],
       graphics: { Icon: '@/components/admin/NavBrand#AdminIcon', Logo: '@/components/admin/NavBrand#AdminLogo' },
-      views: { dashboard: { Component: '@/components/admin/Dashboard' } },
+      views: {
+        dashboard: { Component: '@/components/admin/Dashboard' },
+        communications: { Component: '@/components/admin/CommunicationsHub', path: '/communications' },
+      },
     },
   },
   i18n: {
