@@ -4,11 +4,13 @@ import { slugField } from '../fields/slug'
 
 export const Sermons: CollectionConfig = {
   slug: 'sermons',
-  labels: { singular: 'Prédication', plural: 'Prédications' },
+  labels: { singular: 'Message (prédication)', plural: 'Messages' },
   admin: {
     useAsTitle: 'title',
     group: 'Gestion',
     defaultColumns: ['title', 'preacher', 'date', 'featured', '_status'],
+    description: 'Prédications, études bibliques et enseignements publiés sur la page Messages du site.',
+    components: { views: { list: { Component: '@/components/admin/SermonsList' } } },
   },
   versions: { drafts: true },
   access: { read: publishedOrAuthenticated, create: isEditor, update: isEditor, delete: isEditor },
@@ -23,7 +25,19 @@ export const Sermons: CollectionConfig = {
       ],
     },
     { name: 'series', label: 'Série', type: 'text' },
-    { name: 'category', label: 'Catégorie', type: 'text', defaultValue: 'Prédication' },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'category',
+          label: 'Catégorie',
+          type: 'text',
+          defaultValue: 'Prédication',
+          admin: { description: 'Ex. Prédication, Étude biblique, Conférence, Jeunesse, Témoignage, Louange.' },
+        },
+        { name: 'duration', label: 'Durée (ex. 48:32)', type: 'text', maxLength: 10 },
+      ],
+    },
     {
       name: 'featured',
       label: 'Message de la semaine',

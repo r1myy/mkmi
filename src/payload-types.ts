@@ -70,14 +70,14 @@ export interface Config {
     members: Member;
     events: Event;
     'event-registrations': EventRegistration;
-    'contact-messages': ContactMessage;
+    sermons: Sermon;
     donations: Donation;
     'prayer-requests': PrayerRequest;
     'visit-plans': VisitPlan;
     ministries: Ministry;
     missions: Mission;
-    sermons: Sermon;
     testimonials: Testimonial;
+    'contact-messages': ContactMessage;
     announcements: Announcement;
     'email-campaigns': EmailCampaign;
     'social-posts': SocialPost;
@@ -97,14 +97,14 @@ export interface Config {
     members: MembersSelect<false> | MembersSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     'event-registrations': EventRegistrationsSelect<false> | EventRegistrationsSelect<true>;
-    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
+    sermons: SermonsSelect<false> | SermonsSelect<true>;
     donations: DonationsSelect<false> | DonationsSelect<true>;
     'prayer-requests': PrayerRequestsSelect<false> | PrayerRequestsSelect<true>;
     'visit-plans': VisitPlansSelect<false> | VisitPlansSelect<true>;
     ministries: MinistriesSelect<false> | MinistriesSelect<true>;
     missions: MissionsSelect<false> | MissionsSelect<true>;
-    sermons: SermonsSelect<false> | SermonsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     announcements: AnnouncementsSelect<false> | AnnouncementsSelect<true>;
     'email-campaigns': EmailCampaignsSelect<false> | EmailCampaignsSelect<true>;
     'social-posts': SocialPostsSelect<false> | SocialPostsSelect<true>;
@@ -364,24 +364,56 @@ export interface EventRegistration {
   createdAt: string;
 }
 /**
+ * Prédications, études bibliques et enseignements publiés sur la page Messages du site.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-messages".
+ * via the `definition` "sermons".
  */
-export interface ContactMessage {
+export interface Sermon {
   id: number;
-  name: string;
-  email: string;
-  phone?: string | null;
-  subject: string;
-  message: string;
-  newsletter?: boolean | null;
-  status?: ('new' | 'answered' | 'archived') | null;
-  important?: boolean | null;
-  readAt?: string | null;
-  answeredAt?: string | null;
-  internalNotes?: string | null;
+  title: string;
+  preacher?: string | null;
+  date: string;
+  series?: string | null;
+  /**
+   * Ex. Prédication, Étude biblique, Conférence, Jeunesse, Témoignage, Louange.
+   */
+  category?: string | null;
+  duration?: string | null;
+  /**
+   * Affiché sur la page d’accueil (sinon, le plus récent).
+   */
+  featured?: boolean | null;
+  thumbnail?: (number | null) | Media;
+  preacherPhoto?: (number | null) | Media;
+  /**
+   * Si aucune miniature n’est fournie, celle de YouTube est utilisée.
+   */
+  youtubeUrl?: string | null;
+  podcastUrl?: string | null;
+  audioFile?: (number | null) | Media;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Adresse de la page. Générée automatiquement à partir du titre si vide.
+   */
+  slug?: string | null;
   updatedAt: string;
   createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -458,52 +490,6 @@ export interface Mission {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sermons".
- */
-export interface Sermon {
-  id: number;
-  title: string;
-  preacher?: string | null;
-  date: string;
-  series?: string | null;
-  category?: string | null;
-  /**
-   * Affiché sur la page d’accueil (sinon, le plus récent).
-   */
-  featured?: boolean | null;
-  thumbnail?: (number | null) | Media;
-  preacherPhoto?: (number | null) | Media;
-  /**
-   * Si aucune miniature n’est fournie, celle de YouTube est utilisée.
-   */
-  youtubeUrl?: string | null;
-  podcastUrl?: string | null;
-  audioFile?: (number | null) | Media;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  /**
-   * Adresse de la page. Générée automatiquement à partir du titre si vide.
-   */
-  slug?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
@@ -514,6 +500,26 @@ export interface Testimonial {
   photo?: (number | null) | Media;
   consent: boolean;
   approved?: boolean | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages".
+ */
+export interface ContactMessage {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+  subject: string;
+  message: string;
+  newsletter?: boolean | null;
+  status?: ('new' | 'answered' | 'archived') | null;
+  important?: boolean | null;
+  readAt?: string | null;
+  answeredAt?: string | null;
+  internalNotes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -748,8 +754,8 @@ export interface PayloadLockedDocument {
         value: number | EventRegistration;
       } | null)
     | ({
-        relationTo: 'contact-messages';
-        value: number | ContactMessage;
+        relationTo: 'sermons';
+        value: number | Sermon;
       } | null)
     | ({
         relationTo: 'donations';
@@ -772,12 +778,12 @@ export interface PayloadLockedDocument {
         value: number | Mission;
       } | null)
     | ({
-        relationTo: 'sermons';
-        value: number | Sermon;
-      } | null)
-    | ({
         relationTo: 'testimonials';
         value: number | Testimonial;
+      } | null)
+    | ({
+        relationTo: 'contact-messages';
+        value: number | ContactMessage;
       } | null)
     | ({
         relationTo: 'announcements';
@@ -915,22 +921,26 @@ export interface EventRegistrationsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "contact-messages_select".
+ * via the `definition` "sermons_select".
  */
-export interface ContactMessagesSelect<T extends boolean = true> {
-  name?: T;
-  email?: T;
-  phone?: T;
-  subject?: T;
-  message?: T;
-  newsletter?: T;
-  status?: T;
-  important?: T;
-  readAt?: T;
-  answeredAt?: T;
-  internalNotes?: T;
+export interface SermonsSelect<T extends boolean = true> {
+  title?: T;
+  preacher?: T;
+  date?: T;
+  series?: T;
+  category?: T;
+  duration?: T;
+  featured?: T;
+  thumbnail?: T;
+  preacherPhoto?: T;
+  youtubeUrl?: T;
+  podcastUrl?: T;
+  audioFile?: T;
+  description?: T;
+  slug?: T;
   updatedAt?: T;
   createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1022,28 +1032,6 @@ export interface MissionsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "sermons_select".
- */
-export interface SermonsSelect<T extends boolean = true> {
-  title?: T;
-  preacher?: T;
-  date?: T;
-  series?: T;
-  category?: T;
-  featured?: T;
-  thumbnail?: T;
-  preacherPhoto?: T;
-  youtubeUrl?: T;
-  podcastUrl?: T;
-  audioFile?: T;
-  description?: T;
-  slug?: T;
-  updatedAt?: T;
-  createdAt?: T;
-  _status?: T;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials_select".
  */
 export interface TestimonialsSelect<T extends boolean = true> {
@@ -1053,6 +1041,25 @@ export interface TestimonialsSelect<T extends boolean = true> {
   photo?: T;
   consent?: T;
   approved?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages_select".
+ */
+export interface ContactMessagesSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  subject?: T;
+  message?: T;
+  newsletter?: T;
+  status?: T;
+  important?: T;
+  readAt?: T;
+  answeredAt?: T;
+  internalNotes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

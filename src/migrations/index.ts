@@ -13,6 +13,7 @@ import * as migration_20260929_074201_annonces from './20260929_074201_annonces'
 import * as migration_20260929_074952_courriels_reseaux from './20260929_074952_courriels_reseaux';
 import * as migration_20260929_075314_utilisateurs_statut from './20260929_075314_utilisateurs_statut';
 import * as migration_20260929_075739_membres from './20260929_075739_membres';
+import * as migration_20260929_115757_messages_predications from './20260929_115757_messages_predications';
 
 export const migrations = [
   {
@@ -88,6 +89,11 @@ export const migrations = [
   {
     up: migration_20260929_075739_membres.up,
     down: migration_20260929_075739_membres.down,
-    name: '20260929_075739_membres'
+    name: '20260929_075739_membres',
+  },
+  {
+    up: migration_20260929_115757_messages_predications.up,
+    down: migration_20260929_115757_messages_predications.down,
+    name: '20260929_115757_messages_predications'
   },
 ];

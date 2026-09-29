@@ -24,10 +24,11 @@ import { BoldFeatureClient as BoldFeatureClient_e70f5e05f09f93e00b997edb1ef0c864
 import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864 } from '@payloadcms/richtext-lexical/client'
 import { default as default_0193442c735b8f0785aeb62e209aa96f } from '@/components/admin/EventsList'
 import { default as default_04e38c3fdf2ae5a0e4ecdbdb78f57801 } from '@/components/admin/RegistrationsList'
-import { default as default_d59ae891439918b9eb6183c2c7f5a187 } from '@/components/admin/MessagesInbox'
+import { default as default_ded40cf75860cb168d38b2ac94890202 } from '@/components/admin/SermonsList'
 import { default as default_0fae24583ff829190930f43779186079 } from '@/components/admin/DonationsList'
 import { default as default_8818099db63af0b13758d7189c38d347 } from '@/components/admin/MinistriesList'
 import { default as default_427715a5371283387c020b5f8c3ae4fe } from '@/components/admin/MissionsList'
+import { default as default_d59ae891439918b9eb6183c2c7f5a187 } from '@/components/admin/MessagesInbox'
 import { default as default_0880ce1cb95a64d9d59ad639618507b1 } from '@/components/admin/AnnouncementsList'
 import { default as default_2715d5d74bfe9711e9050e1b9e036fd6 } from '@/components/admin/EmailsList'
 import { default as default_a39a9a31285810b9405d0ca18615832b } from '@/components/admin/SocialPlanner'
@@ -73,10 +74,11 @@ export const importMap = {
   "@payloadcms/richtext-lexical/client#ItalicFeatureClient": ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0c864,
   "@/components/admin/EventsList#default": default_0193442c735b8f0785aeb62e209aa96f,
   "@/components/admin/RegistrationsList#default": default_04e38c3fdf2ae5a0e4ecdbdb78f57801,
-  "@/components/admin/MessagesInbox#default": default_d59ae891439918b9eb6183c2c7f5a187,
+  "@/components/admin/SermonsList#default": default_ded40cf75860cb168d38b2ac94890202,
   "@/components/admin/DonationsList#default": default_0fae24583ff829190930f43779186079,
   "@/components/admin/MinistriesList#default": default_8818099db63af0b13758d7189c38d347,
   "@/components/admin/MissionsList#default": default_427715a5371283387c020b5f8c3ae4fe,
+  "@/components/admin/MessagesInbox#default": default_d59ae891439918b9eb6183c2c7f5a187,
   "@/components/admin/AnnouncementsList#default": default_0880ce1cb95a64d9d59ad639618507b1,
   "@/components/admin/EmailsList#default": default_2715d5d74bfe9711e9050e1b9e036fd6,
   "@/components/admin/SocialPlanner#default": default_a39a9a31285810b9405d0ca18615832b,

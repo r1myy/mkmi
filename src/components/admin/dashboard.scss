@@ -1699,3 +1699,58 @@ html[data-theme='dark'] {
     }
   }
 }
+
+// ---------- Messages (prédications) ----------
+.mk-sermon-feature {
+  display: grid;
+  gap: 20px;
+  grid-template-columns: minmax(0, 1fr);
+  @media (min-width: 1000px) {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    align-items: center;
+  }
+  &__media {
+    position: relative;
+    display: grid;
+    place-items: center;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px;
+    background: var(--mk-navy) center / cover;
+  }
+  &__body {
+    display: grid;
+    gap: 10px;
+    h2 {
+      font-size: 26px;
+      font-weight: 800;
+    }
+  }
+}
+.mk-play {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  backdrop-filter: blur(4px);
+}
+.mk-duration {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 2px 7px;
+  border-radius: 6px;
+  background: rgba(7, 15, 29, 0.85);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+}
+.mk-tile__star {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  font-size: 20px;
+}
