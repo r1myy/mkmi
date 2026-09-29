@@ -1298,3 +1298,73 @@ html[data-theme='dark'] {
     }
   }
 }
+
+// ---------- Ministères (cartes) ----------
+.mk-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mk-tile {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  border-radius: 14px;
+  border: 1px solid var(--mk-line);
+  background: var(--theme-elevation-0);
+  transition: transform 0.15s, box-shadow 0.15s;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px -24px rgba(11, 22, 40, 0.55);
+  }
+  &__img {
+    height: 110px;
+    background: var(--mk-navy) center / cover;
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    padding: 12px;
+    strong {
+      font-size: 15px;
+    }
+    .mk-kpi__sub {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+  &__text {
+    flex: 1;
+    font-size: 12px;
+    color: var(--mk-muted);
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  &__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+.mk-events__thumb--sm {
+  width: 64px;
+  height: 52px;
+}
+.mk-card__head {
+  flex-wrap: wrap;
+  .mk-filters {
+    flex-wrap: nowrap;
+    .mk-search {
+      flex-basis: 200px;
+    }
+  }
+}

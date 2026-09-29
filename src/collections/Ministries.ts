@@ -19,7 +19,12 @@ export const ministryIcons = [
 export const Ministries: CollectionConfig = {
   slug: 'ministries',
   labels: { singular: 'Ministère', plural: 'Ministères' },
-  admin: { useAsTitle: 'name', group: 'Gestion', defaultColumns: ['name', 'order', '_status'] },
+  admin: {
+    useAsTitle: 'name',
+    group: 'Gestion',
+    defaultColumns: ['name', 'order', '_status'],
+    components: { views: { list: { Component: '@/components/admin/MinistriesList' } } },
+  },
   versions: { drafts: true },
   access: { read: publishedOrAuthenticated, create: isEditor, update: isEditor, delete: isEditor },
   defaultSort: 'order',
