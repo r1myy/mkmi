@@ -1,3 +1,4 @@
+import { default as default_6e0ef69d76c535641ed42e962a907b81 } from '@/components/admin/MembersList'
 import { RscEntryLexicalCell as RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { RscEntryLexicalField as RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
 import { LexicalDiffComponent as LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e } from '@payloadcms/richtext-lexical/rsc'
@@ -41,10 +42,12 @@ import { NavFooter as NavFooter_47aa48da0e11e9bbac3155f33546fa78 } from '@/compo
 import { NavBrand as NavBrand_47aa48da0e11e9bbac3155f33546fa78 } from '@/components/admin/NavBrand'
 import { default as default_0e7b23c75ea046975e1784ba01f82886 } from '@/components/admin/Dashboard'
 import { default as default_55d95e80ceb696c6f2694e0c812cb82e } from '@/components/admin/CommunicationsHub'
+import { default as default_aed186f427612c880d8a28f694f189dc } from '@/components/admin/SettingsView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 
 /** @type import('payload').ImportMap */
 export const importMap = {
+  "@/components/admin/MembersList#default": default_6e0ef69d76c535641ed42e962a907b81,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalCell": RscEntryLexicalCell_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#RscEntryLexicalField": RscEntryLexicalField_44fe37237e0ebf4470c9990d8cb7b07e,
   "@payloadcms/richtext-lexical/rsc#LexicalDiffComponent": LexicalDiffComponent_44fe37237e0ebf4470c9990d8cb7b07e,
@@ -88,5 +91,6 @@ export const importMap = {
   "@/components/admin/NavBrand#NavBrand": NavBrand_47aa48da0e11e9bbac3155f33546fa78,
   "@/components/admin/Dashboard#default": default_0e7b23c75ea046975e1784ba01f82886,
   "@/components/admin/CommunicationsHub#default": default_55d95e80ceb696c6f2694e0c812cb82e,
+  "@/components/admin/SettingsView#default": default_aed186f427612c880d8a28f694f189dc,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1
 }

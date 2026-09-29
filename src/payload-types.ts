@@ -67,6 +67,7 @@ export interface Config {
   };
   blocks: {};
   collections: {
+    members: Member;
     events: Event;
     'event-registrations': EventRegistration;
     'contact-messages': ContactMessage;
@@ -93,6 +94,7 @@ export interface Config {
   };
   collectionsJoins: {};
   collectionsSelect: {
+    members: MembersSelect<false> | MembersSelect<true>;
     events: EventsSelect<false> | EventsSelect<true>;
     'event-registrations': EventRegistrationsSelect<false> | EventRegistrationsSelect<true>;
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
@@ -177,24 +179,47 @@ export interface UserAuthOperations {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "events".
+ * via the `definition` "members".
  */
-export interface Event {
+export interface Member {
   id: number;
-  title: string;
+  name: string;
+  category?: ('jeunesse' | 'adulte' | 'famille' | 'aine') | null;
+  email?: string | null;
+  phone?: string | null;
+  ministries?: (number | Ministry)[] | null;
+  status?: ('active' | 'pending' | 'inactive') | null;
+  joinedAt?: string | null;
+  consent: boolean;
+  notes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ministries".
+ */
+export interface Ministry {
+  id: number;
+  name: string;
   image?: (number | null) | Media;
-  startsAt: string;
-  endsAt?: string | null;
-  timeToConfirm?: boolean | null;
-  category?:
-    ('louange' | 'enseignement' | 'priere' | 'conference' | 'atelier' | 'jeunesse' | 'famille' | 'rencontre') | null;
-  format?: ('onsite' | 'online' | 'hybrid') | null;
-  /**
-   * Mis en avant en haut de la page Événements.
-   */
-  featured?: boolean | null;
-  location?: string | null;
-  streamUrl?: string | null;
+  icon?:
+    | (
+        | 'baby'
+        | 'book'
+        | 'flower'
+        | 'users'
+        | 'heart-handshake'
+        | 'hand-heart'
+        | 'music'
+        | 'globe'
+        | 'video'
+        | 'graduation-cap'
+        | 'megaphone'
+      )
+    | null;
+  accent?: ('blue' | 'red' | 'green' | 'purple' | 'gold') | null;
+  order?: number | null;
   summary?: string | null;
   description?: {
     root: {
@@ -211,8 +236,8 @@ export interface Event {
     };
     [k: string]: unknown;
   } | null;
-  registrationEnabled?: boolean | null;
-  capacity?: number | null;
+  leader?: string | null;
+  schedule?: string | null;
   /**
    * Adresse de la page. Générée automatiquement à partir du titre si vide.
    */
@@ -275,6 +300,52 @@ export interface Media {
       filename?: string | null;
     };
   };
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "events".
+ */
+export interface Event {
+  id: number;
+  title: string;
+  image?: (number | null) | Media;
+  startsAt: string;
+  endsAt?: string | null;
+  timeToConfirm?: boolean | null;
+  category?:
+    ('louange' | 'enseignement' | 'priere' | 'conference' | 'atelier' | 'jeunesse' | 'famille' | 'rencontre') | null;
+  format?: ('onsite' | 'online' | 'hybrid') | null;
+  /**
+   * Mis en avant en haut de la page Événements.
+   */
+  featured?: boolean | null;
+  location?: string | null;
+  streamUrl?: string | null;
+  summary?: string | null;
+  description?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  registrationEnabled?: boolean | null;
+  capacity?: number | null;
+  /**
+   * Adresse de la page. Générée automatiquement à partir du titre si vide.
+   */
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -363,57 +434,6 @@ export interface VisitPlan {
   consent: boolean;
   updatedAt: string;
   createdAt: string;
-}
-/**
- * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "ministries".
- */
-export interface Ministry {
-  id: number;
-  name: string;
-  image?: (number | null) | Media;
-  icon?:
-    | (
-        | 'baby'
-        | 'book'
-        | 'flower'
-        | 'users'
-        | 'heart-handshake'
-        | 'hand-heart'
-        | 'music'
-        | 'globe'
-        | 'video'
-        | 'graduation-cap'
-        | 'megaphone'
-      )
-    | null;
-  accent?: ('blue' | 'red' | 'green' | 'purple' | 'gold') | null;
-  order?: number | null;
-  summary?: string | null;
-  description?: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  } | null;
-  leader?: string | null;
-  schedule?: string | null;
-  /**
-   * Adresse de la page. Générée automatiquement à partir du titre si vide.
-   */
-  slug?: string | null;
-  updatedAt: string;
-  createdAt: string;
-  _status?: ('draft' | 'published') | null;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -716,6 +736,10 @@ export interface PayloadLockedDocument {
   id: number;
   document?:
     | ({
+        relationTo: 'members';
+        value: number | Member;
+      } | null)
+    | ({
         relationTo: 'events';
         value: number | Event;
       } | null)
@@ -832,6 +856,23 @@ export interface PayloadMigration {
   batch?: number | null;
   updatedAt: string;
   createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "members_select".
+ */
+export interface MembersSelect<T extends boolean = true> {
+  name?: T;
+  category?: T;
+  email?: T;
+  phone?: T;
+  ministries?: T;
+  status?: T;
+  joinedAt?: T;
+  consent?: T;
+  notes?: T;
+  updatedAt?: T;
+  createdAt?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

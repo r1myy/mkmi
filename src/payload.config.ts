@@ -15,6 +15,7 @@ import {
   EventRegistrations,
   Events,
   Links,
+  Members,
   Media,
   Ministries,
   Missions,
@@ -51,6 +52,7 @@ export default buildConfig({
       views: {
         dashboard: { Component: '@/components/admin/Dashboard' },
         communications: { Component: '@/components/admin/CommunicationsHub', path: '/communications' },
+        parametres: { Component: '@/components/admin/SettingsView', path: '/parametres' },
       },
     },
   },
@@ -60,6 +62,7 @@ export default buildConfig({
   },
   // L’ordre des collections fixe l’ordre des groupes du menu : Gestion, Communication, Ressources, Paramètres.
   collections: [
+    Members,
     Events,
     EventRegistrations,
     ContactMessages,
