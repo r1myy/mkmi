@@ -28,7 +28,6 @@ export const footerNav = {
 export const upcomingPages: Record<string, string> = {
   'decouvrir/foi': 'Découvrir la foi',
   temoignages: 'Témoignages',
-  donner: 'Donner',
   servir: 'Servir',
   'planifier-ma-visite': 'Planifier ma visite',
   recherche: 'Recherche',

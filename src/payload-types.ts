@@ -1007,6 +1007,22 @@ export interface PagesContent {
     heroImage?: (number | null) | Media;
     newsletterImage?: (number | null) | Media;
   };
+  /**
+   * Aucune information de paiement n’est inventée : tant qu’un champ est vide, la façon de donner correspondante n’est pas affichée. Le lien de don en ligne se règle dans Informations de l’église › Contact.
+   */
+  don?: {
+    heroImage?: (number | null) | Media;
+    impactImage?: (number | null) | Media;
+    interacEmail?: string | null;
+    interacNote?: string | null;
+    mailingAddress?: string | null;
+    inPersonNote?: string | null;
+    charityNumber?: string | null;
+    /**
+     * Cocher seulement si MKMI Québec est un organisme de bienfaisance enregistré.
+     */
+    taxReceipts?: boolean | null;
+  };
   missions?: {
     heroImage?: (number | null) | Media;
     visionImage?: (number | null) | Media;
@@ -1198,6 +1214,18 @@ export interface PagesContentSelect<T extends boolean = true> {
     | {
         heroImage?: T;
         newsletterImage?: T;
+      };
+  don?:
+    | T
+    | {
+        heroImage?: T;
+        impactImage?: T;
+        interacEmail?: T;
+        interacNote?: T;
+        mailingAddress?: T;
+        inPersonNote?: T;
+        charityNumber?: T;
+        taxReceipts?: T;
       };
   missions?:
     | T

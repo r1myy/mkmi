@@ -14,6 +14,7 @@ const pages: { path: string; priority: number; changeFrequency: MetadataRoute.Si
   { path: '/evenements', priority: 0.8, changeFrequency: 'weekly' },
   { path: '/ministeres', priority: 0.8, changeFrequency: 'monthly' },
   { path: '/missions', priority: 0.7, changeFrequency: 'monthly' },
+  { path: '/donner', priority: 0.6, changeFrequency: 'yearly' },
   { path: '/priere', priority: 0.7, changeFrequency: 'yearly' },
   { path: '/contact', priority: 0.7, changeFrequency: 'yearly' },
 ]

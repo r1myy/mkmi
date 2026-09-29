@@ -131,6 +131,44 @@ export const PagesContent: GlobalConfig = {
           fields: [image('heroImage', 'Photo du haut de page'), image('newsletterImage', 'Photo du bandeau « Restez informé »')],
         },
         {
+          label: 'Don',
+          name: 'don',
+          admin: {
+            description:
+              'Aucune information de paiement n’est inventée : tant qu’un champ est vide, la façon de donner correspondante n’est pas affichée. Le lien de don en ligne se règle dans Informations de l’église › Contact.',
+          },
+          fields: [
+            image('heroImage', 'Photo du haut de page'),
+            image('impactImage', 'Photo « Votre don fait la différence »'),
+            { name: 'interacEmail', label: 'Courriel pour les virements Interac', type: 'email' },
+            { name: 'interacNote', label: 'Précision Interac (ex. question de sécurité)', type: 'text' },
+            {
+              name: 'mailingAddress',
+              label: 'Adresse pour les chèques (libellés à l’ordre de…)',
+              type: 'textarea',
+            },
+            {
+              name: 'inPersonNote',
+              label: 'Don sur place (texte affiché)',
+              type: 'text',
+              defaultValue: 'Pendant le culte, lors du temps des offrandes.',
+            },
+            {
+              type: 'row',
+              fields: [
+                { name: 'charityNumber', label: 'Numéro d’organisme de bienfaisance (ARC)', type: 'text' },
+                {
+                  name: 'taxReceipts',
+                  label: 'Reçus fiscaux délivrés',
+                  type: 'checkbox',
+                  defaultValue: false,
+                  admin: { description: 'Cocher seulement si MKMI Québec est un organisme de bienfaisance enregistré.' },
+                },
+              ],
+            },
+          ],
+        },
+        {
           label: 'Missions',
           name: 'missions',
           fields: [image('heroImage', 'Photo du haut de page'), image('visionImage', 'Photo « Notre vision »')],
