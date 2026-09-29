@@ -14,6 +14,7 @@ import { formatSermonDate, youtubeThumb } from '@/lib/sermons'
 import type { Sermon } from '@/payload-types'
 import { JsonLd } from '@/components/site/JsonLd'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
+import { TrackedDownload } from '@/components/site/TrackedDownload'
 
 export const metadata: Metadata = pageMetadata({
   title: 'Messages et prédications',
@@ -237,13 +238,13 @@ export default async function MessagesPage({ searchParams }: Props) {
                     </ButtonLink>
                   )}
                   {asMedia(featured.audioFile)?.url && (
-                    <a
+                    <TrackedDownload
+                      slug={String(featured.slug ?? featured.id)}
                       href={asMedia(featured.audioFile)!.url!}
-                      download
                       className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-navy-900/25 px-5 py-3 text-xs font-bold tracking-wide text-navy-900 uppercase hover:bg-navy-900/5"
                     >
                       <Download className="h-4 w-4" aria-hidden="true" /> Télécharger
-                    </a>
+                    </TrackedDownload>
                   )}
                   <ButtonLink href={`/messages/${featured.slug ?? featured.id}`} variant="navy">
                     Voir le message <ArrowRight className="h-4 w-4" aria-hidden="true" />

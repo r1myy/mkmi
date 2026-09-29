@@ -45,6 +45,19 @@ export const Sermons: CollectionConfig = {
       defaultValue: false,
       admin: { position: 'sidebar', description: 'Affiché sur la page d’accueil (sinon, le plus récent).' },
     },
+    {
+      type: 'collapsible',
+      label: 'Réactions (YouTube)',
+      admin: {
+        position: 'sidebar',
+        initCollapsed: true,
+        description: 'Facultatif : reportez ici les chiffres de YouTube. Les vues et téléchargements du site sont comptés automatiquement.',
+      },
+      fields: [
+        { name: 'likes', label: 'J’aime', type: 'number', min: 0, admin: { step: 1 } },
+        { name: 'comments', label: 'Commentaires', type: 'number', min: 0, admin: { step: 1 } },
+      ],
+    },
     { name: 'thumbnail', label: 'Miniature', type: 'upload', relationTo: 'media' },
     { name: 'preacherPhoto', label: 'Photo du prédicateur', type: 'upload', relationTo: 'media' },
     {

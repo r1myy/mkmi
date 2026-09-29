@@ -151,6 +151,7 @@ export default async function Dashboard(props: Props) {
   let v30 = 0,
     vPrev = 0
   for (const v of views) {
+    if (v.path.endsWith('/telechargement')) continue // téléchargements d’audio, comptés à part
     if (perDay.has(v.day)) {
       perDay.set(v.day, (perDay.get(v.day) ?? 0) + v.count)
       perPath.set(v.path, (perPath.get(v.path) ?? 0) + v.count)

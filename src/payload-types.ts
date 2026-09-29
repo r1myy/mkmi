@@ -384,6 +384,8 @@ export interface Sermon {
    * Affiché sur la page d’accueil (sinon, le plus récent).
    */
   featured?: boolean | null;
+  likes?: number | null;
+  comments?: number | null;
   thumbnail?: (number | null) | Media;
   preacherPhoto?: (number | null) | Media;
   /**
@@ -931,6 +933,8 @@ export interface SermonsSelect<T extends boolean = true> {
   category?: T;
   duration?: T;
   featured?: T;
+  likes?: T;
+  comments?: T;
   thumbnail?: T;
   preacherPhoto?: T;
   youtubeUrl?: T;

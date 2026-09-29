@@ -10,6 +10,7 @@ import { JsonLd } from '@/components/site/JsonLd'
 import { asMedia, getSermons } from '@/lib/content'
 import { breadcrumbJsonLd, pageMetadata, siteUrl } from '@/lib/seo'
 import { formatSermonDate, youtubeId, youtubeThumb } from '@/lib/sermons'
+import { TrackedDownload } from '@/components/site/TrackedDownload'
 
 export const revalidate = 60
 
@@ -95,13 +96,13 @@ export default async function SermonPage({ params }: Props) {
               </ButtonLink>
             )}
             {audio?.url && (
-              <a
+              <TrackedDownload
+                slug={String(sermon.slug ?? sermon.id)}
                 href={audio.url}
-                download
                 className="inline-flex min-h-11 items-center gap-2 rounded-lg border border-white/40 px-5 py-3 text-xs font-bold tracking-wide uppercase hover:bg-white/10"
               >
                 <Download className="h-4 w-4" aria-hidden="true" /> Télécharger l’audio
-              </a>
+              </TrackedDownload>
             )}
           </div>
         </div>

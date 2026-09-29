@@ -6,6 +6,7 @@ import type { Event, Sermon } from '@/payload-types'
 import { Photo } from '../site/Photo'
 import { ButtonLink, Eyebrow } from '../site/ui'
 import { EventCarousel, type EventCard } from './EventCarousel'
+import { TrackedDownload } from '@/components/site/TrackedDownload'
 
 const TZ = 'America/Toronto'
 
@@ -129,14 +130,14 @@ export function EventsAndSermon({ events, sermon }: { events: Event[]; sermon: S
                   </a>
                 )}
                 {audio?.url && (
-                  <a
+                  <TrackedDownload
+                    slug={String(sermon.slug ?? sermon.id)}
                     href={audio.url}
-                    download
                     aria-label="Télécharger l’audio"
                     className="inline-flex h-11 w-11 items-center justify-center rounded-lg border border-navy-900/25 text-navy-900 hover:bg-navy-900/5"
                   >
                     <Download className="h-4 w-4" aria-hidden="true" />
-                  </a>
+                  </TrackedDownload>
                 )}
               </div>
             </div>

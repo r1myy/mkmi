@@ -1701,31 +1701,6 @@ html[data-theme='dark'] {
 }
 
 // ---------- Messages (prédications) ----------
-.mk-sermon-feature {
-  display: grid;
-  gap: 20px;
-  grid-template-columns: minmax(0, 1fr);
-  @media (min-width: 1000px) {
-    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-    align-items: center;
-  }
-  &__media {
-    position: relative;
-    display: grid;
-    place-items: center;
-    aspect-ratio: 16 / 9;
-    border-radius: 14px;
-    background: var(--mk-navy) center / cover;
-  }
-  &__body {
-    display: grid;
-    gap: 10px;
-    h2 {
-      font-size: 26px;
-      font-weight: 800;
-    }
-  }
-}
 .mk-play {
   display: grid;
   place-items: center;
@@ -1753,4 +1728,163 @@ html[data-theme='dark'] {
   top: 8px;
   right: 10px;
   font-size: 20px;
+}
+
+// ---------- Messages : cartes, vue liste, import ----------
+.mk-split--msg {
+  @media (min-width: 1280px) {
+    grid-template-columns: minmax(0, 1fr) 300px;
+    > .mk-side {
+      grid-template-columns: minmax(0, 1fr);
+    }
+  }
+}
+.mk-scards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 16px;
+  margin: 0 0 8px;
+  padding: 0;
+  list-style: none;
+}
+.mk-scard {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--mk-line);
+  border-radius: 14px;
+  background: var(--theme-elevation-0);
+  transition: box-shadow 0.15s, transform 0.15s;
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 16px 34px -24px rgba(11, 22, 40, 0.55);
+  }
+  &__img {
+    position: relative;
+    display: block;
+    aspect-ratio: 16 / 9;
+    border-radius: 14px 14px 0 0;
+    background: var(--mk-navy) center / cover;
+  }
+  &__draft {
+    position: absolute;
+    left: 10px;
+    bottom: 8px;
+  }
+  &__body {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    padding: 12px 14px 10px;
+  }
+  &__title {
+    font-weight: 800;
+    font-size: 15px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    &:hover {
+      color: var(--mk-blue);
+    }
+  }
+  &__who {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    > span:last-child {
+      display: grid;
+      line-height: 1.3;
+    }
+  }
+  &__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: auto;
+    padding-top: 8px;
+    border-top: 1px solid var(--mk-line);
+  }
+  &__stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    font-size: 12px;
+    color: var(--mk-muted);
+    span {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+    }
+  }
+  &__menu summary {
+    list-style: none;
+    cursor: pointer;
+    &::-webkit-details-marker {
+      display: none;
+    }
+  }
+  &__menu .mk-menu__list {
+    top: auto;
+    bottom: calc(100% + 6px);
+    min-width: 200px;
+  }
+}
+.mk-avatar--xs {
+  width: 30px;
+  height: 30px;
+  font-size: 11px;
+  background-size: cover;
+  background-position: center;
+}
+.mk-view-toggle {
+  display: inline-flex;
+  margin-left: auto;
+  border: 1px solid var(--theme-elevation-200);
+  border-radius: 10px;
+  overflow: hidden;
+  a {
+    display: grid;
+    place-items: center;
+    width: 40px;
+    height: 38px;
+    color: var(--mk-muted);
+    &.is-active {
+      background: var(--mk-navy);
+      color: #fff;
+    }
+  }
+}
+.mk-cats li.is-active {
+  margin: 0 -8px;
+  padding: 0 8px;
+  border-radius: 8px;
+  background: #fdf7e8;
+  a {
+    font-weight: 700;
+    color: #8a5a00;
+  }
+}
+.mk-import {
+  gap: 10px;
+  width: min(360px, 90vw);
+  padding: 16px !important;
+  white-space: normal;
+  p {
+    margin: 0;
+  }
+  input[type='file'] {
+    font-size: 13px;
+  }
+  a {
+    padding: 0 !important;
+    text-decoration: underline;
+  }
+}
+.mk-notice--ok {
+  background: #eaf7f0;
+  border-color: #b6e2c8;
+  color: #1f5c3d;
 }
