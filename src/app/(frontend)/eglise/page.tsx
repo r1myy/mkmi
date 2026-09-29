@@ -19,7 +19,7 @@ import {
 import { CtaBand, Faq, FeatureStrip, Glow, Gold, IconRing, PageHero, SectionHead } from '@/components/pages/blocks'
 import { Photo } from '@/components/site/Photo'
 import { ButtonLink, Eyebrow } from '@/components/site/ui'
-import { asMedia, getPagesContent, getSettings } from '@/lib/content'
+import { asMedia, getAllMinistries, getPagesContent, getSettings } from '@/lib/content'
 import { JsonLd } from '@/components/site/JsonLd'
 import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
@@ -36,14 +36,16 @@ export const metadata: Metadata = pageMetadata({
 })
 
 const groups = [
-  { icon: UsersRound, title: 'Adultes', text: 'Un temps d’adoration, d’enseignement et de communion fraternelle.', href: '/ministeres' },
-  { icon: Baby, title: 'Enfants', text: 'Un environnement sécuritaire et stimulant pour la prochaine génération.', href: '/ministeres' },
-  { icon: Sparkles, title: 'Jeunesse', text: 'Une génération engagée pour impacter notre monde avec l’Évangile.', href: '/ministeres' },
-  { icon: BookOpen, title: 'Groupes', text: 'Grandir ensemble à travers des groupes et des études bibliques.', href: '/ministeres' },
+  { icon: UsersRound, ministry: 'Hommes', title: 'Adultes', text: 'Un temps d’adoration, d’enseignement et de communion fraternelle.', href: '/ministeres' },
+  { icon: Baby, ministry: 'Enfants', title: 'Enfants', text: 'Un environnement sécuritaire et stimulant pour la prochaine génération.', href: '/ministeres' },
+  { icon: Sparkles, ministry: 'Jeunesse', title: 'Jeunesse', text: 'Une génération engagée pour impacter notre monde avec l’Évangile.', href: '/ministeres' },
+  { icon: BookOpen, ministry: 'Prière', title: 'Groupes', text: 'Grandir ensemble à travers des groupes et des études bibliques.', href: '/ministeres' },
 ]
 
 export default async function EglisePage() {
-  const [pages, settings] = await Promise.all([getPagesContent(), getSettings()])
+  const [pages, settings, ministries] = await Promise.all([getPagesContent(), getSettings(), getAllMinistries()])
+  // Photos des groupes : reprises des ministères correspondants (modifiables dans l’administration).
+  const ministryImage = (name: string) => asMedia(ministries.find((m) => m.name === name)?.image)
   const content = pages.eglise!
   const directions = settings.directionsUrl
 
@@ -176,13 +178,13 @@ export default async function EglisePage() {
         <div className="container-site">
           <SectionHead id="groupes-title" eyebrow="Pour chaque génération" title="Une place pour chacun." />
           <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {groups.map(({ icon: Icon, title, text, href }) => (
+            {groups.map(({ icon: Icon, ministry, title, text, href }) => (
               <li key={title}>
                 <Link
                   href={href}
                   className="group flex h-full flex-col overflow-hidden rounded-2xl bg-white shadow-[0_14px_40px_-24px_rgba(11,22,40,.45)] transition-transform hover:-translate-y-1"
                 >
-                  <Photo className="aspect-[16/10] w-full" tone="light" placeholder="" sizes="(min-width:1024px) 25vw, 50vw" />
+                  <Photo media={ministryImage(ministry)} className="aspect-[16/10] w-full" tone="light" placeholder="" sizes="(min-width:1024px) 25vw, 50vw" />
                   <div className="relative flex flex-1 flex-col p-6 pt-9">
                     <span className="absolute -top-6 left-6 flex h-12 w-12 items-center justify-center rounded-full bg-white text-navy-900 shadow-md ring-4 ring-gold-400/30">
                       <Icon className="h-5 w-5" aria-hidden="true" />
@@ -252,6 +254,7 @@ export default async function EglisePage() {
         eyebrow="Une église dans sa ville"
         title="Ensemble pour un plus grand impact."
         text="Nous croyons qu’une église locale doit être une lumière dans sa ville, au service des gens et engagée dans sa communauté."
+        image={asMedia(pages.contact?.visitImage)}
         actions={
           <ButtonLink href="/missions">
             Découvrir nos initiatives <ArrowRight className="h-4 w-4" aria-hidden="true" />
