@@ -3,6 +3,7 @@ import * as migration_20260924_074735_settings_coordonnees from './20260924_0747
 import * as migration_20260929_030944_pages_interieures from './20260929_030944_pages_interieures';
 import * as migration_20260929_041733_evenements from './20260929_041733_evenements';
 import * as migration_20260929_043837_page_don from './20260929_043837_page_don';
+import * as migration_20260929_053234_editeur_pages from './20260929_053234_editeur_pages';
 
 export const migrations = [
   {
@@ -28,6 +29,11 @@ export const migrations = [
   {
     up: migration_20260929_043837_page_don.up,
     down: migration_20260929_043837_page_don.down,
-    name: '20260929_043837_page_don'
+    name: '20260929_043837_page_don',
+  },
+  {
+    up: migration_20260929_053234_editeur_pages.up,
+    down: migration_20260929_053234_editeur_pages.down,
+    name: '20260929_053234_editeur_pages'
   },
 ];

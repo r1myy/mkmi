@@ -23,7 +23,7 @@ import {
 } from './collections'
 import { migrations } from './migrations'
 import { HomePage } from './globals/HomePage'
-import { PagesContent } from './globals/PagesContent'
+import { pageGlobals } from './globals/pages'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -39,7 +39,7 @@ export default buildConfig({
       titleSuffix: ' — Administration MKMI Québec',
     },
     components: {
-      beforeDashboard: ['@/components/admin/StatsDashboard'],
+      beforeDashboard: ['@/components/admin/EditorShortcuts', '@/components/admin/StatsDashboard'],
     },
   },
   i18n: {
@@ -61,7 +61,7 @@ export default buildConfig({
     PageViews,
     Users,
   ],
-  globals: [HomePage, PagesContent, SiteSettings],
+  globals: [HomePage, ...pageGlobals, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

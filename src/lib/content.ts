@@ -1,17 +1,17 @@
 import 'server-only'
 import config from '@payload-config'
-import { getPayload } from 'payload'
+import { draftMode } from 'next/headers'
+import { getPayload, type GlobalConfig } from 'payload'
 import { cache } from 'react'
 
 import { HomePage as HomePageConfig } from '@/globals/HomePage'
-import { PagesContent as PagesContentConfig } from '@/globals/PagesContent'
+import { pageGlobals } from '@/globals/pages'
 import { SiteSettings as SiteSettingsConfig } from '@/globals/SiteSettings'
-import type { Event, HomePage, Media, Ministry, Mission, PagesContent, Sermon, SiteSetting, Testimonial } from '@/payload-types'
+import type { Config, Event, HomePage, Media, Ministry, Mission, Sermon, SiteSetting, Testimonial } from '@/payload-types'
 import { extractDefaults, withDefaults } from './defaults'
 
 const homeDefaults = extractDefaults(HomePageConfig.fields)
 const settingsDefaults = extractDefaults(SiteSettingsConfig.fields)
-const pagesDefaults = extractDefaults(PagesContentConfig.fields)
 
 async function safe<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
   try {
@@ -31,12 +31,35 @@ export const getSettings = cache(async () =>
   ),
 )
 
-export const getHomePage = cache(async () =>
-  withDefaults<HomePage>(
-    await safe(async () => (await payloadClient()).findGlobal({ slug: 'home-page', depth: 1 }), null),
+/** Vrai quand un membre de l’équipe regarde le site en mode édition (brouillons visibles). */
+export const isEditing = cache(async () => {
+  try {
+    return (await draftMode()).isEnabled
+  } catch {
+    return false
+  }
+})
+
+export const getHomePage = cache(async () => {
+  const draft = await isEditing()
+  return withDefaults<HomePage>(
+    await safe(async () => (await payloadClient()).findGlobal({ slug: 'home-page', depth: 1, draft }), null),
     homeDefaults,
-  ),
-)
+  )
+})
+
+const pageDefaults = Object.fromEntries(pageGlobals.map((g: GlobalConfig) => [g.slug, extractDefaults(g.fields)]))
+
+type PageSlug = Extract<keyof Config['globals'], `page-${string}`>
+
+/** Contenu d’une page du site (sections modifiables dans « Pages du site »), brouillon inclus en mode édition. */
+export const getPage = cache(async <S extends PageSlug>(slug: S): Promise<Config['globals'][S]> => {
+  const draft = await isEditing()
+  return withDefaults<Config['globals'][S]>(
+    await safe(async () => (await payloadClient()).findGlobal({ slug, depth: 1, draft }), null),
+    pageDefaults[slug],
+  )
+})
 
 export const getUpcomingEvents = cache(async (limit = 4): Promise<Event[]> =>
   safe(async () => {
@@ -84,13 +107,6 @@ export const getMinistries = cache(async (): Promise<Ministry[]> =>
     })
     return res.docs
   }, []),
-)
-
-export const getPagesContent = cache(async () =>
-  withDefaults<PagesContent>(
-    await safe(async () => (await payloadClient()).findGlobal({ slug: 'pages-content', depth: 1 }), null),
-    pagesDefaults,
-  ),
 )
 
 export const getAllMinistries = cache(async (): Promise<Ministry[]> =>

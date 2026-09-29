@@ -3,6 +3,7 @@ import { ArrowRight, ChevronDown, Quote } from 'lucide-react'
 import clsx from 'clsx'
 
 import type { Media } from '@/payload-types'
+import { iconFor } from '../site/icons'
 import { Photo } from '../site/Photo'
 import { Eyebrow } from '../site/ui'
 
@@ -19,7 +20,8 @@ export function Glow({ className }: { className?: string }) {
   )
 }
 
-export function QuoteCard({ text, source, className }: { text: string; source: string; className?: string }) {
+export function QuoteCard({ text, source, className }: { text?: string | null; source?: string | null; className?: string }) {
+  if (!text) return null
   return (
     <figure
       className={clsx(
@@ -39,9 +41,9 @@ export function QuoteCard({ text, source, className }: { text: string; source: s
 
 type HeroProps = {
   id: string
-  eyebrow: string
+  eyebrow?: string | null
   title: ReactNode
-  text: string
+  text?: string | null
   image?: Media | null
   placeholder?: string
   actions?: ReactNode
@@ -81,7 +83,11 @@ export function Gold({ children }: { children: ReactNode }) {
   return <span className="text-gold-400">{children}</span>
 }
 
-export type Feature = { icon: Icon; title: string; text: string }
+/** Convertit les atouts saisis dans l’éditeur (icône choisie par nom). */
+export const toFeatures = (items?: { icon?: string | null; title: string; text?: string | null }[] | null): Feature[] =>
+  (items ?? []).map((i) => ({ icon: iconFor(i.icon), title: i.title, text: i.text }))
+
+export type Feature = { icon: Icon; title: string; text?: string | null }
 
 /** Bandeau de quatre atouts, posé à cheval sur le haut de page. */
 export function FeatureStrip({ items }: { items: Feature[] }) {
@@ -114,9 +120,9 @@ export function SectionHead({
   className,
 }: {
   id?: string
-  eyebrow: string
+  eyebrow?: string | null
   title: ReactNode
-  text?: string
+  text?: string | null
   action?: ReactNode
   light?: boolean
   className?: string
@@ -179,9 +185,9 @@ export function CtaBand({
   image,
 }: {
   id: string
-  eyebrow: string
-  title: string
-  text: string
+  eyebrow?: string | null
+  title: ReactNode
+  text?: string | null
   actions: ReactNode
   image?: Media | null
 }) {

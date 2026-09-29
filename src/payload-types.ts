@@ -111,12 +111,28 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'home-page': HomePage;
-    'pages-content': PagesContent;
+    'page-eglise': PageEglise;
+    'page-decouvrir': PageDecouvrir;
+    'page-ministeres': PageMinistere;
+    'page-messages': PageMessage;
+    'page-evenements': PageEvenement;
+    'page-missions': PageMission;
+    'page-priere': PagePriere;
+    'page-don': PageDon;
+    'page-contact': PageContact;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
-    'pages-content': PagesContentSelect<false> | PagesContentSelect<true>;
+    'page-eglise': PageEgliseSelect<false> | PageEgliseSelect<true>;
+    'page-decouvrir': PageDecouvrirSelect<false> | PageDecouvrirSelect<true>;
+    'page-ministeres': PageMinisteresSelect<false> | PageMinisteresSelect<true>;
+    'page-messages': PageMessagesSelect<false> | PageMessagesSelect<true>;
+    'page-evenements': PageEvenementsSelect<false> | PageEvenementsSelect<true>;
+    'page-missions': PageMissionsSelect<false> | PageMissionsSelect<true>;
+    'page-priere': PagePriereSelect<false> | PagePriereSelect<true>;
+    'page-don': PageDonSelect<false> | PageDonSelect<true>;
+    'page-contact': PageContactSelect<false> | PageContactSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -878,6 +894,8 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   createdAt?: T;
 }
 /**
+ * Chaque onglet correspond à une section de la page d’accueil. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "home-page".
  */
@@ -949,22 +967,201 @@ export interface HomePage {
     text?: string | null;
     background?: (number | null) | Media;
   };
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
 /**
- * Photos et contenus des pages Église, Découvrir, Ministères, etc.
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
  *
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages-content".
+ * via the `definition` "page-eglise".
  */
-export interface PagesContent {
+export interface PageEglise {
   id: number;
-  eglise?: {
-    heroImage?: (number | null) | Media;
-    welcomeImage?: (number | null) | Media;
-    membershipImage?: (number | null) | Media;
-    faq?:
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  features?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  welcome?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+    image?: (number | null) | Media;
+  };
+  services?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Le jour, l’heure et l’adresse se modifient dans Paramètres › Informations de l’église.
+     */
+    serviceLabel?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+  };
+  groups?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    cards?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          image?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  membership?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+    image?: (number | null) | Media;
+    steps?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  faq?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+    questions?:
       | {
           question: string;
           answer: string;
@@ -972,10 +1169,133 @@ export interface PagesContent {
         }[]
       | null;
   };
-  decouvrir?: {
-    heroImage?: (number | null) | Media;
-    storyImage?: (number | null) | Media;
-    faithImage?: (number | null) | Media;
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-decouvrir".
+ */
+export interface PageDecouvrir {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  about?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    image?: (number | null) | Media;
+    highlights?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          id?: string | null;
+        }[]
+      | null;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  pillars?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  story?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
     timeline?:
       | {
           label: string;
@@ -984,6 +1304,28 @@ export interface PagesContent {
           id?: string | null;
         }[]
       | null;
+  };
+  vision?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  team?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
     leaders?:
       | {
           name: string;
@@ -993,49 +1335,858 @@ export interface PagesContent {
         }[]
       | null;
   };
-  ministeres?: {
-    heroImage?: (number | null) | Media;
-    serveImage?: (number | null) | Media;
+  faith?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+    image?: (number | null) | Media;
   };
-  messages?: {
-    heroImage?: (number | null) | Media;
+  network?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+  };
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-ministeres".
+ */
+export interface PageMinistere {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  features?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  list?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+  };
+  serve?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+    image?: (number | null) | Media;
+    steps?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  spotlight?: {
+    eyebrow?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+    /**
+     * Doit correspondre au nom d’un ministère.
+     */
+    ministryName?: string | null;
+    activitiesTitle?: string | null;
+  };
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-messages".
+ */
+export interface PageMessage {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  featured?: {
+    eyebrow?: string | null;
+  };
+  library?: {
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+  };
+  podcast?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
     spotifyUrl?: string | null;
     applePodcastsUrl?: string | null;
     youtubeChannelUrl?: string | null;
   };
-  evenements?: {
-    heroImage?: (number | null) | Media;
-    newsletterImage?: (number | null) | Media;
+  newsletter?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
   };
-  /**
-   * Aucune information de paiement n’est inventée : tant qu’un champ est vide, la façon de donner correspondante n’est pas affichée. Le lien de don en ligne se règle dans Informations de l’église › Contact.
-   */
-  don?: {
-    heroImage?: (number | null) | Media;
-    impactImage?: (number | null) | Media;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-evenements".
+ */
+export interface PageEvenement {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  features?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  featured?: {
+    eyebrow?: string | null;
+  };
+  list?: {
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+  };
+  newsletter?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-missions".
+ */
+export interface PageMission {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  features?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  vision?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    image?: (number | null) | Media;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  fields?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+  };
+  presence?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+  };
+  involve?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    ways?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          link?: string | null;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  testimonials?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+  };
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-priere".
+ */
+export interface PagePriere {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  features?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  request?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    image?: (number | null) | Media;
+    formTitle?: string | null;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  others?: {
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+  };
+  process?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    steps?:
+      | {
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  testimonials?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+  };
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-don".
+ */
+export interface PageDon {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  features?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  ways?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    onlineText?: string | null;
     interacEmail?: string | null;
     interacNote?: string | null;
     mailingAddress?: string | null;
     inPersonNote?: string | null;
+  };
+  impact?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    image?: (number | null) | Media;
+    uses?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  trust?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
     charityNumber?: string | null;
     /**
      * Cocher seulement si MKMI Québec est un organisme de bienfaisance enregistré.
      */
     taxReceipts?: boolean | null;
   };
-  missions?: {
-    heroImage?: (number | null) | Media;
-    visionImage?: (number | null) | Media;
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
   };
-  priere?: {
-    heroImage?: (number | null) | Media;
-    sideImage?: (number | null) | Media;
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-contact".
+ */
+export interface PageContact {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
   };
-  contact?: {
-    heroImage?: (number | null) | Media;
-    visitImage?: (number | null) | Media;
+  info?: {
     officeHours?: string | null;
   };
+  visit?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+    image?: (number | null) | Media;
+  };
+  form?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+  };
+  others?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+  };
+  faq?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    questions?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
   updatedAt?: string | null;
   createdAt?: string | null;
 }
@@ -1149,22 +2300,96 @@ export interface HomePageSelect<T extends boolean = true> {
         text?: T;
         background?: T;
       };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
- * via the `definition` "pages-content_select".
+ * via the `definition` "page-eglise_select".
  */
-export interface PagesContentSelect<T extends boolean = true> {
-  eglise?:
+export interface PageEgliseSelect<T extends boolean = true> {
+  hero?:
     | T
     | {
-        heroImage?: T;
-        welcomeImage?: T;
-        membershipImage?: T;
-        faq?:
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  features?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  welcome?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        button?: T;
+        image?: T;
+      };
+  services?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        serviceLabel?: T;
+        primary?: T;
+        secondary?: T;
+      };
+  groups?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        cards?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              image?: T;
+              id?: T;
+            };
+      };
+  membership?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        button?: T;
+        image?: T;
+        steps?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              id?: T;
+            };
+      };
+  faq?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        button?: T;
+        questions?:
           | T
           | {
               question?: T;
@@ -1172,12 +2397,70 @@ export interface PagesContentSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  decouvrir?:
+  cta?:
     | T
     | {
-        heroImage?: T;
-        storyImage?: T;
-        faithImage?: T;
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-decouvrir_select".
+ */
+export interface PageDecouvrirSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  about?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        image?: T;
+        highlights?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              id?: T;
+            };
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  pillars?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  story?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
         timeline?:
           | T
           | {
@@ -1186,6 +2469,23 @@ export interface PagesContentSelect<T extends boolean = true> {
               text?: T;
               id?: T;
             };
+      };
+  vision?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        button?: T;
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  team?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
         leaders?:
           | T
           | {
@@ -1195,57 +2495,528 @@ export interface PagesContentSelect<T extends boolean = true> {
               id?: T;
             };
       };
-  ministeres?:
+  faith?:
     | T
     | {
-        heroImage?: T;
-        serveImage?: T;
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        button?: T;
+        image?: T;
       };
-  messages?:
+  network?:
     | T
     | {
-        heroImage?: T;
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        button?: T;
+      };
+  cta?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-ministeres_select".
+ */
+export interface PageMinisteresSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  features?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  list?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+      };
+  serve?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        button?: T;
+        image?: T;
+        steps?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              id?: T;
+            };
+      };
+  spotlight?:
+    | T
+    | {
+        eyebrow?: T;
+        button?: T;
+        ministryName?: T;
+        activitiesTitle?: T;
+      };
+  cta?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-messages_select".
+ */
+export interface PageMessagesSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  featured?:
+    | T
+    | {
+        eyebrow?: T;
+      };
+  library?:
+    | T
+    | {
+        title?: T;
+      };
+  podcast?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
         spotifyUrl?: T;
         applePodcastsUrl?: T;
         youtubeChannelUrl?: T;
       };
-  evenements?:
+  newsletter?:
     | T
     | {
-        heroImage?: T;
-        newsletterImage?: T;
+        eyebrow?: T;
+        title?: T;
+        text?: T;
       };
-  don?:
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-evenements_select".
+ */
+export interface PageEvenementsSelect<T extends boolean = true> {
+  hero?:
     | T
     | {
-        heroImage?: T;
-        impactImage?: T;
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  features?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  featured?:
+    | T
+    | {
+        eyebrow?: T;
+      };
+  list?:
+    | T
+    | {
+        title?: T;
+      };
+  newsletter?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-missions_select".
+ */
+export interface PageMissionsSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  features?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  vision?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        image?: T;
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  fields?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+      };
+  presence?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+      };
+  involve?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        ways?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              link?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  testimonials?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+      };
+  cta?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-priere_select".
+ */
+export interface PagePriereSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  features?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  request?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        image?: T;
+        formTitle?: T;
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  others?:
+    | T
+    | {
+        title?: T;
+      };
+  process?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        steps?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  testimonials?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        button?: T;
+      };
+  cta?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-don_select".
+ */
+export interface PageDonSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  features?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  ways?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        onlineText?: T;
         interacEmail?: T;
         interacNote?: T;
         mailingAddress?: T;
         inPersonNote?: T;
+      };
+  impact?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        image?: T;
+        uses?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  trust?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
         charityNumber?: T;
         taxReceipts?: T;
       };
-  missions?:
+  cta?:
     | T
     | {
-        heroImage?: T;
-        visionImage?: T;
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
       };
-  priere?:
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-contact_select".
+ */
+export interface PageContactSelect<T extends boolean = true> {
+  hero?:
     | T
     | {
-        heroImage?: T;
-        sideImage?: T;
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
       };
-  contact?:
+  info?:
     | T
     | {
-        heroImage?: T;
-        visitImage?: T;
         officeHours?: T;
       };
+  visit?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        button?: T;
+        image?: T;
+      };
+  form?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+      };
+  others?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+      };
+  faq?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        questions?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  _status?: T;
   updatedAt?: T;
   createdAt?: T;
   globalType?: T;

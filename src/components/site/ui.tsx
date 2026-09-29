@@ -33,7 +33,8 @@ export function ButtonLink({
   )
 }
 
-export function Eyebrow({ children, light = false }: { children: ReactNode; light?: boolean }) {
+export function Eyebrow({ children, light = false }: { children?: ReactNode; light?: boolean }) {
+  if (!children) return null
   return (
     <p
       className={clsx(

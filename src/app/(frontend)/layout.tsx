@@ -4,7 +4,8 @@ import React from 'react'
 import { Footer } from '@/components/site/Footer'
 import { Header } from '@/components/site/Header'
 import { PageViewTracker } from '@/components/site/PageViewTracker'
-import { getSettings } from '@/lib/content'
+import { EditMode } from '@/components/site/EditMode'
+import { getSettings, isEditing } from '@/lib/content'
 import { ogImageUrl } from '@/lib/seo'
 import './globals.css'
 
@@ -35,14 +36,14 @@ export const metadata: Metadata = {
 export const viewport: Viewport = { themeColor: '#0b1628' }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const settings = await getSettings()
+  const [settings, editing] = await Promise.all([getSettings(), isEditing()])
   return (
     <html lang="fr-CA">
       <body>
         <Header siteName={settings.name ?? 'MKMI Québec'} />
         <main id="contenu">{children}</main>
         <Footer settings={settings} />
-        <PageViewTracker />
+        {editing ? <EditMode /> : <PageViewTracker />}
       </body>
     </html>
   )

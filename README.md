@@ -22,6 +22,17 @@ Le contenu de démonstration ne doit **pas** être utilisé en production.
 
 ## Administration (CMS)
 
+### Modifier les pages (éditeur visuel)
+
+- **Pages du site** (menu de gauche) : une fiche par page (Accueil, Église, Découvrir…). Chaque onglet
+  est une section de la page, dans l’ordre d’affichage ; chaque champ est un texte, un bouton ou une photo.
+- **Aperçu en direct** à droite des champs : il se met à jour pendant la saisie (brouillon enregistré
+  automatiquement). Le public ne voit rien avant « Publier les modifications ».
+- **Mode édition** : bouton « Ouvrir le site en mode édition » sur le tableau de bord. Sur le site,
+  survoler une section l’encadre et « Modifier » ouvre exactement cet onglet dans l’administration.
+- Dans les titres, les mots entre `*astérisques*` s’affichent en or.
+
+
 - **Tableau de bord** : statistiques (vues sur 7/30 jours, pages les plus vues, demandes de prière,
   visites planifiées, inscriptions, abonnés, événements, messages). Les vues sont comptées de façon
   anonyme : pas de cookie, pas d’adresse IP (Loi 25).

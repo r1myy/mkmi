@@ -8,6 +8,7 @@ import { Prayer } from '@/components/home/Prayer'
 import { Welcome } from '@/components/home/Welcome'
 import type { Metadata } from 'next'
 
+import { EditZone } from '@/components/site/EditZone'
 import { JsonLd } from '@/components/site/JsonLd'
 import { asMedia, getFeaturedSermon, getHomePage, getMinistries, getSettings, getUpcomingEvents } from '@/lib/content'
 import { ogImageUrl, siteUrl } from '@/lib/seo'
@@ -91,14 +92,26 @@ export default async function HomePage() {
     <>
       <JsonLd data={church} />
       <JsonLd data={website} />
-      <Hero hero={home.hero!} settings={settings} />
-      <Welcome welcome={home.welcome!} />
-      <Pillars pillars={home.pillars!} />
+      <EditZone page="home-page" section="Haut de page">
+        <Hero hero={home.hero!} settings={settings} />
+      </EditZone>
+      <EditZone page="home-page" section="Nouveau ici ?">
+        <Welcome welcome={home.welcome!} />
+      </EditZone>
+      <EditZone page="home-page" section="Notre ADN">
+        <Pillars pillars={home.pillars!} />
+      </EditZone>
       <EventsAndSermon events={events} sermon={sermon} />
       <Ministries ministries={ministries} />
-      <Prayer prayer={home.prayer!} />
-      <Missions missions={home.missions!} />
-      <FinalCta cta={home.finalCta!} />
+      <EditZone page="home-page" section="Prière">
+        <Prayer prayer={home.prayer!} />
+      </EditZone>
+      <EditZone page="home-page" section="Missions">
+        <Missions missions={home.missions!} />
+      </EditZone>
+      <EditZone page="home-page" section="Appel final">
+        <FinalCta cta={home.finalCta!} />
+      </EditZone>
     </>
   )
 }

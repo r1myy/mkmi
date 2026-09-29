@@ -6,15 +6,23 @@ const text = (name: string, label: string, defaultValue: string, textarea = fals
 
 export const HomePage: GlobalConfig = {
   slug: 'home-page',
-  label: 'Page d’accueil',
-  admin: { group: 'Contenu' },
+  label: 'Accueil',
+  admin: {
+    group: 'Pages du site',
+    description:
+      'Chaque onglet correspond à une section de la page d’accueil. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.',
+    livePreview: { openByDefault: true, url: () => `${process.env.NEXT_PUBLIC_SITE_URL || ''}/api/preview?path=/` },
+    preview: () => `${process.env.NEXT_PUBLIC_SITE_URL || ''}/api/preview?path=/`,
+  },
+  versions: { drafts: { autosave: { interval: 700 } }, max: 20 },
   access: { read: anyone, update: isEditor },
   fields: [
+    { name: 'sectionFocus', type: 'ui', admin: { components: { Field: '@/components/admin/SectionFocus#SectionFocus' } } },
     {
       type: 'tabs',
       tabs: [
         {
-          label: 'Hero',
+          label: 'Haut de page',
           name: 'hero',
           fields: [
             text('eyebrow', 'Sur-titre', 'MKMI Québec'),
