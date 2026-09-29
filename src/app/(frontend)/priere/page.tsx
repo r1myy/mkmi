@@ -7,13 +7,20 @@ import { PrayerForm } from '@/components/pages/forms'
 import { Photo } from '@/components/site/Photo'
 import { ButtonLink } from '@/components/site/ui'
 import { asMedia, getPagesContent, getSettings, getTestimonials } from '@/lib/content'
+import { JsonLd } from '@/components/site/JsonLd'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
-  title: 'Prière',
-  description: 'Vous n’êtes pas seul. Envoyez votre demande de prière : notre équipe prie pour vous, en toute confidentialité.',
-}
+export const metadata: Metadata = pageMetadata({
+  title: 'Demande de prière',
+  description:
+    'Vous n’êtes pas seul. Envoyez votre demande de prière à l’équipe de MKMI Québec : nous prions pour vous, en toute confidentialité.',
+  path: '/priere',
+  eyebrow: 'Prière',
+  ogTitle: 'Vous n’êtes pas seul. Nous prions avec vous.',
+  keywords: ['demande de prière', 'prière Québec', 'soutien spirituel'],
+})
 
 const steps = [
   { title: 'Vous partagez', text: 'Remplissez le formulaire ou contactez notre équipe.' },
@@ -69,6 +76,7 @@ export default async function PrierePage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Prière', path: '/priere' }])} />
       <PageHero
         id="priere-title"
         eyebrow="Prière"

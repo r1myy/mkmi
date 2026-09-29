@@ -10,11 +10,18 @@ import { ButtonLink, Eyebrow } from '@/components/site/ui'
 import { asMedia, getPagesContent, getSermons } from '@/lib/content'
 import { formatSermonDate, youtubeThumb } from '@/lib/sermons'
 import type { Sermon } from '@/payload-types'
+import { JsonLd } from '@/components/site/JsonLd'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-  title: 'Messages',
-  description: 'Prédications, études bibliques et enseignements de MKMI Québec, en vidéo et en balado.',
-}
+export const metadata: Metadata = pageMetadata({
+  title: 'Messages et prédications',
+  description:
+    'Prédications, études bibliques et enseignements de MKMI Québec en vidéo et en balado, pour grandir dans la foi au quotidien.',
+  path: '/messages',
+  eyebrow: 'Messages',
+  ogTitle: 'Des enseignements pour aujourd’hui et pour demain.',
+  keywords: ['prédication', 'sermon', 'étude biblique', 'balado chrétien'],
+})
 
 type Props = { searchParams: Promise<Record<string, string | string[] | undefined>> }
 
@@ -114,6 +121,7 @@ export default async function MessagesPage({ searchParams }: Props) {
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Messages', path: '/messages' }])} />
       <PageHero
         id="messages-title"
         eyebrow="Messages"

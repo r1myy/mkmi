@@ -5,13 +5,20 @@ import { CtaBand, FeatureStrip, Glow, Gold, PageHero, QuoteCard, SectionHead } f
 import { Photo } from '@/components/site/Photo'
 import { ButtonLink } from '@/components/site/ui'
 import { asMedia, getHomePage, getMissions, getPagesContent, getTestimonials } from '@/lib/content'
+import { JsonLd } from '@/components/site/JsonLd'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Missions',
-  description: 'L’Évangile sans frontières : nos missions au Québec, au Canada et dans le monde.',
-}
+  description:
+    'L’Évangile sans frontières : les missions et initiatives soutenues par MKMI Québec, au Québec, au Canada et dans le monde.',
+  path: '/missions',
+  eyebrow: 'Missions',
+  ogTitle: 'L’Évangile sans frontières.',
+  keywords: ['missions chrétiennes', 'évangélisation', 'Haïti', 'Afrique'],
+})
 
 const status = { active: 'En cours', planned: 'À venir', done: 'Terminé' } as const
 
@@ -34,6 +41,7 @@ export default async function MissionsPage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Missions', path: '/missions' }])} />
       <PageHero
         id="missions-title"
         eyebrow="Missions"

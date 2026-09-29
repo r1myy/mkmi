@@ -20,13 +20,20 @@ import { CtaBand, Faq, FeatureStrip, Glow, Gold, IconRing, PageHero, SectionHead
 import { Photo } from '@/components/site/Photo'
 import { ButtonLink, Eyebrow } from '@/components/site/ui'
 import { asMedia, getPagesContent, getSettings } from '@/lib/content'
+import { JsonLd } from '@/components/site/JsonLd'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Notre église',
-  description: 'Une maison pour tous : découvrez nos cultes, nos groupes et à quoi vous attendre lors de votre première visite.',
-}
+  description:
+    'Une maison pour tous : découvrez nos cultes du dimanche, nos groupes pour chaque génération et tout ce qu’il faut savoir avant votre première visite à MKMI Québec.',
+  path: '/eglise',
+  eyebrow: 'Notre église',
+  ogTitle: 'Une maison pour tous.',
+  keywords: ['culte dimanche Québec', 'église Charlesbourg', 'première visite église'],
+})
 
 const groups = [
   { icon: UsersRound, title: 'Adultes', text: 'Un temps d’adoration, d’enseignement et de communion fraternelle.', href: '/ministeres' },
@@ -42,6 +49,18 @@ export default async function EglisePage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Notre église', path: '/eglise' }])} />
+      <JsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: (content.faq ?? []).map((q) => ({
+            '@type': 'Question',
+            name: q.question,
+            acceptedAnswer: { '@type': 'Answer', text: q.answer },
+          })),
+        }}
+      />
       <PageHero
         id="eglise-title"
         eyebrow="Notre église"

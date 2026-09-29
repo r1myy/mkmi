@@ -6,13 +6,20 @@ import { MinistryGrid } from '@/components/pages/MinistryGrid'
 import { Photo } from '@/components/site/Photo'
 import { ButtonLink } from '@/components/site/ui'
 import { asMedia, getAllMinistries, getPagesContent, getUpcomingEvents } from '@/lib/content'
+import { JsonLd } from '@/components/site/JsonLd'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Ministères',
-  description: 'Nos ministères : des espaces où chacun peut grandir, servir et faire une différence.',
-}
+  description:
+    'Louange, jeunesse, enfants, familles, prière, évangélisation… Découvrez les ministères de MKMI Québec et trouvez votre place pour servir.',
+  path: '/ministeres',
+  eyebrow: 'Ministères',
+  ogTitle: 'Des talents au service du Royaume.',
+  keywords: ['ministères église', 'servir église Québec', 'jeunesse chrétienne Québec'],
+})
 
 const TZ = 'America/Toronto'
 
@@ -23,6 +30,7 @@ export default async function MinisteresPage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Ministères', path: '/ministeres' }])} />
       <PageHero
         id="ministeres-title"
         eyebrow="Ministères"

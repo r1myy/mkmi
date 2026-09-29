@@ -6,7 +6,9 @@ import { ArrowLeft, Download, Headphones, Play } from 'lucide-react'
 import { Glow } from '@/components/pages/blocks'
 import { Photo } from '@/components/site/Photo'
 import { ButtonLink, Eyebrow } from '@/components/site/ui'
+import { JsonLd } from '@/components/site/JsonLd'
 import { asMedia, getSermons } from '@/lib/content'
+import { breadcrumbJsonLd, pageMetadata, siteUrl } from '@/lib/seo'
 import { formatSermonDate, youtubeId, youtubeThumb } from '@/lib/sermons'
 
 export const revalidate = 60
@@ -19,7 +21,14 @@ async function findSermon(slug: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const sermon = await findSermon((await params).slug)
-  return sermon ? { title: sermon.title } : { title: 'Message introuvable' }
+  if (!sermon) return { title: 'Message introuvable', robots: { index: false } }
+  return pageMetadata({
+    title: sermon.title,
+    description: `${sermon.category || 'Prédication'} de ${sermon.preacher} du ${formatSermonDate(sermon.date)}${sermon.series ? `, série « ${sermon.series} »` : ''}. À regarder ou écouter sur le site de MKMI Québec.`,
+    path: `/messages/${sermon.slug ?? sermon.id}`,
+    eyebrow: sermon.category || 'Prédication',
+    image: asMedia(sermon.thumbnail)?.url ?? youtubeThumb(sermon),
+  })
 }
 
 export default async function SermonPage({ params }: Props) {
@@ -29,8 +38,26 @@ export default async function SermonPage({ params }: Props) {
   const thumb = asMedia(sermon.thumbnail)
   const audio = asMedia(sermon.audioFile)
 
+  const path = `/messages/${sermon.slug ?? sermon.id}`
+  const thumbUrl = thumb?.url ? `${siteUrl}${thumb.url}` : youtubeThumb(sermon)
+
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Messages', path: '/messages' }, { name: sermon.title, path }])} />
+      {ytId && thumbUrl && (
+        <JsonLd
+          data={{
+            '@context': 'https://schema.org',
+            '@type': 'VideoObject',
+            name: sermon.title,
+            description: `${sermon.category || 'Prédication'} de ${sermon.preacher}`,
+            thumbnailUrl: thumbUrl,
+            uploadDate: sermon.date,
+            embedUrl: `https://www.youtube-nocookie.com/embed/${ytId}`,
+            url: `${siteUrl}${path}`,
+          }}
+        />
+      )}
       <section aria-labelledby="sermon-title" className="relative isolate overflow-hidden bg-navy-950 pt-32 pb-16 text-white">
         <Glow />
         <div className="container-site max-w-4xl">

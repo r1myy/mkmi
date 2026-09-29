@@ -7,7 +7,9 @@ import { Glow } from '@/components/pages/blocks'
 import { ministryIcons } from '@/components/site/ministryIcons'
 import { Photo } from '@/components/site/Photo'
 import { ButtonLink, Eyebrow } from '@/components/site/ui'
+import { JsonLd } from '@/components/site/JsonLd'
 import { asMedia, getAllMinistries } from '@/lib/content'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
@@ -19,7 +21,15 @@ async function findMinistry(slug: string) {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const ministry = await findMinistry((await params).slug)
-  return ministry ? { title: ministry.name, description: ministry.summary ?? undefined } : { title: 'Ministère introuvable' }
+  if (!ministry) return { title: 'Ministère introuvable', robots: { index: false } }
+  return pageMetadata({
+    title: `Ministère ${ministry.name}`,
+    description:
+      ministry.summary || `Découvrez le ministère ${ministry.name} de MKMI Québec, ses activités et comment vous y impliquer.`,
+    path: `/ministeres/${ministry.slug}`,
+    eyebrow: 'Ministère',
+    image: asMedia(ministry.image)?.url,
+  })
 }
 
 export default async function MinistryPage({ params }: Props) {
@@ -29,6 +39,12 @@ export default async function MinistryPage({ params }: Props) {
 
   return (
     <>
+      <JsonLd
+        data={breadcrumbJsonLd([
+          { name: 'Ministères', path: '/ministeres' },
+          { name: ministry.name, path: `/ministeres/${ministry.slug}` },
+        ])}
+      />
       <section aria-labelledby="ministry-title" className="relative isolate overflow-hidden bg-navy-950 pt-32 pb-16 text-white">
         <Glow />
         <div className="container-site grid items-center gap-10 lg:grid-cols-2">

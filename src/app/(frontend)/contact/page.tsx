@@ -7,13 +7,20 @@ import { Photo } from '@/components/site/Photo'
 import { SocialIcons } from '@/components/site/SocialIcons'
 import { ButtonLink, Eyebrow } from '@/components/site/ui'
 import { asMedia, getPagesContent, getSettings } from '@/lib/content'
+import { JsonLd } from '@/components/site/JsonLd'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Nous contacter',
-  description: 'Une question, un besoin de prière ou envie de nous visiter ? Écrivez-nous ou venez nous rencontrer.',
-}
+  description:
+    'Adresse, téléphone et formulaire de contact de MKMI Québec, 4635, 1re Avenue à Québec (Charlesbourg). Une question ou envie de nous visiter ? Écrivez-nous.',
+  path: '/contact',
+  eyebrow: 'Nous contacter',
+  ogTitle: 'Nous serions heureux de vous rencontrer.',
+  keywords: ['contact église Québec', 'adresse MKMI Québec'],
+})
 
 export default async function ContactPage() {
   const [pages, settings] = await Promise.all([getPagesContent(), getSettings()])
@@ -43,6 +50,7 @@ export default async function ContactPage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Contact', path: '/contact' }])} />
       <PageHero
         id="contact-title"
         eyebrow="Nous contacter"

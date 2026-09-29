@@ -5,13 +5,20 @@ import { CtaBand, Glow, Gold, PageHero, QuoteCard, SectionHead } from '@/compone
 import { Photo } from '@/components/site/Photo'
 import { ButtonLink } from '@/components/site/ui'
 import { asMedia, getHomePage, getPagesContent } from '@/lib/content'
+import { JsonLd } from '@/components/site/JsonLd'
+import { breadcrumbJsonLd, pageMetadata } from '@/lib/seo'
 
 export const revalidate = 60
 
-export const metadata: Metadata = {
+export const metadata: Metadata = pageMetadata({
   title: 'Découvrir MKMI Québec',
-  description: 'Qui sommes-nous ? Notre mission, notre vision, nos valeurs, notre histoire et notre équipe.',
-}
+  description:
+    'Qui sommes-nous ? La mission, la vision, les valeurs, l’histoire et l’équipe de MKMI Québec, membre du réseau international Messianic Kingdom Miracles International.',
+  path: '/decouvrir',
+  eyebrow: 'Qui sommes-nous',
+  ogTitle: 'Une histoire plus grande que nous.',
+  keywords: ['Messianic Kingdom Miracles International', 'église multiculturelle Québec'],
+})
 
 const pillars = [
   { icon: Megaphone, title: 'Notre mission', text: 'Annoncer l’Évangile, faire des disciples et impacter notre génération.' },
@@ -27,6 +34,7 @@ export default async function DecouvrirPage() {
 
   return (
     <>
+      <JsonLd data={breadcrumbJsonLd([{ name: 'Qui sommes-nous', path: '/decouvrir' }])} />
       <PageHero
         id="decouvrir-title"
         eyebrow="Découvrir MKMI Québec"
