@@ -398,6 +398,12 @@ export interface Mission {
   id: number;
   project: string;
   zone: string;
+  scope?: ('quebec' | 'canada' | 'international') | null;
+  startDate?: string | null;
+  endDate?: string | null;
+  progress?: number | null;
+  leader?: string | null;
+  ministry?: (number | null) | Ministry;
   description?: string | null;
   images?: (number | Media)[] | null;
   status?: ('active' | 'planned' | 'done') | null;
@@ -776,6 +782,12 @@ export interface MinistriesSelect<T extends boolean = true> {
 export interface MissionsSelect<T extends boolean = true> {
   project?: T;
   zone?: T;
+  scope?: T;
+  startDate?: T;
+  endDate?: T;
+  progress?: T;
+  leader?: T;
+  ministry?: T;
   description?: T;
   images?: T;
   status?: T;

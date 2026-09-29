@@ -1368,3 +1368,51 @@ html[data-theme='dark'] {
     }
   }
 }
+
+// ---------- Missions ----------
+.mk-tiles--wide {
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+}
+.mk-tile__img {
+  position: relative;
+}
+.mk-tile__badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+}
+.mk-mini-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.mk-mini {
+  display: grid;
+  justify-items: center;
+  gap: 2px;
+  padding: 12px 8px;
+  border-radius: 12px;
+  text-align: center;
+  font-size: 12px;
+  strong {
+    font-family: 'Manrope Variable', var(--font-body);
+    font-size: 24px;
+    font-weight: 800;
+  }
+  &--blue {
+    background: #eef3fc;
+    color: #1d4fa3;
+  }
+  &--red {
+    background: #fdecea;
+    color: #c0392b;
+  }
+  &--green {
+    background: #eaf7f0;
+    color: #1f7a4d;
+  }
+  &--gold {
+    background: #fdf7e8;
+    color: #8a5a00;
+  }
+}
