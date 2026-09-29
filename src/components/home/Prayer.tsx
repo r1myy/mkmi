@@ -9,7 +9,7 @@ export function Prayer({ prayer }: { prayer: NonNullable<HomePage['prayer']> }) 
   return (
     <section aria-labelledby="prayer-title" className="grid bg-navy-900 text-white lg:grid-cols-2">
       <div className="relative min-h-64 lg:min-h-[380px]">
-        <Photo media={asMedia(prayer.image)} className="absolute inset-0" placeholder="Photo de prière à venir" sizes="(min-width:1024px) 50vw, 100vw" />
+        <Photo media={asMedia(prayer.image)} className="!absolute inset-0" placeholder="Photo de prière à venir" sizes="(min-width:1024px) 50vw, 100vw" />
         <div className="absolute inset-0 hidden bg-gradient-to-r from-transparent to-navy-900 lg:block" />
       </div>
       <div className="flex items-center px-4 py-14 sm:px-8 lg:px-14">

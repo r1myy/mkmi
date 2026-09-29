@@ -1,6 +1,7 @@
 import * as migration_20260924_062231_initial from './20260924_062231_initial';
 import * as migration_20260924_074735_settings_coordonnees from './20260924_074735_settings_coordonnees';
 import * as migration_20260929_030944_pages_interieures from './20260929_030944_pages_interieures';
+import * as migration_20260929_041733_evenements from './20260929_041733_evenements';
 
 export const migrations = [
   {
@@ -16,6 +17,11 @@ export const migrations = [
   {
     up: migration_20260929_030944_pages_interieures.up,
     down: migration_20260929_030944_pages_interieures.down,
-    name: '20260929_030944_pages_interieures'
+    name: '20260929_030944_pages_interieures',
+  },
+  {
+    up: migration_20260929_041733_evenements.up,
+    down: migration_20260929_041733_evenements.down,
+    name: '20260929_041733_evenements'
   },
 ];

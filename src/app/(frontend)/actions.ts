@@ -122,3 +122,50 @@ export async function submitContactMessage(_prev: FormState, formData: FormData)
     return { status: 'error', message: 'Une erreur est survenue. Réessayez plus tard.' }
   }
 }
+
+export async function registerForEvent(_prev: FormState, formData: FormData): Promise<FormState> {
+  const thanks = 'Merci ! Votre inscription est confirmée. À très bientôt !'
+  if (formData.get('website')) return { status: 'success', message: thanks }
+
+  const eventId = Number(formData.get('event'))
+  const name = clean(formData, 'name', 120)
+  const email = clean(formData, 'email', 254).toLowerCase()
+  const seats = Math.min(Math.max(Number(formData.get('seats')) || 1, 1), 10)
+  if (!Number.isInteger(eventId) || eventId <= 0) return { status: 'error', message: 'Événement introuvable.' }
+  if (!name) return { status: 'error', message: 'Veuillez indiquer votre nom.' }
+  if (!EMAIL.test(email)) return { status: 'error', message: 'Veuillez entrer une adresse courriel valide.' }
+  if (formData.get('consent') !== 'on') return { status: 'error', message: 'Veuillez cocher la case de consentement.' }
+  if (!rateLimit(`event:${clientKey(await headers())}`, 10, 60 * 60 * 1000)) {
+    return { status: 'error', message: 'Trop de tentatives. Réessayez plus tard.' }
+  }
+
+  try {
+    const payload = await getPayload({ config })
+    const event = await payload.findByID({ collection: 'events', id: eventId, depth: 0, overrideAccess: false })
+    if (!event || event._status !== 'published' || !event.registrationEnabled) {
+      return { status: 'error', message: 'Les inscriptions ne sont pas ouvertes pour cet événement.' }
+    }
+    if (typeof event.capacity === 'number' && event.capacity > 0) {
+      const existing = await payload.find({
+        collection: 'event-registrations',
+        where: { event: { equals: eventId } },
+        limit: 1000,
+        depth: 0,
+        overrideAccess: true,
+      })
+      const taken = existing.docs.reduce((sum, r) => sum + (r.seats ?? 1), 0)
+      if (taken + seats > event.capacity) {
+        const left = Math.max(event.capacity - taken, 0)
+        return { status: 'error', message: left ? `Il ne reste que ${left} place(s).` : 'Désolé, cet événement est complet.' }
+      }
+    }
+    await payload.create({
+      collection: 'event-registrations',
+      data: { event: eventId, name, email, seats, consent: true },
+      overrideAccess: true,
+    })
+    return { status: 'success', message: thanks }
+  } catch {
+    return { status: 'error', message: 'Une erreur est survenue. Réessayez plus tard.' }
+  }
+}

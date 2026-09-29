@@ -156,8 +156,17 @@ export interface Event {
   title: string;
   image?: (number | null) | Media;
   startsAt: string;
+  endsAt?: string | null;
   timeToConfirm?: boolean | null;
+  category?:
+    ('louange' | 'enseignement' | 'priere' | 'conference' | 'atelier' | 'jeunesse' | 'famille' | 'rencontre') | null;
+  format?: ('onsite' | 'online' | 'hybrid') | null;
+  /**
+   * Mis en avant en haut de la page Événements.
+   */
+  featured?: boolean | null;
   location?: string | null;
+  streamUrl?: string | null;
   summary?: string | null;
   description?: {
     root: {
@@ -595,8 +604,13 @@ export interface EventsSelect<T extends boolean = true> {
   title?: T;
   image?: T;
   startsAt?: T;
+  endsAt?: T;
   timeToConfirm?: T;
+  category?: T;
+  format?: T;
+  featured?: T;
   location?: T;
+  streamUrl?: T;
   summary?: T;
   description?: T;
   registrationEnabled?: T;
@@ -989,6 +1003,10 @@ export interface PagesContent {
     applePodcastsUrl?: string | null;
     youtubeChannelUrl?: string | null;
   };
+  evenements?: {
+    heroImage?: (number | null) | Media;
+    newsletterImage?: (number | null) | Media;
+  };
   missions?: {
     heroImage?: (number | null) | Media;
     visionImage?: (number | null) | Media;
@@ -1174,6 +1192,12 @@ export interface PagesContentSelect<T extends boolean = true> {
         spotifyUrl?: T;
         applePodcastsUrl?: T;
         youtubeChannelUrl?: T;
+      };
+  evenements?:
+    | T
+    | {
+        heroImage?: T;
+        newsletterImage?: T;
       };
   missions?:
     | T

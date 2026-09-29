@@ -27,7 +27,6 @@ export const footerNav = {
 /** Pages prévues au plan du site, pas encore construites (phase 4). */
 export const upcomingPages: Record<string, string> = {
   'decouvrir/foi': 'Découvrir la foi',
-  evenements: 'Événements',
   temoignages: 'Témoignages',
   donner: 'Donner',
   servir: 'Servir',

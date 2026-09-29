@@ -126,6 +126,11 @@ export const PagesContent: GlobalConfig = {
           ],
         },
         {
+          label: 'Événements',
+          name: 'evenements',
+          fields: [image('heroImage', 'Photo du haut de page'), image('newsletterImage', 'Photo du bandeau « Restez informé »')],
+        },
+        {
           label: 'Missions',
           name: 'missions',
           fields: [image('heroImage', 'Photo du haut de page'), image('visionImage', 'Photo « Notre vision »')],

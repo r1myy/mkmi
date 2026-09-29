@@ -106,6 +106,37 @@ export const getAllMinistries = cache(async (): Promise<Ministry[]> =>
   }, []),
 )
 
+/** Événements publiés à venir (y compris ceux commencés il y a moins de 12 h). */
+export const getAllUpcomingEvents = cache(async (): Promise<Event[]> =>
+  safe(async () => {
+    const res = await (await payloadClient()).find({
+      collection: 'events',
+      where: {
+        and: [
+          { _status: { equals: 'published' } },
+          { startsAt: { greater_than_equal: new Date(Date.now() - 12 * 3600 * 1000).toISOString() } },
+        ],
+      },
+      sort: 'startsAt',
+      limit: 200,
+      depth: 1,
+    })
+    return res.docs
+  }, []),
+)
+
+export const getEventBySlug = cache(async (slug: string): Promise<Event | null> =>
+  safe(async () => {
+    const res = await (await payloadClient()).find({
+      collection: 'events',
+      where: { and: [{ _status: { equals: 'published' } }, { slug: { equals: slug } }] },
+      limit: 1,
+      depth: 1,
+    })
+    return res.docs[0] ?? null
+  }, null),
+)
+
 /** Tous les messages publiés (les filtres de la page Messages s’appliquent ensuite). */
 export const getSermons = cache(async (): Promise<Sermon[]> =>
   safe(async () => {

@@ -27,6 +27,12 @@ export const Events: CollectionConfig = {
           admin: { date: { pickerAppearance: 'dayAndTime' } },
         },
         {
+          name: 'endsAt',
+          label: 'Date et heure de fin',
+          type: 'date',
+          admin: { date: { pickerAppearance: 'dayAndTime' } },
+        },
+        {
           name: 'timeToConfirm',
           label: 'Heure à confirmer',
           type: 'checkbox',
@@ -34,7 +40,47 @@ export const Events: CollectionConfig = {
         },
       ],
     },
+    {
+      type: 'row',
+      fields: [
+        {
+          name: 'category',
+          label: 'Catégorie',
+          type: 'select',
+          defaultValue: 'rencontre',
+          options: [
+            { label: 'Louange', value: 'louange' },
+            { label: 'Enseignement', value: 'enseignement' },
+            { label: 'Prière', value: 'priere' },
+            { label: 'Conférence', value: 'conference' },
+            { label: 'Atelier', value: 'atelier' },
+            { label: 'Jeunesse', value: 'jeunesse' },
+            { label: 'Famille', value: 'famille' },
+            { label: 'Rencontre', value: 'rencontre' },
+          ],
+        },
+        {
+          name: 'format',
+          label: 'Format',
+          type: 'select',
+          defaultValue: 'onsite',
+          options: [
+            { label: 'En présentiel', value: 'onsite' },
+            { label: 'En ligne', value: 'online' },
+            { label: 'En présentiel et en ligne', value: 'hybrid' },
+          ],
+        },
+        {
+          name: 'featured',
+          label: 'À la une',
+          type: 'checkbox',
+          defaultValue: false,
+          admin: { description: 'Mis en avant en haut de la page Événements.' },
+        },
+      ],
+    },
     { name: 'location', label: 'Lieu', type: 'text', defaultValue: 'Québec, Québec' },
+    { name: 'streamUrl', label: 'Lien de la diffusion en ligne', type: 'text' },
     { name: 'summary', label: 'Description courte', type: 'textarea' },
     { name: 'description', label: 'Description complète', type: 'richText' },
     {

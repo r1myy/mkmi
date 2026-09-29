@@ -3,7 +3,7 @@
 import { useActionState, useState, type ComponentType, type ReactNode } from 'react'
 import { CheckCircle2, Lock, Mail, Phone, Send, User } from 'lucide-react'
 
-import { submitContactMessage, submitPrayerRequest, type FormState } from '@/app/(frontend)/actions'
+import { registerForEvent, submitContactMessage, submitPrayerRequest, type FormState } from '@/app/(frontend)/actions'
 
 type Icon = ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' }>
 
@@ -175,6 +175,35 @@ export function ContactForm() {
       <Honeypot />
       <Result state={state} />
       <Submit pending={pending}>Envoyer le message</Submit>
+    </form>
+  )
+}
+
+export function EventRegistrationForm({ eventId }: { eventId: number }) {
+  const [state, action, pending] = useActionState<FormState, FormData>(registerForEvent, { status: 'idle' })
+  if (state.status === 'success') return <Result state={state} />
+  return (
+    <form action={action} className="space-y-4">
+      <input type="hidden" name="event" value={eventId} />
+      <Field name="name" label="Nom complet" icon={User} required autoComplete="name" />
+      <Field name="email" label="Adresse courriel" icon={Mail} type="email" required autoComplete="email" />
+      <label className="block">
+        <span className="mb-1.5 block text-sm font-semibold text-navy-900">Nombre de places</span>
+        <select name="seats" defaultValue="1" className={`${inputClass} pl-4`}>
+          {[1, 2, 3, 4, 5, 6].map((n) => (
+            <option key={n} value={n}>
+              {n}
+            </option>
+          ))}
+        </select>
+      </label>
+      <label className="flex items-start gap-3 text-sm text-muted">
+        <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 accent-gold-500" />
+        <span>J’accepte que MKMI Québec utilise ces informations pour gérer mon inscription.</span>
+      </label>
+      <Honeypot />
+      <Result state={state} />
+      <Submit pending={pending}>Confirmer mon inscription</Submit>
     </form>
   )
 }
