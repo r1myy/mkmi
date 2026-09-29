@@ -6,6 +6,7 @@ import * as migration_20260929_043837_page_don from './20260929_043837_page_don'
 import * as migration_20260929_053234_editeur_pages from './20260929_053234_editeur_pages';
 import * as migration_20260929_071211_inscriptions_statut from './20260929_071211_inscriptions_statut';
 import * as migration_20260929_071734_messages_boite from './20260929_071734_messages_boite';
+import * as migration_20260929_072427_registre_dons from './20260929_072427_registre_dons';
 
 export const migrations = [
   {
@@ -46,6 +47,11 @@ export const migrations = [
   {
     up: migration_20260929_071734_messages_boite.up,
     down: migration_20260929_071734_messages_boite.down,
-    name: '20260929_071734_messages_boite'
+    name: '20260929_071734_messages_boite',
+  },
+  {
+    up: migration_20260929_072427_registre_dons.up,
+    down: migration_20260929_072427_registre_dons.down,
+    name: '20260929_072427_registre_dons'
   },
 ];

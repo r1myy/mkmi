@@ -1280,3 +1280,21 @@ html[data-theme='dark'] {
     font-size: 13px;
   }
 }
+
+// ---------- Dons ----------
+.mk-bars {
+  display: grid;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 6px;
+    font-size: 13px;
+    .mk-progress__bar {
+      grid-column: 1 / -1;
+    }
+  }
+}

@@ -70,6 +70,7 @@ export interface Config {
     events: Event;
     'event-registrations': EventRegistration;
     'contact-messages': ContactMessage;
+    donations: Donation;
     'prayer-requests': PrayerRequest;
     'visit-plans': VisitPlan;
     ministries: Ministry;
@@ -90,6 +91,7 @@ export interface Config {
     events: EventsSelect<false> | EventsSelect<true>;
     'event-registrations': EventRegistrationsSelect<false> | EventRegistrationsSelect<true>;
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
+    donations: DonationsSelect<false> | DonationsSelect<true>;
     'prayer-requests': PrayerRequestsSelect<false> | PrayerRequestsSelect<true>;
     'visit-plans': VisitPlansSelect<false> | VisitPlansSelect<true>;
     ministries: MinistriesSelect<false> | MinistriesSelect<true>;
@@ -282,6 +284,25 @@ export interface ContactMessage {
   readAt?: string | null;
   answeredAt?: string | null;
   internalNotes?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donations".
+ */
+export interface Donation {
+  id: number;
+  date: string;
+  amount: number;
+  donorName: string;
+  email?: string | null;
+  category: 'general' | 'tithe' | 'missions' | 'projects' | 'building' | 'social' | 'youth' | 'other';
+  method: 'card' | 'interac' | 'bank' | 'cheque' | 'cash' | 'online';
+  status?: ('confirmed' | 'pending' | 'refunded') | null;
+  recurring?: boolean | null;
+  receiptSent?: boolean | null;
+  notes?: string | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -537,6 +558,10 @@ export interface PayloadLockedDocument {
         value: number | ContactMessage;
       } | null)
     | ({
+        relationTo: 'donations';
+        value: number | Donation;
+      } | null)
+    | ({
         relationTo: 'prayer-requests';
         value: number | PrayerRequest;
       } | null)
@@ -673,6 +698,24 @@ export interface ContactMessagesSelect<T extends boolean = true> {
   readAt?: T;
   answeredAt?: T;
   internalNotes?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "donations_select".
+ */
+export interface DonationsSelect<T extends boolean = true> {
+  date?: T;
+  amount?: T;
+  donorName?: T;
+  email?: T;
+  category?: T;
+  method?: T;
+  status?: T;
+  recurring?: T;
+  receiptSent?: T;
+  notes?: T;
   updatedAt?: T;
   createdAt?: T;
 }

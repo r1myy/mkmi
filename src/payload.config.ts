@@ -8,6 +8,7 @@ import sharp from 'sharp'
 
 import {
   ContactMessages,
+  Donations,
   EventRegistrations,
   Events,
   Media,
@@ -54,6 +55,7 @@ export default buildConfig({
     Events,
     EventRegistrations,
     ContactMessages,
+    Donations,
     PrayerRequests,
     VisitPlans,
     Ministries,

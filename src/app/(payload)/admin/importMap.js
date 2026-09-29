@@ -24,6 +24,7 @@ import { ItalicFeatureClient as ItalicFeatureClient_e70f5e05f09f93e00b997edb1ef0
 import { default as default_0193442c735b8f0785aeb62e209aa96f } from '@/components/admin/EventsList'
 import { default as default_04e38c3fdf2ae5a0e4ecdbdb78f57801 } from '@/components/admin/RegistrationsList'
 import { default as default_d59ae891439918b9eb6183c2c7f5a187 } from '@/components/admin/MessagesInbox'
+import { default as default_0fae24583ff829190930f43779186079 } from '@/components/admin/DonationsList'
 import { SectionFocus as SectionFocus_35357f70f2939b9fc7ec19d6a5088193 } from '@/components/admin/SectionFocus'
 import { HelpText as HelpText_05e5518b200e435040c0de946eb64f8b } from '@/components/admin/HelpText'
 import { AdminIcon as AdminIcon_47aa48da0e11e9bbac3155f33546fa78 } from '@/components/admin/NavBrand'
@@ -61,6 +62,7 @@ export const importMap = {
   "@/components/admin/EventsList#default": default_0193442c735b8f0785aeb62e209aa96f,
   "@/components/admin/RegistrationsList#default": default_04e38c3fdf2ae5a0e4ecdbdb78f57801,
   "@/components/admin/MessagesInbox#default": default_d59ae891439918b9eb6183c2c7f5a187,
+  "@/components/admin/DonationsList#default": default_0fae24583ff829190930f43779186079,
   "@/components/admin/SectionFocus#SectionFocus": SectionFocus_35357f70f2939b9fc7ec19d6a5088193,
   "@/components/admin/HelpText#HelpText": HelpText_05e5518b200e435040c0de946eb64f8b,
   "@/components/admin/NavBrand#AdminIcon": AdminIcon_47aa48da0e11e9bbac3155f33546fa78,

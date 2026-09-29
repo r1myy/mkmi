@@ -5,7 +5,7 @@ import React from 'react'
 import { categoryLabels, eventDate } from '@/lib/events'
 import type { Event, Media } from '@/payload-types'
 import './dashboard.scss'
-import { Donut, Icon, type IconName } from './ui'
+import { Donut, Icon, LineChart, type IconName } from './ui'
 
 type Props = {
   payload?: Payload
@@ -35,44 +35,6 @@ function Trend({ now, before, label }: { now: number; before: number; label: str
       </span>
       <span className="mk-kpi__sub">{label}</span>
     </span>
-  )
-}
-
-/** Courbe des 30 derniers jours (SVG, à l’échelle). */
-function LineChart({ data, labels }: { data: number[]; labels: string[] }) {
-  const W = 560,
-    H = 200,
-    L = 34,
-    B = 26,
-    T = 10
-  const max = Math.max(4, ...data)
-  const step = Math.pow(10, Math.floor(Math.log10(max)))
-  const top = Math.ceil(max / step) * step
-  const x = (i: number) => L + (i * (W - L - 8)) / (data.length - 1)
-  const y = (v: number) => T + (H - T - B) * (1 - v / top)
-  const pts = data.map((v, i) => `${x(i)},${y(v)}`).join(' ')
-  const ticks = [0, top / 2, top]
-  return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="mk-chart" role="img" aria-label="Visites par jour sur 30 jours">
-      {ticks.map((t) => (
-        <g key={t}>
-          <line x1={L} x2={W - 8} y1={y(t)} y2={y(t)} className="mk-grid" />
-          <text x={L - 8} y={y(t) + 4} textAnchor="end" className="mk-axis">
-            {fmt.format(t)}
-          </text>
-        </g>
-      ))}
-      <polygon points={`${x(0)},${y(0)} ${pts} ${x(data.length - 1)},${y(0)}`} className="mk-area" />
-      <polyline points={pts} className="mk-line" />
-      {data.map((v, i) => (i % 3 === 0 || i === data.length - 1 ? <circle key={i} cx={x(i)} cy={y(v)} r="3.5" className="mk-dot" /> : null))}
-      {labels.map((l, i) =>
-        (i % 7 === 0 && labels.length - 1 - i >= 4) || i === labels.length - 1 ? (
-          <text key={i} x={x(i)} y={H - 6} textAnchor="middle" className="mk-axis">
-            {l}
-          </text>
-        ) : null,
-      )}
-    </svg>
   )
 }
 
