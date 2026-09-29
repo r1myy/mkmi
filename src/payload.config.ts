@@ -7,6 +7,7 @@ import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
 import {
+  ContactMessages,
   EventRegistrations,
   Events,
   Media,
@@ -22,6 +23,7 @@ import {
 } from './collections'
 import { migrations } from './migrations'
 import { HomePage } from './globals/HomePage'
+import { PagesContent } from './globals/PagesContent'
 import { SiteSettings } from './globals/SiteSettings'
 
 const filename = fileURLToPath(import.meta.url)
@@ -52,13 +54,14 @@ export default buildConfig({
     Media,
     Testimonials,
     PrayerRequests,
+    ContactMessages,
     VisitPlans,
     EventRegistrations,
     NewsletterSubscribers,
     PageViews,
     Users,
   ],
-  globals: [HomePage, SiteSettings],
+  globals: [HomePage, PagesContent, SiteSettings],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

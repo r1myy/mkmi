@@ -1,46 +1,12 @@
 import Link from 'next/link'
-import {
-  ArrowRight,
-  Baby,
-  BookOpen,
-  Flower2,
-  Globe2,
-  GraduationCap,
-  HandHeart,
-  HeartHandshake,
-  Megaphone,
-  Music,
-  Users,
-  Video,
-} from 'lucide-react'
+import { ArrowRight, Users } from 'lucide-react'
 import clsx from 'clsx'
 
 import { asMedia } from '@/lib/content'
 import type { Ministry } from '@/payload-types'
 import { Photo } from '../site/Photo'
 import { Eyebrow } from '../site/ui'
-
-const icons = {
-  baby: Baby,
-  book: BookOpen,
-  flower: Flower2,
-  users: Users,
-  'heart-handshake': HeartHandshake,
-  'hand-heart': HandHeart,
-  music: Music,
-  globe: Globe2,
-  video: Video,
-  'graduation-cap': GraduationCap,
-  megaphone: Megaphone,
-}
-
-const accents = {
-  blue: 'text-blue-600',
-  red: 'text-rose-500',
-  green: 'text-emerald-600',
-  purple: 'text-fuchsia-600',
-  gold: 'text-gold-500',
-}
+import { ministryAccents, ministryIcons } from '../site/ministryIcons'
 
 export function Ministries({ ministries }: { ministries: Ministry[] }) {
   return (
@@ -68,7 +34,7 @@ export function Ministries({ ministries }: { ministries: Ministry[] }) {
         ) : (
           <ul className="mt-8 -mx-4 flex snap-x gap-4 overflow-x-auto px-4 pb-4 sm:mx-0 sm:grid sm:grid-cols-4 sm:overflow-visible sm:px-0 lg:grid-cols-8">
             {ministries.map((m) => {
-              const Icon = icons[(m.icon as keyof typeof icons) ?? 'users'] ?? Users
+              const Icon = ministryIcons[(m.icon as keyof typeof ministryIcons) ?? 'users'] ?? Users
               return (
                 <li key={m.id} className="w-36 shrink-0 snap-start sm:w-auto">
                   <Link
@@ -80,7 +46,7 @@ export function Ministries({ ministries }: { ministries: Ministry[] }) {
                       <span
                         className={clsx(
                           'absolute -top-5 left-4 flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-md',
-                          accents[(m.accent as keyof typeof accents) ?? 'blue'],
+                          ministryAccents[(m.accent as keyof typeof ministryAccents) ?? 'blue'],
                         )}
                       >
                         <Icon className="h-5 w-5" aria-hidden="true" />

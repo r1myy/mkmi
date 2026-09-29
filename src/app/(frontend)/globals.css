@@ -65,3 +65,51 @@
     padding-inline: 2rem;
   }
 }
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Texte riche saisi dans l’administration */
+.rich-text {
+  & > * + * {
+    margin-top: 1rem;
+  }
+  & h2,
+  & h3 {
+    font-weight: 800;
+    color: var(--color-navy-900);
+    margin-top: 2rem;
+  }
+  & h2 {
+    font-size: 1.5rem;
+  }
+  & h3 {
+    font-size: 1.25rem;
+  }
+  & a {
+    text-decoration: underline;
+    text-decoration-color: var(--color-gold-400);
+    text-underline-offset: 3px;
+  }
+  & ul {
+    list-style: disc;
+    padding-left: 1.25rem;
+  }
+  & ol {
+    list-style: decimal;
+    padding-left: 1.25rem;
+  }
+  & blockquote {
+    border-left: 3px solid var(--color-gold-400);
+    padding-left: 1rem;
+    font-style: italic;
+  }
+}

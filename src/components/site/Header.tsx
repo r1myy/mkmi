@@ -48,15 +48,15 @@ export function Header({ siteName }: { siteName: string }) {
       <div className="container-site flex h-18 items-center justify-between gap-4 py-3">
         <Logo name={siteName} />
 
-        <nav aria-label="Navigation principale" className="hidden lg:block">
-          <ul className="flex items-center gap-7">
+        <nav aria-label="Navigation principale" className="hidden xl:block">
+          <ul className="flex items-center gap-5">
             {mainNav.map((item) => (
               <li key={item.href}>
                 <Link
                   href={item.href}
                   aria-current={isActive(item.href) ? 'page' : undefined}
                   className={clsx(
-                    'relative py-2 text-sm font-medium transition-colors',
+                    'relative py-2 text-sm font-medium whitespace-nowrap transition-colors',
                     isActive(item.href) ? 'text-gold-400' : 'text-white/85 hover:text-white',
                   )}
                 >
@@ -100,7 +100,7 @@ export function Header({ siteName }: { siteName: string }) {
           </Link>
           <button
             type="button"
-            className="flex h-11 w-11 items-center justify-center rounded-lg text-white hover:bg-white/10 lg:hidden"
+            className="flex h-11 w-11 items-center justify-center rounded-lg text-white hover:bg-white/10 xl:hidden"
             aria-expanded={open}
             aria-controls="menu-mobile"
             aria-label={open ? 'Fermer le menu' : 'Ouvrir le menu'}
@@ -114,7 +114,7 @@ export function Header({ siteName }: { siteName: string }) {
       <div
         id="menu-mobile"
         hidden={!open}
-        className="fixed inset-x-0 top-18 bottom-0 overflow-y-auto bg-navy-950 lg:hidden"
+        className="fixed inset-x-0 top-18 bottom-0 overflow-y-auto bg-navy-950 xl:hidden"
       >
         <nav aria-label="Navigation mobile" className="container-site flex flex-col gap-1 py-8">
           {mainNav.map((item) => (

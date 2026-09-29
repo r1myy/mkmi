@@ -4,12 +4,14 @@ import { getPayload } from 'payload'
 import { cache } from 'react'
 
 import { HomePage as HomePageConfig } from '@/globals/HomePage'
+import { PagesContent as PagesContentConfig } from '@/globals/PagesContent'
 import { SiteSettings as SiteSettingsConfig } from '@/globals/SiteSettings'
-import type { Event, HomePage, Media, Ministry, Sermon, SiteSetting } from '@/payload-types'
+import type { Event, HomePage, Media, Ministry, Mission, PagesContent, Sermon, SiteSetting, Testimonial } from '@/payload-types'
 import { extractDefaults, withDefaults } from './defaults'
 
 const homeDefaults = extractDefaults(HomePageConfig.fields)
 const settingsDefaults = extractDefaults(SiteSettingsConfig.fields)
+const pagesDefaults = extractDefaults(PagesContentConfig.fields)
 
 async function safe<T>(fn: () => Promise<T>, fallback: T): Promise<T> {
   try {
@@ -79,6 +81,66 @@ export const getMinistries = cache(async (): Promise<Ministry[]> =>
       sort: 'order',
       limit: 12,
       depth: 1,
+    })
+    return res.docs
+  }, []),
+)
+
+export const getPagesContent = cache(async () =>
+  withDefaults<PagesContent>(
+    await safe(async () => (await payloadClient()).findGlobal({ slug: 'pages-content', depth: 1 }), null),
+    pagesDefaults,
+  ),
+)
+
+export const getAllMinistries = cache(async (): Promise<Ministry[]> =>
+  safe(async () => {
+    const res = await (await payloadClient()).find({
+      collection: 'ministries',
+      where: { _status: { equals: 'published' } },
+      sort: 'order',
+      limit: 100,
+      depth: 1,
+    })
+    return res.docs
+  }, []),
+)
+
+/** Tous les messages publiés (les filtres de la page Messages s’appliquent ensuite). */
+export const getSermons = cache(async (): Promise<Sermon[]> =>
+  safe(async () => {
+    const res = await (await payloadClient()).find({
+      collection: 'sermons',
+      where: { _status: { equals: 'published' } },
+      sort: '-date',
+      limit: 500,
+      depth: 1,
+    })
+    return res.docs
+  }, []),
+)
+
+export const getMissions = cache(async (): Promise<Mission[]> =>
+  safe(async () => {
+    const res = await (await payloadClient()).find({
+      collection: 'missions',
+      where: { _status: { equals: 'published' } },
+      limit: 50,
+      depth: 1,
+    })
+    return res.docs
+  }, []),
+)
+
+export const getTestimonials = cache(async (limit = 6): Promise<Testimonial[]> =>
+  safe(async () => {
+    const res = await (await payloadClient()).find({
+      collection: 'testimonials',
+      where: { and: [{ approved: { equals: true } }, { consent: { equals: true } }] },
+      sort: '-createdAt',
+      limit,
+      depth: 1,
+      overrideAccess: false,
     })
     return res.docs
   }, []),

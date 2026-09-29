@@ -1,21 +1,22 @@
 'use client'
 
-import { useActionState } from 'react'
+import { useActionState, useId } from 'react'
 import { ArrowRight } from 'lucide-react'
 
 import { subscribeNewsletter, type FormState } from '@/app/(frontend)/actions'
 
 export function NewsletterForm() {
+  const id = useId()
   const [state, action, pending] = useActionState<FormState, FormData>(subscribeNewsletter, { status: 'idle' })
 
   return (
     <form action={action} className="space-y-3" noValidate>
       <div className="flex overflow-hidden rounded-lg border border-white/25 focus-within:border-gold-400">
-        <label htmlFor="newsletter-email" className="sr-only">
+        <label htmlFor={id} className="sr-only">
           Votre courriel
         </label>
         <input
-          id="newsletter-email"
+          id={id}
           name="email"
           type="email"
           required

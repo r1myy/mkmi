@@ -74,6 +74,7 @@ export interface Config {
     media: Media;
     testimonials: Testimonial;
     'prayer-requests': PrayerRequest;
+    'contact-messages': ContactMessage;
     'visit-plans': VisitPlan;
     'event-registrations': EventRegistration;
     'newsletter-subscribers': NewsletterSubscriber;
@@ -93,6 +94,7 @@ export interface Config {
     media: MediaSelect<false> | MediaSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
     'prayer-requests': PrayerRequestsSelect<false> | PrayerRequestsSelect<true>;
+    'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     'visit-plans': VisitPlansSelect<false> | VisitPlansSelect<true>;
     'event-registrations': EventRegistrationsSelect<false> | EventRegistrationsSelect<true>;
     'newsletter-subscribers': NewsletterSubscribersSelect<false> | NewsletterSubscribersSelect<true>;
@@ -109,10 +111,12 @@ export interface Config {
   fallbackLocale: null;
   globals: {
     'home-page': HomePage;
+    'pages-content': PagesContent;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
     'home-page': HomePageSelect<false> | HomePageSelect<true>;
+    'pages-content': PagesContentSelect<false> | PagesContentSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -366,6 +370,22 @@ export interface PrayerRequest {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages".
+ */
+export interface ContactMessage {
+  id: number;
+  name: string;
+  email: string;
+  phone?: string | null;
+  subject: string;
+  message: string;
+  newsletter?: boolean | null;
+  status?: ('new' | 'answered' | 'archived') | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "visit-plans".
  */
 export interface VisitPlan {
@@ -500,6 +520,10 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'prayer-requests';
         value: number | PrayerRequest;
+      } | null)
+    | ({
+        relationTo: 'contact-messages';
+        value: number | ContactMessage;
       } | null)
     | ({
         relationTo: 'visit-plans';
@@ -711,6 +735,21 @@ export interface PrayerRequestsSelect<T extends boolean = true> {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contact-messages_select".
+ */
+export interface ContactMessagesSelect<T extends boolean = true> {
+  name?: T;
+  email?: T;
+  phone?: T;
+  subject?: T;
+  message?: T;
+  newsletter?: T;
+  status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "visit-plans_select".
  */
 export interface VisitPlansSelect<T extends boolean = true> {
@@ -900,6 +939,73 @@ export interface HomePage {
   createdAt?: string | null;
 }
 /**
+ * Photos et contenus des pages Église, Découvrir, Ministères, etc.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages-content".
+ */
+export interface PagesContent {
+  id: number;
+  eglise?: {
+    heroImage?: (number | null) | Media;
+    welcomeImage?: (number | null) | Media;
+    membershipImage?: (number | null) | Media;
+    faq?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  decouvrir?: {
+    heroImage?: (number | null) | Media;
+    storyImage?: (number | null) | Media;
+    faithImage?: (number | null) | Media;
+    timeline?:
+      | {
+          label: string;
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    leaders?:
+      | {
+          name: string;
+          role: string;
+          photo?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  ministeres?: {
+    heroImage?: (number | null) | Media;
+    serveImage?: (number | null) | Media;
+  };
+  messages?: {
+    heroImage?: (number | null) | Media;
+    spotifyUrl?: string | null;
+    applePodcastsUrl?: string | null;
+    youtubeChannelUrl?: string | null;
+  };
+  missions?: {
+    heroImage?: (number | null) | Media;
+    visionImage?: (number | null) | Media;
+  };
+  priere?: {
+    heroImage?: (number | null) | Media;
+    sideImage?: (number | null) | Media;
+  };
+  contact?: {
+    heroImage?: (number | null) | Media;
+    visitImage?: (number | null) | Media;
+    officeHours?: string | null;
+  };
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -1008,6 +1114,85 @@ export interface HomePageSelect<T extends boolean = true> {
         title?: T;
         text?: T;
         background?: T;
+      };
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "pages-content_select".
+ */
+export interface PagesContentSelect<T extends boolean = true> {
+  eglise?:
+    | T
+    | {
+        heroImage?: T;
+        welcomeImage?: T;
+        membershipImage?: T;
+        faq?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  decouvrir?:
+    | T
+    | {
+        heroImage?: T;
+        storyImage?: T;
+        faithImage?: T;
+        timeline?:
+          | T
+          | {
+              label?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+        leaders?:
+          | T
+          | {
+              name?: T;
+              role?: T;
+              photo?: T;
+              id?: T;
+            };
+      };
+  ministeres?:
+    | T
+    | {
+        heroImage?: T;
+        serveImage?: T;
+      };
+  messages?:
+    | T
+    | {
+        heroImage?: T;
+        spotifyUrl?: T;
+        applePodcastsUrl?: T;
+        youtubeChannelUrl?: T;
+      };
+  missions?:
+    | T
+    | {
+        heroImage?: T;
+        visionImage?: T;
+      };
+  priere?:
+    | T
+    | {
+        heroImage?: T;
+        sideImage?: T;
+      };
+  contact?:
+    | T
+    | {
+        heroImage?: T;
+        visitImage?: T;
+        officeHours?: T;
       };
   updatedAt?: T;
   createdAt?: T;

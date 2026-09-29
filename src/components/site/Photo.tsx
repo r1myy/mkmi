@@ -57,10 +57,13 @@ export function Photo({
         className,
       )}
     >
-      <span className="flex flex-col items-center gap-1 text-[10px] font-medium tracking-wider uppercase">
-        <ImageIcon className="h-5 w-5" aria-hidden="true" />
-        {placeholder}
-      </span>
+      {/* Fonds décoratifs sombres sans libellé : aucun pictogramme. */}
+      {(placeholder || tone === 'light') && (
+        <span className="flex flex-col items-center gap-1 text-[10px] font-medium tracking-wider uppercase">
+          <ImageIcon className="h-5 w-5" aria-hidden="true" />
+          {placeholder}
+        </span>
+      )}
     </div>
   )
 }

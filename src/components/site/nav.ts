@@ -5,6 +5,8 @@ export const mainNav = [
   { href: '/ministeres', label: 'Ministères' },
   { href: '/messages', label: 'Messages' },
   { href: '/evenements', label: 'Événements' },
+  { href: '/missions', label: 'Missions' },
+  { href: '/contact', label: 'Nous contacter' },
 ]
 
 export const footerNav = {
@@ -24,18 +26,11 @@ export const footerNav = {
 
 /** Pages prévues au plan du site, pas encore construites (phase 4). */
 export const upcomingPages: Record<string, string> = {
-  decouvrir: 'Découvrir MKMI Québec',
   'decouvrir/foi': 'Découvrir la foi',
-  eglise: 'Église',
-  ministeres: 'Ministères',
-  messages: 'Messages',
   evenements: 'Événements',
-  priere: 'Prière',
   temoignages: 'Témoignages',
-  missions: 'Missions',
   donner: 'Donner',
   servir: 'Servir',
-  contact: 'Contact',
   'planifier-ma-visite': 'Planifier ma visite',
   recherche: 'Recherche',
   confidentialite: 'Politique de confidentialité',
