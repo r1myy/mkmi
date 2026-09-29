@@ -46,6 +46,9 @@ export default async function HomePage() {
     getMinistries(),
   ])
 
+  // Aucune valeur provisoire (« à confirmer ») n’est envoyée aux moteurs de recherche.
+  const confirmed = (v?: string | null) => (v && !/confirmer/i.test(v) ? v : undefined)
+  const phone = /\d{3}.*\d{4}/.test(settings.phone ?? '') ? confirmed(settings.phone) : undefined
   const sameAs = [settings.facebook, settings.instagram, settings.youtube, settings.tiktok].filter(Boolean)
   const logo = asMedia(settings.logo)?.url
   const church = {
@@ -58,16 +61,20 @@ export default async function HomePage() {
     url: siteUrl,
     image: `${siteUrl}${ogImageUrl('Une famille. Une foi. Une mission.')}`,
     ...(logo ? { logo: `${siteUrl}${logo}` } : {}),
-    telephone: settings.phone,
+    ...(phone ? { telephone: phone } : {}),
     ...(settings.email?.includes('@') ? { email: settings.email } : {}),
-    address: {
-      '@type': 'PostalAddress',
-      streetAddress: settings.address,
-      postalCode: settings.postalCode,
-      addressLocality: 'Québec',
-      addressRegion: 'QC',
-      addressCountry: 'CA',
-    },
+    ...(confirmed(settings.address)
+      ? {
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: settings.address,
+            ...(confirmed(settings.postalCode) ? { postalCode: settings.postalCode } : {}),
+            addressLocality: 'Québec',
+            addressRegion: 'QC',
+            addressCountry: 'CA',
+          },
+        }
+      : {}),
     ...(settings.directionsUrl ? { hasMap: settings.directionsUrl } : {}),
     ...(sameAs.length ? { sameAs } : {}),
   }
