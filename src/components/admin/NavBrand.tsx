@@ -25,6 +25,7 @@ import {
   Mic,
   PanelsTopLeft,
   Quote,
+  Search,
   Send,
   Settings,
   Share2,
@@ -50,6 +51,7 @@ const groups: Group[] = [
     title: 'Tableau de bord',
     items: [
       { href: '/admin', label: 'Tableau de bord', icon: House, match: (p) => p === '/admin' || p === '/admin/' },
+      { href: '/admin/recherche', label: 'Recherche', icon: Search },
       { href: '/admin/communications', label: 'Communications', icon: MessagesSquare },
     ],
   },

@@ -56,6 +56,7 @@ export default buildConfig({
         communications: { Component: '@/components/admin/CommunicationsHub', path: '/communications' },
         parametres: { Component: '@/components/admin/SettingsView', path: '/parametres' },
         pages: { Component: '@/components/admin/PagesView', path: '/pages' },
+        recherche: { Component: '@/components/admin/SearchView', path: '/recherche' },
       },
     },
   },

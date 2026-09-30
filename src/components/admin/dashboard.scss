@@ -2045,3 +2045,32 @@ html[data-theme='dark'] {
     color: #6b3fc4;
   }
 }
+
+// ---------- Recherche (administration) ----------
+.mk-search-results {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 14px;
+  h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 17px;
+  }
+}
+.mk-hits {
+  display: grid;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  a {
+    display: grid;
+    gap: 2px;
+    padding: 10px 8px;
+    border-radius: 8px;
+    border-bottom: 1px solid var(--mk-line);
+    &:hover {
+      background: var(--theme-elevation-50);
+    }
+  }
+}
