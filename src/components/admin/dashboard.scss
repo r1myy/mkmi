@@ -1992,3 +1992,56 @@ html[data-theme='dark'] {
     margin-left: 0;
   }
 }
+
+// ---------- Découvrir la foi ----------
+.mk-minikpis {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: 12px;
+  > a {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    &:hover {
+      border-color: var(--mk-gold);
+    }
+    strong {
+      display: block;
+      font-family: 'Manrope Variable', var(--font-body);
+      font-size: 24px;
+      font-weight: 800;
+      line-height: 1.1;
+    }
+  }
+  &__icon {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 46px;
+    height: 46px;
+    border-radius: 12px;
+  }
+}
+.mk-tone-red {
+  background: #fdecea;
+  color: #c0392b;
+}
+.mk-minikpis__icon {
+  &.mk-tone-green {
+    background: #e3f5ec;
+    color: #1f7a4d;
+  }
+  &.mk-tone-blue {
+    background: #eaf0fb;
+    color: #1d4fa3;
+  }
+  &.mk-tone-gold {
+    background: #fdf3dc;
+    color: #8a5a00;
+  }
+  &.mk-tone-violet {
+    background: #efe8fb;
+    color: #6b3fc4;
+  }
+}

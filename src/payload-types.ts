@@ -77,6 +77,7 @@ export interface Config {
     ministries: Ministry;
     missions: Mission;
     testimonials: Testimonial;
+    'faith-resources': FaithResource;
     'contact-messages': ContactMessage;
     announcements: Announcement;
     'email-campaigns': EmailCampaign;
@@ -104,6 +105,7 @@ export interface Config {
     ministries: MinistriesSelect<false> | MinistriesSelect<true>;
     missions: MissionsSelect<false> | MissionsSelect<true>;
     testimonials: TestimonialsSelect<false> | TestimonialsSelect<true>;
+    'faith-resources': FaithResourcesSelect<false> | FaithResourcesSelect<true>;
     'contact-messages': ContactMessagesSelect<false> | ContactMessagesSelect<true>;
     announcements: AnnouncementsSelect<false> | AnnouncementsSelect<true>;
     'email-campaigns': EmailCampaignsSelect<false> | EmailCampaignsSelect<true>;
@@ -136,6 +138,7 @@ export interface Config {
     'page-contact': PageContact;
     'page-visite': PageVisite;
     'page-temoignages': PageTemoignage;
+    'page-foi': PageFoi;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
@@ -151,6 +154,7 @@ export interface Config {
     'page-contact': PageContactSelect<false> | PageContactSelect<true>;
     'page-visite': PageVisiteSelect<false> | PageVisiteSelect<true>;
     'page-temoignages': PageTemoignagesSelect<false> | PageTemoignagesSelect<true>;
+    'page-foi': PageFoiSelect<false> | PageFoiSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -533,6 +537,51 @@ export interface Testimonial {
   createdAt: string;
 }
 /**
+ * Articles, vidéos, guides et parcours qui aident à connaître Dieu, comprendre la Bible et grandir dans la foi.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faith-resources".
+ */
+export interface FaithResource {
+  id: number;
+  title: string;
+  type: 'article' | 'video' | 'guide' | 'serie' | 'parcours';
+  theme: 'dieu' | 'jesus' | 'bible' | 'priere' | 'vie' | 'croissance' | 'famille' | 'autres';
+  level?: ('debutant' | 'intermediaire' | 'avance') | null;
+  summary?: string | null;
+  author?: string | null;
+  publishedAt: string;
+  duration?: string | null;
+  cover?: (number | null) | Media;
+  youtubeUrl?: string | null;
+  body?: {
+    root: {
+      type: string;
+      children: {
+        type: any;
+        version: number;
+        [k: string]: unknown;
+      }[];
+      direction: ('ltr' | 'rtl') | null;
+      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+      indent: number;
+      version: number;
+    };
+    [k: string]: unknown;
+  } | null;
+  /**
+   * Affichée en premier dans « Ressources récentes » ou « Vidéos populaires ».
+   */
+  featured?: boolean | null;
+  /**
+   * Adresse de la page. Générée automatiquement à partir du titre si vide.
+   */
+  slug?: string | null;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "contact-messages".
  */
@@ -811,6 +860,10 @@ export interface PayloadLockedDocument {
         value: number | Testimonial;
       } | null)
     | ({
+        relationTo: 'faith-resources';
+        value: number | FaithResource;
+      } | null)
+    | ({
         relationTo: 'contact-messages';
         value: number | ContactMessage;
       } | null)
@@ -1080,6 +1133,28 @@ export interface TestimonialsSelect<T extends boolean = true> {
   approved?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "faith-resources_select".
+ */
+export interface FaithResourcesSelect<T extends boolean = true> {
+  title?: T;
+  type?: T;
+  theme?: T;
+  level?: T;
+  summary?: T;
+  author?: T;
+  publishedAt?: T;
+  duration?: T;
+  cover?: T;
+  youtubeUrl?: T;
+  body?: T;
+  featured?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -2849,6 +2924,136 @@ export interface PageTemoignage {
   createdAt?: string | null;
 }
 /**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-foi".
+ */
+export interface PageFoi {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+    quoteText?: string | null;
+    quoteSource?: string | null;
+  };
+  shortcuts?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  themes?: {
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    /**
+     * Le nombre de ressources de chaque thème est calculé automatiquement.
+     */
+    cards?:
+      | {
+          theme: 'dieu' | 'jesus' | 'bible' | 'priere' | 'vie' | 'croissance' | 'famille' | 'autres';
+          image?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  start?: {
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    button?: string | null;
+    steps?:
+      | {
+          title: string;
+          link?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+    buttonLink?: string | null;
+  };
+  verses?: {
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    /**
+     * Un verset différent est affiché chaque jour, à tour de rôle.
+     */
+    list?:
+      | {
+          text: string;
+          reference: string;
+          id?: string | null;
+        }[]
+      | null;
+    image?: (number | null) | Media;
+  };
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -3803,6 +4008,88 @@ export interface PageTemoignagesSelect<T extends boolean = true> {
         eyebrow?: T;
         title?: T;
         text?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-foi_select".
+ */
+export interface PageFoiSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+        quoteText?: T;
+        quoteSource?: T;
+      };
+  shortcuts?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  themes?:
+    | T
+    | {
+        title?: T;
+        cards?:
+          | T
+          | {
+              theme?: T;
+              image?: T;
+              id?: T;
+            };
+      };
+  start?:
+    | T
+    | {
+        title?: T;
+        button?: T;
+        steps?:
+          | T
+          | {
+              title?: T;
+              link?: T;
+              id?: T;
+            };
+        buttonLink?: T;
+      };
+  verses?:
+    | T
+    | {
+        title?: T;
+        list?:
+          | T
+          | {
+              text?: T;
+              reference?: T;
+              id?: T;
+            };
+        image?: T;
+      };
+  cta?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        image?: T;
       };
   _status?: T;
   updatedAt?: T;

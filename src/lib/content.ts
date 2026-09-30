@@ -7,7 +7,7 @@ import { cache } from 'react'
 import { HomePage as HomePageConfig } from '@/globals/HomePage'
 import { pageGlobals } from '@/globals/pages'
 import { SiteSettings as SiteSettingsConfig } from '@/globals/SiteSettings'
-import type { Config, Event, HomePage, Media, Ministry, Mission, Sermon, SiteSetting, Testimonial } from '@/payload-types'
+import type { Config, Event, FaithResource, HomePage, Media, Ministry, Mission, Sermon, SiteSetting, Testimonial } from '@/payload-types'
 import { extractDefaults, withDefaults } from './defaults'
 
 const homeDefaults = extractDefaults(HomePageConfig.fields)
@@ -228,6 +228,38 @@ export const getAllTestimonials = cache(async (): Promise<Testimonial[]> =>
     })
     return res.docs
   }, []),
+)
+
+/** Ressources publiées de « Découvrir la foi » (brouillons inclus en mode édition). */
+export const getFaithResources = cache(async (): Promise<FaithResource[]> =>
+  safe(async () => {
+    const draft = await isEditing()
+    const res = await (await payloadClient()).find({
+      collection: 'faith-resources',
+      sort: '-publishedAt',
+      limit: 1000,
+      pagination: false,
+      depth: 1,
+      draft,
+      overrideAccess: false,
+    })
+    return res.docs
+  }, []),
+)
+
+export const getFaithResourceBySlug = cache(async (slug: string): Promise<FaithResource | null> =>
+  safe(async () => {
+    const draft = await isEditing()
+    const res = await (await payloadClient()).find({
+      collection: 'faith-resources',
+      where: { slug: { equals: slug } },
+      limit: 1,
+      depth: 1,
+      draft,
+      overrideAccess: false,
+    })
+    return res.docs[0] ?? null
+  }, null),
 )
 
 /** Retourne le média s’il est peuplé (profondeur ≥ 1), sinon null. */

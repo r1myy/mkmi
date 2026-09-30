@@ -26,6 +26,7 @@ import {
   SocialPosts,
   Sermons,
   Testimonials,
+  FaithResources,
   Users,
   VisitPlans,
 } from './collections'
@@ -74,6 +75,7 @@ export default buildConfig({
     Ministries,
     Missions,
     Testimonials,
+    FaithResources,
     ContactMessages,
     Announcements,
     EmailCampaigns,

@@ -29,6 +29,7 @@ import { default as default_0fae24583ff829190930f43779186079 } from '@/component
 import { default as default_8818099db63af0b13758d7189c38d347 } from '@/components/admin/MinistriesList'
 import { default as default_427715a5371283387c020b5f8c3ae4fe } from '@/components/admin/MissionsList'
 import { default as default_4b03d1a78902cf8eb51009332784e943 } from '@/components/admin/TestimonialsList'
+import { default as default_98bfc716c97a9d72f242b2932bae78eb } from '@/components/admin/FaithResourcesList'
 import { default as default_d59ae891439918b9eb6183c2c7f5a187 } from '@/components/admin/MessagesInbox'
 import { default as default_0880ce1cb95a64d9d59ad639618507b1 } from '@/components/admin/AnnouncementsList'
 import { default as default_2715d5d74bfe9711e9050e1b9e036fd6 } from '@/components/admin/EmailsList'
@@ -82,6 +83,7 @@ export const importMap = {
   "@/components/admin/MinistriesList#default": default_8818099db63af0b13758d7189c38d347,
   "@/components/admin/MissionsList#default": default_427715a5371283387c020b5f8c3ae4fe,
   "@/components/admin/TestimonialsList#default": default_4b03d1a78902cf8eb51009332784e943,
+  "@/components/admin/FaithResourcesList#default": default_98bfc716c97a9d72f242b2932bae78eb,
   "@/components/admin/MessagesInbox#default": default_d59ae891439918b9eb6183c2c7f5a187,
   "@/components/admin/AnnouncementsList#default": default_0880ce1cb95a64d9d59ad639618507b1,
   "@/components/admin/EmailsList#default": default_2715d5d74bfe9711e9050e1b9e036fd6,

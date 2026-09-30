@@ -801,6 +801,121 @@ export const PageTemoignages = pageGlobal('page-temoignages', 'Témoignages', '/
   }),
 ])
 
+const themeCards = (defaultValue: { theme: string }[]): Field => ({
+  name: 'cards',
+  label: 'Cartes de thèmes',
+  type: 'array',
+  maxRows: 8,
+  defaultValue,
+  admin: { initCollapsed: true, description: 'Le nombre de ressources de chaque thème est calculé automatiquement.' },
+  fields: [
+    {
+      name: 'theme',
+      label: 'Thème',
+      type: 'select',
+      required: true,
+      options: [
+        { label: 'Qui est Dieu ?', value: 'dieu' },
+        { label: 'Qui est Jésus ?', value: 'jesus' },
+        { label: 'Lire la Bible', value: 'bible' },
+        { label: 'La prière', value: 'priere' },
+        { label: 'La vie chrétienne', value: 'vie' },
+        { label: 'La croissance spirituelle', value: 'croissance' },
+        { label: 'La famille', value: 'famille' },
+        { label: 'Autres', value: 'autres' },
+      ],
+    },
+    image('image', 'Photo'),
+  ],
+})
+
+export const PageFoi = pageGlobal('page-foi', 'Découvrir la foi', '/decouvrir/foi', [
+  hero({
+    eyebrow: 'Découvrir la foi',
+    title: 'Un chemin de foi\npour *aujourd’hui.*',
+    text: 'Explorez des ressources simples et pratiques pour connaître Dieu, comprendre la Bible, grandir dans la foi et vivre une relation authentique avec Jésus-Christ.',
+    primary: 'Commencer mon parcours',
+    secondary: 'Explorer par thème',
+    quote: ['Cherchez l’Éternel pendant qu’il se trouve ; invoquez-le, tandis qu’il est près.', 'Ésaïe 55:6'],
+  }),
+  {
+    name: 'shortcuts',
+    label: 'Raccourcis',
+    description: 'La rangée d’icônes sous le haut de page.',
+    fields: [
+      items(
+        'items',
+        'Raccourcis',
+        [
+          { icon: 'book', title: 'Qui est Dieu ?', text: 'Découvrez son amour' },
+          { icon: 'users', title: 'Qui est Jésus ?', text: 'Sa vie, sa mission' },
+          { icon: 'church', title: 'Lire la Bible', text: 'Comprendre sa Parole' },
+          { icon: 'sprout', title: 'Grandir dans la foi', text: 'Des pas concrets' },
+          { icon: 'hands', title: 'Prier', text: 'Parlez à Dieu' },
+          { icon: 'heart', title: 'Vivre en communauté', text: 'Une famille pour vous' },
+        ],
+        { maxRows: 6 },
+      ),
+    ],
+  },
+  section('themes', 'Explorer par thème', { title: 'Explorer par thème' }, [
+    themeCards([{ theme: 'bible' }, { theme: 'jesus' }, { theme: 'priere' }, { theme: 'croissance' }, { theme: 'vie' }]),
+  ]),
+  section('start', 'Par où commencer ?', { title: 'Par où commencer ?', button: 'Suivre le parcours complet' }, [
+    {
+      name: 'steps',
+      label: 'Étapes',
+      type: 'array',
+      maxRows: 8,
+      defaultValue: [
+        { title: 'Connaître Dieu', link: '/decouvrir/foi?theme=dieu' },
+        { title: 'Découvrir Jésus-Christ', link: '/decouvrir/foi?theme=jesus' },
+        { title: 'Lire la Bible', link: '/decouvrir/foi?theme=bible' },
+        { title: 'Apprendre à prier', link: '/decouvrir/foi?theme=priere' },
+        { title: 'Vivre la foi au quotidien', link: '/decouvrir/foi?theme=vie' },
+      ],
+      admin: { initCollapsed: true },
+      fields: [
+        {
+          type: 'row',
+          fields: [
+            { name: 'title', label: 'Étape', type: 'text', required: true },
+            { name: 'link', label: 'Lien (ex. /decouvrir/foi?theme=bible)', type: 'text' },
+          ],
+        },
+      ],
+    },
+    { name: 'buttonLink', label: 'Lien du bouton', type: 'text', defaultValue: '/decouvrir/foi?type=parcours' },
+  ]),
+  section('verses', 'Versets du jour', { title: 'Versets du jour' }, [
+    {
+      name: 'list',
+      label: 'Versets',
+      type: 'array',
+      admin: { initCollapsed: true, description: 'Un verset différent est affiché chaque jour, à tour de rôle.' },
+      defaultValue: [
+        {
+          text: 'Car je connais les projets que j’ai formés sur vous, dit l’Éternel, projets de paix et non de malheur, afin de vous donner un avenir et de l’espérance.',
+          reference: 'Jérémie 29:11',
+        },
+        { text: 'Ta parole est une lampe à mes pieds, et une lumière sur mon sentier.', reference: 'Psaume 119:105' },
+        { text: 'Approchez-vous de Dieu, et il s’approchera de vous.', reference: 'Jacques 4:8' },
+      ],
+      fields: [
+        { name: 'text', label: 'Verset', type: 'textarea', required: true },
+        { name: 'reference', label: 'Référence', type: 'text', required: true },
+      ],
+    },
+    image('image', 'Photo de fond'),
+  ]),
+  cta({
+    eyebrow: 'Besoin d’en parler ?',
+    title: 'Vous avez des questions sur la foi ?',
+    text: 'Nous sommes là pour vous accompagner dans votre parcours.',
+    primary: 'Nous contacter',
+  }),
+])
+
 export const pageGlobals = [
   PageEglise,
   PageDecouvrir,
@@ -813,6 +928,7 @@ export const pageGlobals = [
   PageContact,
   PageVisite,
   PageTemoignages,
+  PageFoi,
 ]
 
 /** Chemin public de chaque fiche (pour les liens « Modifier » du site). */
@@ -828,4 +944,5 @@ export const pagePaths: Record<string, string> = {
   'page-contact': '/contact',
   'page-visite': '/planifier-ma-visite',
   'page-temoignages': '/temoignages',
+  'page-foi': '/decouvrir/foi',
 }
