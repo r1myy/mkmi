@@ -916,6 +916,24 @@ export const PageFoi = pageGlobal('page-foi', 'Découvrir la foi', '/decouvrir/f
   }),
 ])
 
+export const PageRecherche = pageGlobal('page-recherche', 'Recherche', '/recherche', [
+  section(
+    'hero',
+    'Haut de page',
+    {
+      eyebrow: 'Recherche',
+      title: 'Résultats de *recherche*',
+      text: 'Trouvez des prédications, des ressources pour grandir dans la foi, des témoignages, des événements et des ministères.',
+    },
+    [image('image', 'Photo de fond')],
+  ),
+  section('newsletter', 'Infolettre', {
+    eyebrow: 'Restez connecté',
+    title: 'Recevez nos nouveaux messages',
+    text: 'Abonnez-vous pour être informé de nos dernières prédications, études bibliques et enseignements.',
+  }),
+])
+
 export const pageGlobals = [
   PageEglise,
   PageDecouvrir,
@@ -929,6 +947,7 @@ export const pageGlobals = [
   PageVisite,
   PageTemoignages,
   PageFoi,
+  PageRecherche,
 ]
 
 /** Chemin public de chaque fiche (pour les liens « Modifier » du site). */
@@ -945,4 +964,5 @@ export const pagePaths: Record<string, string> = {
   'page-visite': '/planifier-ma-visite',
   'page-temoignages': '/temoignages',
   'page-foi': '/decouvrir/foi',
+  'page-recherche': '/recherche',
 }

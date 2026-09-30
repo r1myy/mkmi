@@ -139,6 +139,7 @@ export interface Config {
     'page-visite': PageVisite;
     'page-temoignages': PageTemoignage;
     'page-foi': PageFoi;
+    'page-recherche': PageRecherche;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
@@ -155,6 +156,7 @@ export interface Config {
     'page-visite': PageVisiteSelect<false> | PageVisiteSelect<true>;
     'page-temoignages': PageTemoignagesSelect<false> | PageTemoignagesSelect<true>;
     'page-foi': PageFoiSelect<false> | PageFoiSelect<true>;
+    'page-recherche': PageRechercheSelect<false> | PageRechercheSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -3054,6 +3056,35 @@ export interface PageFoi {
   createdAt?: string | null;
 }
 /**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-recherche".
+ */
+export interface PageRecherche {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    image?: (number | null) | Media;
+  };
+  newsletter?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -4090,6 +4121,31 @@ export interface PageFoiSelect<T extends boolean = true> {
         text?: T;
         primary?: T;
         image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-recherche_select".
+ */
+export interface PageRechercheSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        image?: T;
+      };
+  newsletter?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
       };
   _status?: T;
   updatedAt?: T;
