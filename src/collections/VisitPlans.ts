@@ -13,6 +13,7 @@ export const VisitPlans: CollectionConfig = {
     { name: 'visitDate', label: 'Date souhaitée', type: 'date' },
     { name: 'people', label: 'Nombre de personnes', type: 'number', min: 1, defaultValue: 1 },
     { name: 'withChildren', label: 'Avec enfants', type: 'checkbox' },
+    { name: 'message', label: 'Questions ou besoins particuliers', type: 'textarea', maxLength: 1000 },
     { name: 'consent', label: 'Consentement', type: 'checkbox', required: true },
   ],
 }

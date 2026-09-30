@@ -17,6 +17,7 @@ const pages: { path: string; priority: number; changeFrequency: MetadataRoute.Si
   { path: '/donner', priority: 0.6, changeFrequency: 'yearly' },
   { path: '/priere', priority: 0.7, changeFrequency: 'yearly' },
   { path: '/contact', priority: 0.7, changeFrequency: 'yearly' },
+  { path: '/planifier-ma-visite', priority: 0.8, changeFrequency: 'monthly' },
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -700,6 +700,77 @@ export const PageContact = pageGlobal('page-contact', 'Nous contacter', '/contac
   }),
 ])
 
+export const PageVisite = pageGlobal('page-visite', 'Planifier ma visite', '/planifier-ma-visite', [
+  hero({
+    eyebrow: 'Planifier ma visite',
+    title: 'Votre première visite,\n*on vous attend.*',
+    text: 'Venir dans une nouvelle église peut sembler intimidant. Dites-nous quand vous comptez venir : une personne de l’équipe d’accueil sera là pour vous recevoir et répondre à vos questions.',
+    primary: 'Planifier ma visite',
+    secondary: 'À quoi s’attendre',
+  }),
+  features([
+    { icon: 'handshake', title: 'Un accueil personnel', text: 'Quelqu’un vous attend à l’entrée et vous fait découvrir les lieux.' },
+    { icon: 'heart', title: 'Venez comme vous êtes', text: 'Pas de code vestimentaire : l’important, c’est que vous soyez à l’aise.' },
+    { icon: 'baby', title: 'Pour toute la famille', text: 'Les enfants et les familles sont les bienvenus.' },
+    { icon: 'book', title: 'Une Parole pour aujourd’hui', text: 'Un message biblique clair, pratique et plein d’espérance.' },
+  ]),
+  section(
+    'expect',
+    'À quoi s’attendre',
+    {
+      eyebrow: 'À quoi s’attendre ?',
+      title: 'Le déroulement d’un culte.',
+      text: 'Nos cultes sont chaleureux, vivants et centrés sur Jésus. Voici comment se passe une rencontre, pour que vous sachiez à quoi vous attendre avant d’arriver.',
+      image: 'Photo',
+    },
+    [
+      items(
+        'steps',
+        'Étapes du culte',
+        [
+          { icon: 'handshake', title: 'Arrivée et accueil', text: 'L’équipe d’accueil vous reçoit, vous oriente et vous présente quelques personnes.' },
+          { icon: 'music', title: 'Louange et prière', text: 'Un temps de chants et de prière pour adorer Dieu ensemble.' },
+          { icon: 'book', title: 'Prédication', text: 'Un message tiré de la Bible, appliqué à la vie de tous les jours.' },
+          { icon: 'users', title: 'Moment fraternel', text: 'Après le culte, prenez le temps de faire connaissance et de poser vos questions.' },
+        ],
+        { maxRows: 6 },
+      ),
+    ],
+  ),
+  section(
+    'plan',
+    'Formulaire de visite',
+    {
+      eyebrow: 'Planifier ma visite',
+      title: 'Dites-nous quand vous venez.',
+      text: 'Remplissez ce court formulaire : nous vous attendrons et nous vous écrirons si nous avons des précisions à vous donner avant votre visite.',
+    },
+    [
+      text('formTitle', 'Titre du formulaire', 'Je planifie ma visite'),
+      text('parking', 'Stationnement', 'Les informations sur le stationnement seront publiées prochainement.', { long: true }),
+      text('kids', 'Pour les enfants', 'Les familles sont les bienvenues. Écrivez-nous pour savoir ce qui est prévu pour les enfants.', { long: true }),
+      text('access', 'Accessibilité', 'Informations sur l’accessibilité des lieux à venir.', { long: true }),
+    ],
+  ),
+  section(
+    'faq',
+    'Questions fréquentes',
+    {
+      eyebrow: 'Questions fréquentes',
+      title: 'Avant de venir',
+      text: 'Les réponses aux questions que l’on nous pose le plus souvent avant une première visite.',
+    },
+    [faqField()],
+  ),
+  cta({
+    eyebrow: 'Au plaisir de vous rencontrer',
+    title: 'Une place vous attend.',
+    text: 'Vous avez une question avant de venir ? Notre équipe est là pour vous répondre.',
+    primary: 'Nous écrire',
+    secondary: 'Découvrir MKMI',
+  }),
+])
+
 export const pageGlobals = [
   PageEglise,
   PageDecouvrir,
@@ -710,6 +781,7 @@ export const pageGlobals = [
   PagePriere,
   PageDon,
   PageContact,
+  PageVisite,
 ]
 
 /** Chemin public de chaque fiche (pour les liens « Modifier » du site). */
@@ -723,4 +795,5 @@ export const pagePaths: Record<string, string> = {
   'page-priere': '/priere',
   'page-don': '/donner',
   'page-contact': '/contact',
+  'page-visite': '/planifier-ma-visite',
 }

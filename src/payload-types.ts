@@ -134,6 +134,7 @@ export interface Config {
     'page-priere': PagePriere;
     'page-don': PageDon;
     'page-contact': PageContact;
+    'page-visite': PageVisite;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
@@ -147,6 +148,7 @@ export interface Config {
     'page-priere': PagePriereSelect<false> | PagePriereSelect<true>;
     'page-don': PageDonSelect<false> | PageDonSelect<true>;
     'page-contact': PageContactSelect<false> | PageContactSelect<true>;
+    'page-visite': PageVisiteSelect<false> | PageVisiteSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -465,6 +467,7 @@ export interface VisitPlan {
   visitDate?: string | null;
   people?: number | null;
   withChildren?: boolean | null;
+  message?: string | null;
   consent: boolean;
   updatedAt: string;
   createdAt: string;
@@ -991,6 +994,7 @@ export interface VisitPlansSelect<T extends boolean = true> {
   visitDate?: T;
   people?: T;
   withChildren?: T;
+  message?: T;
   consent?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2585,6 +2589,156 @@ export interface PageContact {
   createdAt?: string | null;
 }
 /**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-visite".
+ */
+export interface PageVisite {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  features?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  expect?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    image?: (number | null) | Media;
+    steps?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  plan?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    formTitle?: string | null;
+    parking?: string | null;
+    kids?: string | null;
+    access?: string | null;
+  };
+  faq?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    questions?:
+      | {
+          question: string;
+          answer: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -3385,6 +3539,89 @@ export interface PageContactSelect<T extends boolean = true> {
     | {
         eyebrow?: T;
         title?: T;
+      };
+  faq?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        questions?:
+          | T
+          | {
+              question?: T;
+              answer?: T;
+              id?: T;
+            };
+      };
+  cta?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-visite_select".
+ */
+export interface PageVisiteSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  features?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  expect?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        image?: T;
+        steps?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  plan?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        formTitle?: T;
+        parking?: T;
+        kids?: T;
+        access?: T;
       };
   faq?:
     | T

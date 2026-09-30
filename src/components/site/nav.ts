@@ -29,7 +29,6 @@ export const upcomingPages: Record<string, string> = {
   'decouvrir/foi': 'Découvrir la foi',
   temoignages: 'Témoignages',
   servir: 'Servir',
-  'planifier-ma-visite': 'Planifier ma visite',
   recherche: 'Recherche',
   confidentialite: 'Politique de confidentialité',
   conditions: 'Conditions d’utilisation',

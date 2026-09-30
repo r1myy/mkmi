@@ -169,3 +169,48 @@ export async function registerForEvent(_prev: FormState, formData: FormData): Pr
     return { status: 'error', message: 'Une erreur est survenue. Réessayez plus tard.' }
   }
 }
+
+export async function submitVisitPlan(_prev: FormState, formData: FormData): Promise<FormState> {
+  const thanks = 'Merci ! Votre visite est notée : notre équipe d’accueil vous attend avec joie.'
+  if (formData.get('website')) return { status: 'success', message: thanks }
+
+  const name = clean(formData, 'name', 120)
+  const email = clean(formData, 'email', 254).toLowerCase()
+  const phone = clean(formData, 'phone', 40)
+  const message = clean(formData, 'message', 1000)
+  const people = Math.min(Math.max(Number(formData.get('people')) || 1, 1), 20)
+  const rawDate = clean(formData, 'visitDate', 10)
+  const visitDate = /^\d{4}-\d{2}-\d{2}$/.test(rawDate) ? new Date(`${rawDate}T12:00:00Z`) : null
+  if (!name) return { status: 'error', message: 'Veuillez indiquer votre nom.' }
+  if (!EMAIL.test(email)) return { status: 'error', message: 'Veuillez entrer une adresse courriel valide.' }
+  if (visitDate && visitDate.getTime() < Date.now() - 36 * 3600 * 1000) {
+    return { status: 'error', message: 'Veuillez choisir une date à venir.' }
+  }
+  if (formData.get('consent') !== 'on') {
+    return { status: 'error', message: 'Veuillez cocher la case de consentement.' }
+  }
+  if (!rateLimit(`visit:${clientKey(await headers())}`, 5, 60 * 60 * 1000)) {
+    return { status: 'error', message: 'Trop de tentatives. Réessayez plus tard.' }
+  }
+
+  try {
+    const payload = await getPayload({ config })
+    await payload.create({
+      collection: 'visit-plans',
+      data: {
+        name,
+        email,
+        phone: phone || undefined,
+        visitDate: visitDate?.toISOString(),
+        people,
+        withChildren: formData.get('withChildren') === 'on',
+        message: message || undefined,
+        consent: true,
+      },
+      overrideAccess: true,
+    })
+    return { status: 'success', message: thanks }
+  } catch {
+    return { status: 'error', message: 'Une erreur est survenue. Réessayez plus tard.' }
+  }
+}

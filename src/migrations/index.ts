@@ -15,6 +15,7 @@ import * as migration_20260929_075314_utilisateurs_statut from './20260929_07531
 import * as migration_20260929_075739_membres from './20260929_075739_membres';
 import * as migration_20260929_115757_messages_predications from './20260929_115757_messages_predications';
 import * as migration_20260929_221234_messages_reactions from './20260929_221234_messages_reactions';
+import * as migration_20260930_030150_page_visite from './20260930_030150_page_visite';
 
 export const migrations = [
   {
@@ -100,6 +101,11 @@ export const migrations = [
   {
     up: migration_20260929_221234_messages_reactions.up,
     down: migration_20260929_221234_messages_reactions.down,
-    name: '20260929_221234_messages_reactions'
+    name: '20260929_221234_messages_reactions',
+  },
+  {
+    up: migration_20260930_030150_page_visite.up,
+    down: migration_20260930_030150_page_visite.down,
+    name: '20260930_030150_page_visite'
   },
 ];
