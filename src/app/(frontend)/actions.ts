@@ -178,6 +178,7 @@ export async function submitVisitPlan(_prev: FormState, formData: FormData): Pro
   const email = clean(formData, 'email', 254).toLowerCase()
   const phone = clean(formData, 'phone', 40)
   const message = clean(formData, 'message', 1000)
+  const service = clean(formData, 'service', 120)
   const people = Math.min(Math.max(Number(formData.get('people')) || 1, 1), 20)
   const rawDate = clean(formData, 'visitDate', 10)
   const visitDate = /^\d{4}-\d{2}-\d{2}$/.test(rawDate) ? new Date(`${rawDate}T12:00:00Z`) : null
@@ -201,6 +202,7 @@ export async function submitVisitPlan(_prev: FormState, formData: FormData): Pro
         name,
         email,
         phone: phone || undefined,
+        service: service || undefined,
         visitDate: visitDate?.toISOString(),
         people,
         withChildren: formData.get('withChildren') === 'on',

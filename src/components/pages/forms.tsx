@@ -1,16 +1,16 @@
 'use client'
 
 import { useActionState, useState, type ComponentType, type ReactNode } from 'react'
-import { CalendarDays, CheckCircle2, Lock, Mail, Phone, Send, User } from 'lucide-react'
+import { CheckCircle2, Lock, Mail, Phone, Send, User } from 'lucide-react'
 
-import { registerForEvent, submitContactMessage, submitPrayerRequest, submitTestimonial, submitVisitPlan, type FormState } from '@/app/(frontend)/actions'
+import { registerForEvent, submitContactMessage, submitPrayerRequest, submitTestimonial, type FormState } from '@/app/(frontend)/actions'
 
 type Icon = ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' }>
 
-const inputClass =
+export const inputClass =
   'w-full rounded-xl border border-navy-900/15 bg-white py-3 pr-4 text-sm text-navy-900 placeholder:text-muted/70 focus:border-gold-400 focus:ring-2 focus:ring-gold-400/30 focus:outline-none'
 
-function Field({
+export function Field({
   name,
   label,
   icon: Icon,
@@ -89,7 +89,7 @@ function Check({ name, children }: { name: string; children: ReactNode }) {
   )
 }
 
-function Result({ state }: { state: FormState }) {
+export function Result({ state }: { state: FormState }) {
   if (state.status === 'idle') return null
   return (
     <p
@@ -106,11 +106,11 @@ function Result({ state }: { state: FormState }) {
   )
 }
 
-function Honeypot() {
+export function Honeypot() {
   return <input type="text" name="website" tabIndex={-1} autoComplete="off" className="hidden" aria-hidden="true" />
 }
 
-function Submit({ pending, children }: { pending: boolean; children: ReactNode }) {
+export function Submit({ pending, children }: { pending: boolean; children: ReactNode }) {
   return (
     <button
       type="submit"
@@ -204,56 +204,6 @@ export function EventRegistrationForm({ eventId }: { eventId: number }) {
       <Honeypot />
       <Result state={state} />
       <Submit pending={pending}>Confirmer mon inscription</Submit>
-    </form>
-  )
-}
-
-export function VisitForm({ serviceDay }: { serviceDay?: string | null }) {
-  const [state, action, pending] = useActionState<FormState, FormData>(submitVisitPlan, { status: 'idle' })
-  const [today] = useState(() => new Date().toLocaleDateString('en-CA', { timeZone: 'America/Toronto' }))
-  if (state.status === 'success') return <Result state={state} />
-  return (
-    <form action={action} className="space-y-4">
-      <Field name="name" label="Nom complet" icon={User} required autoComplete="name" />
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Field name="email" label="Adresse courriel" icon={Mail} type="email" required autoComplete="email" />
-        <Field name="phone" label="Téléphone (optionnel)" icon={Phone} type="tel" autoComplete="tel" />
-      </div>
-      <div className="grid gap-4 sm:grid-cols-2">
-        <label className="block">
-          <span className="mb-1.5 flex items-center gap-2 text-sm font-semibold text-navy-900">
-            <CalendarDays className="h-4 w-4 text-gold-500" aria-hidden="true" /> Date de votre visite
-          </span>
-          <input type="date" name="visitDate" min={today} className={`${inputClass} pl-4`} />
-          {serviceDay && <span className="mt-1 block text-xs text-muted">Culte le {serviceDay.toLowerCase()}</span>}
-        </label>
-        <label className="block">
-          <span className="mb-1.5 block text-sm font-semibold text-navy-900">Nombre de personnes</span>
-          <select name="people" defaultValue="1" className={`${inputClass} pl-4`}>
-            {[1, 2, 3, 4, 5, 6, 7, 8].map((n) => (
-              <option key={n} value={n}>
-                {n === 8 ? '8 ou plus' : n}
-              </option>
-            ))}
-          </select>
-        </label>
-      </div>
-      <Check name="withChildren">Je viendrai avec des enfants.</Check>
-      <label className="block">
-        <span className="mb-1.5 block text-sm font-semibold text-navy-900">Questions ou besoins particuliers (optionnel)</span>
-        <textarea name="message" rows={3} maxLength={1000} className={`${inputClass} resize-y pl-4`} />
-      </label>
-      <label className="flex items-start gap-3 text-sm text-muted">
-        <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 accent-gold-500" />
-        <span>J’accepte que MKMI Québec utilise ces informations pour préparer mon accueil. *</span>
-      </label>
-      <Honeypot />
-      <Result state={state} />
-      <Submit pending={pending}>Planifier ma visite</Submit>
-      <p className="flex items-start gap-2 text-xs text-muted">
-        <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
-        Vos informations servent uniquement à préparer votre accueil. Elles ne sont jamais publiées ni partagées.
-      </p>
     </form>
   )
 }

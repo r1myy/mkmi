@@ -472,6 +472,7 @@ export interface VisitPlan {
   name: string;
   email: string;
   phone?: string | null;
+  service?: string | null;
   visitDate?: string | null;
   people?: number | null;
   withChildren?: boolean | null;
@@ -1070,6 +1071,7 @@ export interface VisitPlansSelect<T extends boolean = true> {
   name?: T;
   email?: T;
   phone?: T;
+  service?: T;
   visitDate?: T;
   people?: T;
   withChildren?: T;
@@ -2754,6 +2756,19 @@ export interface PageVisite {
         }[]
       | null;
   };
+  services?: {
+    list?:
+      | {
+          name: string;
+          badge?: string | null;
+          weekday: '0' | '1' | '2' | '3' | '4' | '5' | '6';
+          time?: string | null;
+          text?: string | null;
+          image?: (number | null) | Media;
+          id?: string | null;
+        }[]
+      | null;
+  };
   expect?: {
     eyebrow?: string | null;
     /**
@@ -2806,6 +2821,7 @@ export interface PageVisite {
     formTitle?: string | null;
     parking?: string | null;
     kids?: string | null;
+    transit?: string | null;
     access?: string | null;
   };
   faq?: {
@@ -3942,6 +3958,21 @@ export interface PageVisiteSelect<T extends boolean = true> {
               id?: T;
             };
       };
+  services?:
+    | T
+    | {
+        list?:
+          | T
+          | {
+              name?: T;
+              badge?: T;
+              weekday?: T;
+              time?: T;
+              text?: T;
+              image?: T;
+              id?: T;
+            };
+      };
   expect?:
     | T
     | {
@@ -3967,6 +3998,7 @@ export interface PageVisiteSelect<T extends boolean = true> {
         formTitle?: T;
         parking?: T;
         kids?: T;
+        transit?: T;
         access?: T;
       };
   faq?:

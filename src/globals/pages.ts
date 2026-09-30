@@ -703,17 +703,73 @@ export const PageContact = pageGlobal('page-contact', 'Nous contacter', '/contac
 export const PageVisite = pageGlobal('page-visite', 'Planifier ma visite', '/planifier-ma-visite', [
   hero({
     eyebrow: 'Planifier ma visite',
-    title: 'Votre première visite,\n*on vous attend.*',
-    text: 'Venir dans une nouvelle église peut sembler intimidant. Dites-nous quand vous comptez venir : une personne de l’équipe d’accueil sera là pour vous recevoir et répondre à vos questions.',
+    title: 'Planifier ma *visite*',
+    text: 'Nous sommes ravis de vous accueillir ! Choisissez le jour de votre visite : une personne de l’équipe d’accueil sera là pour vous recevoir, vous faire découvrir notre communauté et répondre à vos questions.',
     primary: 'Planifier ma visite',
     secondary: 'À quoi s’attendre',
   }),
   features([
-    { icon: 'handshake', title: 'Un accueil personnel', text: 'Quelqu’un vous attend à l’entrée et vous fait découvrir les lieux.' },
-    { icon: 'heart', title: 'Venez comme vous êtes', text: 'Pas de code vestimentaire : l’important, c’est que vous soyez à l’aise.' },
-    { icon: 'baby', title: 'Pour toute la famille', text: 'Les enfants et les familles sont les bienvenus.' },
-    { icon: 'book', title: 'Une Parole pour aujourd’hui', text: 'Un message biblique clair, pratique et plein d’espérance.' },
+    { icon: 'users', title: 'Un accueil chaleureux', text: 'Une équipe sera là pour vous guider.' },
+    { icon: 'book', title: 'Une expérience inspirante', text: 'Louez, apprenez et grandissez.' },
+    { icon: 'heart', title: 'Une communauté accueillante', text: 'Vous n’êtes pas seul(e).' },
   ]),
+  {
+    name: 'services',
+    label: 'Services proposés',
+    description: 'Les rencontres que les visiteurs peuvent choisir. Les dates proposées sont calculées à partir du jour de la semaine.',
+    fields: [
+      {
+        name: 'list',
+        label: 'Services',
+        type: 'array',
+        minRows: 1,
+        maxRows: 6,
+        admin: { initCollapsed: true },
+        defaultValue: [
+          {
+            name: 'Culte dominical',
+            badge: 'Culte principal',
+            weekday: '0',
+            time: 'Heure à confirmer',
+            text: 'Un temps de louange, de prédication et de communion fraternelle.',
+          },
+        ],
+        fields: [
+          {
+            type: 'row',
+            fields: [
+              { name: 'name', label: 'Nom', type: 'text', required: true },
+              { name: 'badge', label: 'Étiquette (ex. Culte principal)', type: 'text' },
+            ],
+          },
+          {
+            type: 'row',
+            fields: [
+              {
+                name: 'weekday',
+                label: 'Jour',
+                type: 'select',
+                required: true,
+                defaultValue: '0',
+                options: [
+                  { label: 'Dimanche', value: '0' },
+                  { label: 'Lundi', value: '1' },
+                  { label: 'Mardi', value: '2' },
+                  { label: 'Mercredi', value: '3' },
+                  { label: 'Jeudi', value: '4' },
+                  { label: 'Vendredi', value: '5' },
+                  { label: 'Samedi', value: '6' },
+                ],
+              },
+              { name: 'time', label: 'Heure (ex. 10 h 00 – 12 h 00)', type: 'text', defaultValue: 'Heure à confirmer' },
+            ],
+          },
+          { name: 'text', label: 'Description', type: 'textarea', admin: { rows: 2 } },
+          image('image', 'Photo'),
+        ],
+      },
+    ],
+  },
   section(
     'expect',
     'À quoi s’attendre',
@@ -749,6 +805,7 @@ export const PageVisite = pageGlobal('page-visite', 'Planifier ma visite', '/pla
       text('formTitle', 'Titre du formulaire', 'Je planifie ma visite'),
       text('parking', 'Stationnement', 'Les informations sur le stationnement seront publiées prochainement.', { long: true }),
       text('kids', 'Pour les enfants', 'Les familles sont les bienvenues. Écrivez-nous pour savoir ce qui est prévu pour les enfants.', { long: true }),
+      text('transit', 'Transport en commun', 'Informations sur les autobus (RTC) à venir.', { long: true }),
       text('access', 'Accessibilité', 'Informations sur l’accessibilité des lieux à venir.', { long: true }),
     ],
   ),
