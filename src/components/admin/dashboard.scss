@@ -1916,3 +1916,79 @@ html[data-theme='dark'] {
     gap: 6px;
   }
 }
+
+// ---------- Témoignages ----------
+.mk-btn--sm {
+  padding: 6px 10px;
+  font-size: 12px;
+  border-radius: 8px;
+}
+.mk-tmono {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 260px;
+  max-width: 420px;
+  > span:last-child {
+    display: grid;
+    gap: 2px;
+    min-width: 0;
+  }
+  &:hover strong {
+    color: var(--mk-blue);
+  }
+  &__thumb {
+    position: relative;
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 76px;
+    height: 54px;
+    border-radius: 10px;
+    background: var(--mk-navy) center / cover;
+    color: #fff;
+    .mk-duration {
+      right: 4px;
+      bottom: 4px;
+      font-size: 10px;
+    }
+  }
+}
+.mk-vbars {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 4px;
+  height: 140px;
+  align-items: end;
+  &__col {
+    display: grid;
+    grid-template-rows: 1fr auto;
+    height: 100%;
+    gap: 4px;
+    align-items: end;
+    justify-items: center;
+  }
+  &__bar {
+    width: 100%;
+    min-height: 2px;
+    border-radius: 4px 4px 0 0;
+    background: linear-gradient(180deg, #4f7de0, #1d4fa3);
+  }
+  &__label {
+    font-size: 10px;
+    color: var(--mk-muted);
+  }
+}
+.mk-tabs a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.mk-table .mk-row-actions:has(form) {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  > * + * {
+    margin-left: 0;
+  }
+}

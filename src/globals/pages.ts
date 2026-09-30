@@ -771,6 +771,36 @@ export const PageVisite = pageGlobal('page-visite', 'Planifier ma visite', '/pla
   }),
 ])
 
+export const PageTemoignages = pageGlobal('page-temoignages', 'Témoignages', '/temoignages', [
+  hero({
+    eyebrow: 'Témoignages',
+    title: 'Des vies transformées\npar la *puissance de Dieu.*',
+    text: 'Découvrez comment Dieu agit encore aujourd’hui dans la vie des hommes et des femmes de notre communauté, à travers des témoignages vrais et inspirants.',
+    primary: 'Partager mon témoignage',
+    secondary: 'Voir les témoignages',
+  }),
+  features([
+    { icon: 'book', title: 'Encourager votre foi', text: 'Des histoires vraies qui édifient.' },
+    { icon: 'heart', title: 'Voir l’œuvre de Dieu', text: 'Des vies transformées.' },
+    { icon: 'users', title: 'Une communauté vivante', text: 'Témoignons ensemble de sa fidélité.' },
+  ]),
+  section(
+    'share',
+    'Partager un témoignage',
+    {
+      eyebrow: 'Partagez votre témoignage',
+      title: 'Dieu a fait quelque chose dans votre vie ?',
+      text: 'Votre histoire peut encourager d’autres personnes. Écrivez-la ici : notre équipe la relira avec vous avant toute publication, et rien n’est publié sans votre accord.',
+    },
+    [text('formTitle', 'Titre du formulaire', 'Soumettre un témoignage écrit')],
+  ),
+  section('newsletter', 'Infolettre', {
+    eyebrow: 'Restez connecté',
+    title: 'Recevez nos nouveaux témoignages',
+    text: 'Abonnez-vous pour être informé des nouveaux témoignages, prédications et événements de notre église.',
+  }),
+])
+
 export const pageGlobals = [
   PageEglise,
   PageDecouvrir,
@@ -782,6 +812,7 @@ export const pageGlobals = [
   PageDon,
   PageContact,
   PageVisite,
+  PageTemoignages,
 ]
 
 /** Chemin public de chaque fiche (pour les liens « Modifier » du site). */
@@ -796,4 +827,5 @@ export const pagePaths: Record<string, string> = {
   'page-don': '/donner',
   'page-contact': '/contact',
   'page-visite': '/planifier-ma-visite',
+  'page-temoignages': '/temoignages',
 }

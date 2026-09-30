@@ -93,7 +93,7 @@ export type Feature = { icon: Icon; title: string; text?: string | null }
 export function FeatureStrip({ items }: { items: Feature[] }) {
   return (
     <div className="container-site relative z-10 -mt-12">
-      <ul className="grid gap-px overflow-hidden rounded-2xl bg-navy-900/10 shadow-[0_24px_60px_-30px_rgba(11,22,40,.5)] sm:grid-cols-2 lg:grid-cols-4">
+      <ul className={clsx('grid gap-px overflow-hidden rounded-2xl bg-navy-900/10 shadow-[0_24px_60px_-30px_rgba(11,22,40,.5)]', items.length === 3 ? 'md:grid-cols-3' : 'sm:grid-cols-2 lg:grid-cols-4')}>
         {items.map(({ icon: Icon, title, text }) => (
           <li key={title} className="flex gap-4 bg-white p-6">
             <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gold-400/15 text-navy-900">

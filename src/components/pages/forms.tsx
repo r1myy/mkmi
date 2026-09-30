@@ -3,7 +3,7 @@
 import { useActionState, useState, type ComponentType, type ReactNode } from 'react'
 import { CalendarDays, CheckCircle2, Lock, Mail, Phone, Send, User } from 'lucide-react'
 
-import { registerForEvent, submitContactMessage, submitPrayerRequest, submitVisitPlan, type FormState } from '@/app/(frontend)/actions'
+import { registerForEvent, submitContactMessage, submitPrayerRequest, submitTestimonial, submitVisitPlan, type FormState } from '@/app/(frontend)/actions'
 
 type Icon = ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' }>
 
@@ -253,6 +253,42 @@ export function VisitForm({ serviceDay }: { serviceDay?: string | null }) {
       <p className="flex items-start gap-2 text-xs text-muted">
         <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         Vos informations servent uniquement à préparer votre accueil. Elles ne sont jamais publiées ni partagées.
+      </p>
+    </form>
+  )
+}
+
+export function TestimonyForm({ categories }: { categories: readonly { label: string; value: string }[] }) {
+  const [state, action, pending] = useActionState<FormState, FormData>(submitTestimonial, { status: 'idle' })
+  if (state.status === 'success') return <Result state={state} />
+  return (
+    <form action={action} className="space-y-4">
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field name="firstName" label="Votre nom (tel qu’affiché)" icon={User} required autoComplete="name" />
+        <Field name="email" label="Adresse courriel" icon={Mail} type="email" required autoComplete="email" />
+      </div>
+      <Field name="title" label="Titre de votre témoignage" required />
+      <label className="block">
+        <span className="mb-1.5 block text-sm font-semibold text-navy-900">Catégorie</span>
+        <select name="category" defaultValue="autre" className={`${inputClass} pl-4`}>
+          {categories.map((c) => (
+            <option key={c.value} value={c.value}>
+              {c.label}
+            </option>
+          ))}
+        </select>
+      </label>
+      <Message name="text" label="Votre témoignage" max={4000} />
+      <label className="flex items-start gap-3 text-sm text-muted">
+        <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 accent-gold-500" />
+        <span>J’accepte que MKMI Québec publie mon témoignage sur son site après relecture, avec le nom indiqué ci-dessus. *</span>
+      </label>
+      <Honeypot />
+      <Result state={state} />
+      <Submit pending={pending}>Envoyer mon témoignage</Submit>
+      <p className="flex items-start gap-2 text-xs text-muted">
+        <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+        Votre courriel ne sera jamais publié. Vous pouvez demander le retrait de votre témoignage en tout temps.
       </p>
     </form>
   )

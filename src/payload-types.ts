@@ -135,6 +135,7 @@ export interface Config {
     'page-don': PageDon;
     'page-contact': PageContact;
     'page-visite': PageVisite;
+    'page-temoignages': PageTemoignage;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
@@ -149,6 +150,7 @@ export interface Config {
     'page-don': PageDonSelect<false> | PageDonSelect<true>;
     'page-contact': PageContactSelect<false> | PageContactSelect<true>;
     'page-visite': PageVisiteSelect<false> | PageVisiteSelect<true>;
+    'page-temoignages': PageTemoignagesSelect<false> | PageTemoignagesSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -494,16 +496,38 @@ export interface Mission {
   _status?: ('draft' | 'published') | null;
 }
 /**
+ * Témoignages partagés par la communauté. Seuls les témoignages publiés et consentis apparaissent sur le site.
+ *
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "testimonials".
  */
 export interface Testimonial {
   id: number;
+  title: string;
   firstName: string;
+  category?:
+    | (
+        | 'guerison'
+        | 'delivrance'
+        | 'restauration'
+        | 'provision'
+        | 'direction'
+        | 'priere'
+        | 'etude'
+        | 'famille'
+        | 'autre'
+      )
+    | null;
   email?: string | null;
   text: string;
+  youtubeUrl?: string | null;
+  duration?: string | null;
   photo?: (number | null) | Media;
   consent: boolean;
+  status?: ('pending' | 'published' | 'rejected') | null;
+  /**
+   * Coché automatiquement quand le statut est « Publié ».
+   */
   approved?: boolean | null;
   updatedAt: string;
   createdAt: string;
@@ -1043,11 +1067,16 @@ export interface MissionsSelect<T extends boolean = true> {
  * via the `definition` "testimonials_select".
  */
 export interface TestimonialsSelect<T extends boolean = true> {
+  title?: T;
   firstName?: T;
+  category?: T;
   email?: T;
   text?: T;
+  youtubeUrl?: T;
+  duration?: T;
   photo?: T;
   consent?: T;
+  status?: T;
   approved?: T;
   updatedAt?: T;
   createdAt?: T;
@@ -2739,6 +2768,87 @@ export interface PageVisite {
   createdAt?: string | null;
 }
 /**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-temoignages".
+ */
+export interface PageTemoignage {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  features?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  share?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    formTitle?: string | null;
+  };
+  newsletter?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -3646,6 +3756,53 @@ export interface PageVisiteSelect<T extends boolean = true> {
         primary?: T;
         secondary?: T;
         image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-temoignages_select".
+ */
+export interface PageTemoignagesSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  features?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  share?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        formTitle?: T;
+      };
+  newsletter?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
       };
   _status?: T;
   updatedAt?: T;

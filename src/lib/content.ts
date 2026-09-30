@@ -214,6 +214,22 @@ export const getTestimonials = cache(async (limit = 6): Promise<Testimonial[]> =
   }, []),
 )
 
+/** Tous les témoignages publiés et consentis (page Témoignages). */
+export const getAllTestimonials = cache(async (): Promise<Testimonial[]> =>
+  safe(async () => {
+    const res = await (await payloadClient()).find({
+      collection: 'testimonials',
+      where: { and: [{ approved: { equals: true } }, { consent: { equals: true } }] },
+      sort: '-createdAt',
+      limit: 1000,
+      pagination: false,
+      depth: 1,
+      overrideAccess: false,
+    })
+    return res.docs
+  }, []),
+)
+
 /** Retourne le média s’il est peuplé (profondeur ≥ 1), sinon null. */
 export function asMedia(value: unknown): Media | null {
   return value && typeof value === 'object' && 'url' in value ? (value as Media) : null

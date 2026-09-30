@@ -214,3 +214,41 @@ export async function submitVisitPlan(_prev: FormState, formData: FormData): Pro
     return { status: 'error', message: 'Une erreur est survenue. Réessayez plus tard.' }
   }
 }
+
+const TESTIMONY_CATEGORIES = ['guerison', 'delivrance', 'restauration', 'provision', 'direction', 'priere', 'etude', 'famille', 'autre'] as const
+
+export async function submitTestimonial(_prev: FormState, formData: FormData): Promise<FormState> {
+  const thanks = 'Merci pour votre témoignage ! Notre équipe le relira avec soin avant de le publier.'
+  if (formData.get('website')) return { status: 'success', message: thanks }
+
+  const firstName = clean(formData, 'firstName', 80)
+  const email = clean(formData, 'email', 254).toLowerCase()
+  const title = clean(formData, 'title', 140)
+  const text = clean(formData, 'text', 4000)
+  const rawCategory = clean(formData, 'category', 20)
+  const category = (TESTIMONY_CATEGORIES as readonly string[]).includes(rawCategory)
+    ? (rawCategory as (typeof TESTIMONY_CATEGORIES)[number])
+    : 'autre'
+  if (!firstName || !title || text.length < 20) {
+    return { status: 'error', message: 'Veuillez indiquer votre nom, un titre et votre témoignage (20 caractères minimum).' }
+  }
+  if (!EMAIL.test(email)) return { status: 'error', message: 'Veuillez entrer une adresse courriel valide.' }
+  if (formData.get('consent') !== 'on') {
+    return { status: 'error', message: 'Veuillez cocher la case de consentement.' }
+  }
+  if (!rateLimit(`testimony:${clientKey(await headers())}`, 3, 60 * 60 * 1000)) {
+    return { status: 'error', message: 'Trop de tentatives. Réessayez plus tard.' }
+  }
+
+  try {
+    const payload = await getPayload({ config })
+    await payload.create({
+      collection: 'testimonials',
+      data: { firstName, email, title, text, category, consent: true, status: 'pending' },
+      overrideAccess: true,
+    })
+    return { status: 'success', message: thanks }
+  } catch {
+    return { status: 'error', message: 'Une erreur est survenue. Réessayez plus tard.' }
+  }
+}
