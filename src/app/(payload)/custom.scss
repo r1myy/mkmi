@@ -131,9 +131,10 @@ h3 {
   }
 
   &__home {
+    position: relative;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     padding: 9px 12px;
     border-radius: 10px;
     color: rgba(255, 255, 255, 0.85) !important;
@@ -144,11 +145,44 @@ h3 {
       background: rgba(255, 255, 255, 0.08);
     }
 
+    svg {
+      flex: none;
+      opacity: 0.85;
+    }
+
     &.is-active {
       background: var(--mk-gold);
       color: #0b1628 !important;
       font-weight: 700;
+      box-shadow: 0 10px 24px -14px rgba(245, 191, 79, 0.9);
+
+      svg {
+        opacity: 1;
+      }
     }
+
+    &:focus-visible {
+      outline: 2px solid var(--mk-gold);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Menu MKMI complet : les groupes par défaut de Payload sont masqués
+.nav .nav-group {
+  display: none;
+}
+
+.mk-menu-nav {
+  display: grid;
+  gap: 14px;
+
+  ul {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
 }
 

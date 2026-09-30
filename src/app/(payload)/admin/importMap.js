@@ -44,6 +44,7 @@ import { NavBrand as NavBrand_47aa48da0e11e9bbac3155f33546fa78 } from '@/compone
 import { default as default_0e7b23c75ea046975e1784ba01f82886 } from '@/components/admin/Dashboard'
 import { default as default_55d95e80ceb696c6f2694e0c812cb82e } from '@/components/admin/CommunicationsHub'
 import { default as default_aed186f427612c880d8a28f694f189dc } from '@/components/admin/SettingsView'
+import { default as default_2d565fb16b8d5f97f6298d41d058170e } from '@/components/admin/PagesView'
 import { CollectionCards as CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1 } from '@payloadcms/next/rsc'
 import { S3ClientUploadHandler as S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24 } from '@payloadcms/storage-s3/client'
 
@@ -95,6 +96,7 @@ export const importMap = {
   "@/components/admin/Dashboard#default": default_0e7b23c75ea046975e1784ba01f82886,
   "@/components/admin/CommunicationsHub#default": default_55d95e80ceb696c6f2694e0c812cb82e,
   "@/components/admin/SettingsView#default": default_aed186f427612c880d8a28f694f189dc,
+  "@/components/admin/PagesView#default": default_2d565fb16b8d5f97f6298d41d058170e,
   "@payloadcms/next/rsc#CollectionCards": CollectionCards_f9c02e79a4aed9a3924487c0cd4cafb1,
   "@payloadcms/storage-s3/client#S3ClientUploadHandler": S3ClientUploadHandler_f97aa6c64367fa259c5bc0567239ef24
 }

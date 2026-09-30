@@ -1888,3 +1888,31 @@ html[data-theme='dark'] {
   border-color: #b6e2c8;
   color: #1f5c3d;
 }
+
+// ---------- Pages du site ----------
+.mk-pages {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  > li {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  &__body {
+    display: grid;
+    gap: 4px;
+    flex: 1;
+    min-width: 0;
+    strong {
+      font-size: 16px;
+    }
+  }
+  &__actions {
+    display: flex;
+    gap: 6px;
+  }
+}

@@ -54,6 +54,7 @@ export default buildConfig({
         dashboard: { Component: '@/components/admin/Dashboard' },
         communications: { Component: '@/components/admin/CommunicationsHub', path: '/communications' },
         parametres: { Component: '@/components/admin/SettingsView', path: '/parametres' },
+        pages: { Component: '@/components/admin/PagesView', path: '/pages' },
       },
     },
   },

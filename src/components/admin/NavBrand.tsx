@@ -3,16 +3,123 @@
 import '@fontsource-variable/inter'
 import '@fontsource-variable/manrope'
 
+import { useAuth } from '@payloadcms/ui'
+import {
+  BookOpen,
+  CalendarDays,
+  ChartNoAxesColumn,
+  ClipboardList,
+  DoorOpen,
+  ExternalLink,
+  FileText,
+  Globe,
+  HandCoins,
+  HandHeart,
+  House,
+  Images,
+  Inbox,
+  Link2,
+  MailCheck,
+  Megaphone,
+  MessagesSquare,
+  Mic,
+  PanelsTopLeft,
+  Quote,
+  Send,
+  Settings,
+  Share2,
+  ShieldCheck,
+  UserRound,
+  UsersRound,
+  type LucideIcon,
+} from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 
 const LEAF =
   'M32 2l5.5 11.5 6-3-2.5 14.5 9-9.5 2 6 10-2-4 11 5 3-15.5 12.5 2 6-15.5-2.5V62h-4V49.5L14.5 52l2-6L1 33.5l5-3-4-11 10 2 2-6 9 9.5L20.5 10.5l6 3z'
 
-/** En-tête du menu de l’administration : logo MKMI et lien « Tableau de bord ». */
+type Item = { href: string; label: string; icon: LucideIcon; slug?: string; match?: (p: string) => boolean }
+type Group = { title: string; items: Item[] }
+
+const C = (slug: string) => `/admin/collections/${slug}`
+
+/** Menu de l’administration, regroupé comme les maquettes ; chaque onglet a son icône. */
+const groups: Group[] = [
+  {
+    title: 'Tableau de bord',
+    items: [
+      { href: '/admin', label: 'Tableau de bord', icon: House, match: (p) => p === '/admin' || p === '/admin/' },
+      { href: '/admin/communications', label: 'Communications', icon: MessagesSquare },
+    ],
+  },
+  {
+    title: 'Gestion',
+    items: [
+      { href: C('members'), slug: 'members', label: 'Membres', icon: UserRound },
+      { href: C('events'), slug: 'events', label: 'Événements', icon: CalendarDays },
+      { href: C('event-registrations'), slug: 'event-registrations', label: 'Inscriptions', icon: ClipboardList },
+      { href: C('visit-plans'), slug: 'visit-plans', label: 'Visites', icon: DoorOpen },
+      { href: C('donations'), slug: 'donations', label: 'Dons', icon: HandCoins },
+      { href: C('ministries'), slug: 'ministries', label: 'Ministères', icon: UsersRound },
+      { href: C('missions'), slug: 'missions', label: 'Missions', icon: Globe },
+      { href: C('prayer-requests'), slug: 'prayer-requests', label: 'Demandes de prière', icon: HandHeart },
+    ],
+  },
+  {
+    title: 'Contenu',
+    items: [
+      { href: C('sermons'), slug: 'sermons', label: 'Messages', icon: Mic },
+      { href: C('faith-resources'), slug: 'faith-resources', label: 'Découvrir la foi', icon: BookOpen },
+      { href: C('testimonials'), slug: 'testimonials', label: 'Témoignages', icon: Quote },
+      { href: C('announcements'), slug: 'announcements', label: 'Annonces', icon: Megaphone },
+      {
+        href: '/admin/pages',
+        label: 'Pages du site',
+        icon: PanelsTopLeft,
+        match: (p) => p.startsWith('/admin/pages') || p.startsWith('/admin/globals/page-') || p.startsWith('/admin/globals/home-page'),
+      },
+    ],
+  },
+  {
+    title: 'Communication',
+    items: [
+      { href: C('contact-messages'), slug: 'contact-messages', label: 'Boîte de réception', icon: Inbox },
+      { href: C('email-campaigns'), slug: 'email-campaigns', label: 'Courriels', icon: Send },
+      { href: C('social-posts'), slug: 'social-posts', label: 'Réseaux sociaux', icon: Share2 },
+      { href: C('newsletter-subscribers'), slug: 'newsletter-subscribers', label: 'Abonnés infolettre', icon: MailCheck },
+    ],
+  },
+  {
+    title: 'Ressources',
+    items: [
+      { href: C('media'), slug: 'media', label: 'Médias', icon: Images },
+      { href: C('documents'), slug: 'documents', label: 'Documents', icon: FileText },
+      { href: C('links'), slug: 'links', label: 'Liens utiles', icon: Link2 },
+    ],
+  },
+  {
+    title: 'Paramètres',
+    items: [
+      { href: C('users'), slug: 'users', label: 'Utilisateurs', icon: ShieldCheck },
+      { href: C('page-views'), slug: 'page-views', label: 'Statistiques', icon: ChartNoAxesColumn },
+      {
+        href: '/admin/parametres',
+        label: 'Paramètres',
+        icon: Settings,
+        match: (p) => p.startsWith('/admin/parametres') || p.startsWith('/admin/globals/site-settings'),
+      },
+    ],
+  },
+]
+
+/** En-tête et menu complet de l’administration (remplace les groupes par défaut de Payload). */
 export function NavBrand() {
-  const pathname = usePathname()
-  const active = pathname === '/admin' || pathname === '/admin/'
+  const pathname = usePathname() ?? ''
+  const { permissions } = useAuth()
+  const can = (slug?: string) => !slug || Boolean(permissions?.collections?.[slug]?.read)
+  const isActive = (i: Item) => (i.match ? i.match(pathname) : pathname === i.href || pathname.startsWith(`${i.href}/`))
+
   return (
     <div className="mk-nav-brand">
       <Link href="/admin" className="mk-nav-brand__logo" aria-label="MKMI Québec, tableau de bord">
@@ -25,44 +132,45 @@ export function NavBrand() {
         </span>
       </Link>
       <p className="mk-nav-brand__tagline">Une communauté. Une foi. Une mission.</p>
-      <p className="mk-nav-brand__group">Tableau de bord</p>
-      <Link href="/admin" className={`mk-nav-brand__home${active ? ' is-active' : ''}`} aria-current={active ? 'page' : undefined}>
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z" />
-        </svg>
-        Tableau de bord
-      </Link>
-      <Link
-        href="/admin/communications"
-        className={`mk-nav-brand__home${pathname.startsWith('/admin/communications') ? ' is-active' : ''}`}
-        aria-current={pathname.startsWith('/admin/communications') ? 'page' : undefined}
-      >
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-        </svg>
-        Communications
-      </Link>
+      <nav aria-label="Menu de l’administration" className="mk-menu-nav">
+        {groups.map((g) => {
+          const items = g.items.filter((i) => can(i.slug))
+          if (!items.length) return null
+          return (
+            <div key={g.title} className="mk-menu-nav__group">
+              <p className="mk-nav-brand__group">{g.title}</p>
+              <ul>
+                {items.map((i) => {
+                  const active = isActive(i)
+                  const Icon = i.icon
+                  return (
+                    <li key={i.href}>
+                      <Link
+                        href={i.href}
+                        className={`mk-nav-brand__home${active ? ' is-active' : ''}`}
+                        aria-current={active ? 'page' : undefined}
+                      >
+                        <Icon size={19} strokeWidth={1.9} aria-hidden="true" />
+                        {i.label}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          )
+        })}
+      </nav>
     </div>
   )
 }
 
-/** Pied du menu : paramètres et lien vers le site public. */
+/** Pied du menu : lien vers le site public. */
 export function NavFooter() {
   return (
-    <>
-      <Link href="/admin/parametres" className="mk-nav-brand__home mk-nav-settings">
-        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-          <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" />
-        </svg>
-        Paramètres
-      </Link>
-      <a href="/" target="_blank" rel="noopener noreferrer" className="mk-nav-site">
-      Voir le site
-      <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-        <path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
-      </svg>
+    <a href="/" target="_blank" rel="noopener noreferrer" className="mk-nav-site">
+      Voir le site <ExternalLink size={16} aria-hidden="true" />
     </a>
-    </>
   )
 }
 
