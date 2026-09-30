@@ -1,4 +1,4 @@
-import type { Field } from 'payload'
+import type { Field, Tab } from 'payload'
 
 import { button, cta, features, hero, iconSelect, image, items, pageGlobal, quote, section, text } from '../fields/sections'
 
@@ -991,6 +991,152 @@ export const PageRecherche = pageGlobal('page-recherche', 'Recherche', '/recherc
   }),
 ])
 
+export const PageServir = pageGlobal('page-servir', 'Servir', '/servir', [
+  hero({
+    eyebrow: 'Servir',
+    title: 'Vos dons peuvent\n*faire la différence.*',
+    text: 'Accueil, louange, enfants, jeunesse, technique, prière, entraide : il y a une place pour chacun. Servir, c’est grandir dans la foi en mettant ses talents au service des autres.',
+    primary: 'Je veux m’impliquer',
+    secondary: 'Où servir',
+  }),
+  features([
+    { icon: 'heart', title: 'Servir avec joie', text: 'Mettre ses talents au service de Dieu et des autres.' },
+    { icon: 'users', title: 'En équipe', text: 'Des équipes accueillantes pour vous accompagner.' },
+    { icon: 'sprout', title: 'Grandir', text: 'Servir fait grandir dans la foi et la confiance.' },
+    { icon: 'calendar', title: 'À votre rythme', text: 'Selon vos disponibilités, ponctuellement ou chaque semaine.' },
+  ]),
+  section('where', 'Où servir', {
+    eyebrow: 'Où servir ?',
+    title: 'Trouvez l’équipe qui vous ressemble.',
+    text: 'Chaque ministère de l’église a besoin de bénévoles. Découvrez-les et dites-nous ce qui vous intéresse.',
+  }),
+  section('process', 'Comment ça fonctionne', { eyebrow: 'Les étapes', title: 'Comment commencer ?' }, [
+    items(
+      'steps',
+      'Étapes',
+      [
+        { title: 'Vous nous écrivez', text: 'Remplissez le formulaire en indiquant ce qui vous intéresse.' },
+        { title: 'Nous faisons connaissance', text: 'Un responsable vous contacte pour échanger avec vous.' },
+        { title: 'Vous découvrez l’équipe', text: 'Vous participez à une première rencontre, sans engagement.' },
+        { title: 'Vous servez', text: 'Vous trouvez votre place et grandissez avec l’équipe.' },
+      ],
+      { withIcon: false, maxRows: 4 },
+    ),
+  ]),
+  section('form', 'Formulaire', {
+    eyebrow: 'Je veux m’impliquer',
+    title: 'Dites-nous où vous aimeriez servir.',
+    text: 'Un responsable de l’équipe vous répondra rapidement pour vous présenter les prochaines étapes.',
+  }),
+  cta({
+    eyebrow: 'Ensemble',
+    title: 'Chacun a une place dans la famille.',
+    text: 'Vous avez une question avant de vous lancer ? Écrivez-nous, nous serons heureux d’en parler avec vous.',
+    primary: 'Nous contacter',
+    secondary: 'Voir les ministères',
+  }),
+])
+
+const legalSections = (defaultValue: { heading: string; body: string }[]): Field => ({
+  name: 'sections',
+  label: 'Sections',
+  type: 'array',
+  defaultValue,
+  admin: { initCollapsed: true },
+  fields: [
+    { name: 'heading', label: 'Titre de la section', type: 'text', required: true },
+    { name: 'body', label: 'Texte', type: 'textarea', required: true, admin: { rows: 6, description: 'Une ligne vide sépare les paragraphes. Une ligne commençant par « - » devient une puce.' } },
+  ],
+})
+
+const legalTab = (name: string, label: string, title: string, intro: string, sections: { heading: string; body: string }[]): Tab => ({
+  name,
+  label,
+  fields: [
+    text('title', 'Titre', title),
+    text('intro', 'Introduction', intro, { long: true }),
+    { name: 'updated', label: 'Date de mise à jour', type: 'date', defaultValue: '2026-09-30T12:00:00.000Z' },
+    legalSections(sections),
+  ],
+})
+
+export const PageLegal = pageGlobal('page-legal', 'Pages légales', '/confidentialite', [
+  {
+    name: 'officer',
+    label: 'Responsable',
+    description: 'Loi 25 : le nom et le titre de la personne responsable de la protection des renseignements personnels doivent être publiés.',
+    fields: [
+      {
+        type: 'row',
+        fields: [
+          { name: 'name', label: 'Nom du responsable', type: 'text', defaultValue: 'Nom à confirmer' },
+          { name: 'role', label: 'Fonction', type: 'text', defaultValue: 'Responsable de la protection des renseignements personnels' },
+        ],
+      },
+      { name: 'email', label: 'Courriel pour les demandes', type: 'email' },
+    ],
+  },
+  legalTab(
+    'privacy',
+    'Confidentialité',
+    'Politique de confidentialité',
+    'MKMI Québec respecte votre vie privée. Cette politique explique quels renseignements nous recueillons sur ce site, pourquoi, et comment exercer vos droits, conformément à la Loi sur la protection des renseignements personnels dans le secteur privé du Québec (Loi 25).',
+    [
+      {
+        heading: 'Renseignements recueillis',
+        body: 'Nous recueillons uniquement les renseignements que vous nous transmettez volontairement par nos formulaires :\n- demande de prière : nom, courriel, téléphone (facultatif), sujet et message ;\n- contact et bénévolat : nom, courriel, téléphone (facultatif), sujet et message ;\n- planification de visite : nom, courriel, téléphone (facultatif), date, nombre de personnes et besoins particuliers ;\n- inscription à un événement : nom, courriel et nombre de places ;\n- témoignage : nom affiché, courriel, titre et texte ;\n- infolettre : adresse courriel.',
+      },
+      {
+        heading: 'Pourquoi nous les utilisons',
+        body: 'Ces renseignements servent uniquement à répondre à votre demande : prier pour vous, vous répondre, préparer votre accueil, gérer votre inscription, relire votre témoignage avant publication ou vous envoyer nos nouvelles. Ils ne sont jamais vendus, loués ni partagés à des fins commerciales.',
+      },
+      {
+        heading: 'Qui peut y accéder',
+        body: 'Seuls les membres autorisés de l’équipe de l’église y ont accès, selon leur rôle. Les demandes de prière, les messages, les visites et les renseignements des membres sont réservés à l’équipe pastorale et aux administrateurs. Aucun de ces renseignements n’est publié sur le site.',
+      },
+      {
+        heading: 'Statistiques de visite',
+        body: 'Le site compte les pages consultées de façon anonyme : aucun cookie, aucune adresse IP ni aucun identifiant n’est enregistré. Nous n’utilisons pas d’outil publicitaire ni de suivi par des tiers.',
+      },
+      {
+        heading: 'Conservation',
+        body: 'Les renseignements sont conservés le temps nécessaire au suivi de votre demande, puis supprimés ou rendus anonymes. La durée exacte de conservation sera précisée par l’église.',
+      },
+      {
+        heading: 'Vos droits',
+        body: 'Vous pouvez en tout temps demander à consulter ou corriger vos renseignements, retirer votre consentement, vous désabonner de l’infolettre ou demander la suppression de vos données. Écrivez à la personne responsable indiquée sur cette page ; nous répondrons dans un délai de 30 jours.',
+      },
+      {
+        heading: 'Hébergement et sécurité',
+        body: 'Les renseignements sont stockés de façon sécurisée : accès protégé par mot de passe, rôles distincts pour l’équipe et blocage des comptes après plusieurs tentatives de connexion échouées.',
+      },
+    ],
+  ),
+  legalTab(
+    'terms',
+    'Conditions',
+    'Conditions d’utilisation',
+    'En utilisant ce site, vous acceptez les conditions suivantes.',
+    [
+      { heading: 'Contenu du site', body: 'Les textes, prédications, photos et vidéos publiés sur ce site appartiennent à MKMI Québec ou à leurs auteurs. Vous pouvez les partager à des fins personnelles et non commerciales, en citant la source.' },
+      { heading: 'Témoignages et messages', body: 'Les témoignages ne sont publiés qu’avec le consentement de leur auteur, après relecture. Nous nous réservons le droit de ne pas publier un contenu inapproprié.' },
+      { heading: 'Liens externes', body: 'Le site peut contenir des liens vers d’autres sites (YouTube, réseaux sociaux, cartes). MKMI Québec n’est pas responsable de leur contenu ni de leurs pratiques de confidentialité.' },
+      { heading: 'Responsabilité', body: 'Nous faisons de notre mieux pour que les informations publiées (horaires, événements) soient exactes. En cas de doute, n’hésitez pas à nous contacter.' },
+    ],
+  ),
+  legalTab(
+    'cookies',
+    'Cookies',
+    'Cookies',
+    'Ce site est conçu pour respecter votre vie privée : il n’utilise aucun cookie publicitaire ni de mesure d’audience.',
+    [
+      { heading: 'Visiteurs du site', body: 'Aucun cookie n’est déposé lorsque vous consultez le site. Les statistiques de visite sont anonymes et ne reposent sur aucun cookie.' },
+      { heading: 'Équipe de l’église', body: 'Seuls les membres de l’équipe qui se connectent à l’administration reçoivent un cookie de session, strictement nécessaire à leur connexion. Il est supprimé à la déconnexion ou à son expiration.' },
+      { heading: 'Contenus externes', body: 'Les vidéos YouTube sont intégrées en mode « confidentialité renforcée » (youtube-nocookie.com). Si vous ouvrez un lien vers YouTube, Google Maps ou un réseau social, ces services appliquent leurs propres règles.' },
+    ],
+  ),
+])
+
 export const pageGlobals = [
   PageEglise,
   PageDecouvrir,
@@ -1005,6 +1151,8 @@ export const pageGlobals = [
   PageTemoignages,
   PageFoi,
   PageRecherche,
+  PageServir,
+  PageLegal,
 ]
 
 /** Chemin public de chaque fiche (pour les liens « Modifier » du site). */
@@ -1022,4 +1170,6 @@ export const pagePaths: Record<string, string> = {
   'page-temoignages': '/temoignages',
   'page-foi': '/decouvrir/foi',
   'page-recherche': '/recherche',
+  'page-servir': '/servir',
+  'page-legal': '/confidentialite',
 }

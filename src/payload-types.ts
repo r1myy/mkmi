@@ -140,6 +140,8 @@ export interface Config {
     'page-temoignages': PageTemoignage;
     'page-foi': PageFoi;
     'page-recherche': PageRecherche;
+    'page-servir': PageServir;
+    'page-legal': PageLegal;
     'site-settings': SiteSetting;
   };
   globalsSelect: {
@@ -157,6 +159,8 @@ export interface Config {
     'page-temoignages': PageTemoignagesSelect<false> | PageTemoignagesSelect<true>;
     'page-foi': PageFoiSelect<false> | PageFoiSelect<true>;
     'page-recherche': PageRechercheSelect<false> | PageRechercheSelect<true>;
+    'page-servir': PageServirSelect<false> | PageServirSelect<true>;
+    'page-legal': PageLegalSelect<false> | PageLegalSelect<true>;
     'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
   };
   locale: null;
@@ -3101,6 +3105,179 @@ export interface PageRecherche {
   createdAt?: string | null;
 }
 /**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-servir".
+ */
+export interface PageServir {
+  id: number;
+  hero?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  features?: {
+    items?:
+      | {
+          icon:
+            | 'heart'
+            | 'users'
+            | 'users-round'
+            | 'book'
+            | 'globe'
+            | 'church'
+            | 'hand-heart'
+            | 'hands'
+            | 'handshake'
+            | 'sprout'
+            | 'megaphone'
+            | 'music'
+            | 'calendar'
+            | 'map-pin'
+            | 'lock'
+            | 'shield'
+            | 'target'
+            | 'compass'
+            | 'gem'
+            | 'sparkles'
+            | 'baby'
+            | 'gift'
+            | 'plane'
+            | 'message'
+            | 'star';
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  where?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+  };
+  process?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    steps?:
+      | {
+          title: string;
+          text?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  form?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+  };
+  cta?: {
+    eyebrow?: string | null;
+    /**
+     * Mettez entre *astérisques* les mots à afficher en or. Un retour à la ligne crée une nouvelle ligne.
+     */
+    title?: string | null;
+    text?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    primary?: string | null;
+    /**
+     * Texte du bouton.
+     */
+    secondary?: string | null;
+    image?: (number | null) | Media;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * Chaque onglet correspond à une section de la page, dans l’ordre d’affichage. L’aperçu à droite se met à jour pendant que vous écrivez ; cliquez sur « Publier les modifications » pour mettre en ligne.
+ *
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-legal".
+ */
+export interface PageLegal {
+  id: number;
+  officer?: {
+    name?: string | null;
+    role?: string | null;
+    email?: string | null;
+  };
+  privacy?: {
+    title?: string | null;
+    intro?: string | null;
+    updated?: string | null;
+    sections?:
+      | {
+          heading: string;
+          /**
+           * Une ligne vide sépare les paragraphes. Une ligne commençant par « - » devient une puce.
+           */
+          body: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  terms?: {
+    title?: string | null;
+    intro?: string | null;
+    updated?: string | null;
+    sections?:
+      | {
+          heading: string;
+          /**
+           * Une ligne vide sépare les paragraphes. Une ligne commençant par « - » devient une puce.
+           */
+          body: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  cookies?: {
+    title?: string | null;
+    intro?: string | null;
+    updated?: string | null;
+    sections?:
+      | {
+          heading: string;
+          /**
+           * Une ligne vide sépare les paragraphes. Une ligne commençant par « - » devient une puce.
+           */
+          body: string;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  _status?: ('draft' | 'published') | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
  * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "site-settings".
  */
@@ -4178,6 +4355,134 @@ export interface PageRechercheSelect<T extends boolean = true> {
         eyebrow?: T;
         title?: T;
         text?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-servir_select".
+ */
+export interface PageServirSelect<T extends boolean = true> {
+  hero?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  features?:
+    | T
+    | {
+        items?:
+          | T
+          | {
+              icon?: T;
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  where?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+      };
+  process?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        steps?:
+          | T
+          | {
+              title?: T;
+              text?: T;
+              id?: T;
+            };
+      };
+  form?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+      };
+  cta?:
+    | T
+    | {
+        eyebrow?: T;
+        title?: T;
+        text?: T;
+        primary?: T;
+        secondary?: T;
+        image?: T;
+      };
+  _status?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "page-legal_select".
+ */
+export interface PageLegalSelect<T extends boolean = true> {
+  officer?:
+    | T
+    | {
+        name?: T;
+        role?: T;
+        email?: T;
+      };
+  privacy?:
+    | T
+    | {
+        title?: T;
+        intro?: T;
+        updated?: T;
+        sections?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+            };
+      };
+  terms?:
+    | T
+    | {
+        title?: T;
+        intro?: T;
+        updated?: T;
+        sections?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+            };
+      };
+  cookies?:
+    | T
+    | {
+        title?: T;
+        intro?: T;
+        updated?: T;
+        sections?:
+          | T
+          | {
+              heading?: T;
+              body?: T;
+              id?: T;
+            };
       };
   _status?: T;
   updatedAt?: T;

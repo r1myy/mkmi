@@ -254,3 +254,39 @@ export async function submitTestimonial(_prev: FormState, formData: FormData): P
     return { status: 'error', message: 'Une erreur est survenue. Réessayez plus tard.' }
   }
 }
+
+export async function submitVolunteer(_prev: FormState, formData: FormData): Promise<FormState> {
+  const thanks = 'Merci pour votre intérêt ! Un responsable vous contactera très bientôt.'
+  if (formData.get('website')) return { status: 'success', message: thanks }
+
+  const name = clean(formData, 'name', 120)
+  const email = clean(formData, 'email', 254).toLowerCase()
+  const phone = clean(formData, 'phone', 40)
+  const team = clean(formData, 'team', 80) || 'À déterminer'
+  const availability = clean(formData, 'availability', 80)
+  const message = clean(formData, 'message', 500)
+  if (!name) return { status: 'error', message: 'Veuillez indiquer votre nom.' }
+  if (!EMAIL.test(email)) return { status: 'error', message: 'Veuillez entrer une adresse courriel valide.' }
+  if (formData.get('consent') !== 'on') return { status: 'error', message: 'Veuillez cocher la case de consentement.' }
+  if (!rateLimit(`volunteer:${clientKey(await headers())}`, 5, 60 * 60 * 1000)) {
+    return { status: 'error', message: 'Trop de tentatives. Réessayez plus tard.' }
+  }
+
+  try {
+    const payload = await getPayload({ config })
+    await payload.create({
+      collection: 'contact-messages',
+      data: {
+        name,
+        email,
+        phone: phone || undefined,
+        subject: `M’impliquer : ${team}`.slice(0, 120),
+        message: [availability && `Disponibilités : ${availability}`, message].filter(Boolean).join('\n\n') || 'Souhaite s’impliquer comme bénévole.',
+      },
+      overrideAccess: true,
+    })
+    return { status: 'success', message: thanks }
+  } catch {
+    return { status: 'error', message: 'Une erreur est survenue. Réessayez plus tard.' }
+  }
+}

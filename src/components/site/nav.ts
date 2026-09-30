@@ -26,8 +26,4 @@ export const footerNav = {
 
 /** Pages prévues au plan du site, pas encore construites (phase 4). */
 export const upcomingPages: Record<string, string> = {
-  servir: 'Servir',
-  confidentialite: 'Politique de confidentialité',
-  conditions: 'Conditions d’utilisation',
-  cookies: 'Cookies',
 }

@@ -3,7 +3,7 @@
 import { useActionState, useState, type ComponentType, type ReactNode } from 'react'
 import { CheckCircle2, Lock, Mail, Phone, Send, User } from 'lucide-react'
 
-import { registerForEvent, submitContactMessage, submitPrayerRequest, submitTestimonial, type FormState } from '@/app/(frontend)/actions'
+import { registerForEvent, submitContactMessage, submitPrayerRequest, submitTestimonial, submitVolunteer, type FormState } from '@/app/(frontend)/actions'
 
 type Icon = ComponentType<{ className?: string; 'aria-hidden'?: boolean | 'true' }>
 
@@ -240,6 +240,51 @@ export function TestimonyForm({ categories }: { categories: readonly { label: st
         <Lock className="mt-0.5 h-3.5 w-3.5 shrink-0" aria-hidden="true" />
         Votre courriel ne sera jamais publié. Vous pouvez demander le retrait de votre témoignage en tout temps.
       </p>
+    </form>
+  )
+}
+
+export function VolunteerForm({ teams }: { teams: string[] }) {
+  const [state, action, pending] = useActionState<FormState, FormData>(submitVolunteer, { status: 'idle' })
+  if (state.status === 'success') return <Result state={state} />
+  return (
+    <form action={action} className="space-y-4">
+      <Field name="name" label="Nom complet" icon={User} required autoComplete="name" />
+      <div className="grid gap-4 sm:grid-cols-2">
+        <Field name="email" label="Adresse courriel" icon={Mail} type="email" required autoComplete="email" />
+        <Field name="phone" label="Téléphone (optionnel)" icon={Phone} type="tel" autoComplete="tel" />
+      </div>
+      <div className="grid gap-4 sm:grid-cols-2">
+        <label className="block">
+          <span className="mb-1.5 block text-sm font-semibold text-navy-900">Équipe qui vous intéresse</span>
+          <select name="team" defaultValue="" className={`${inputClass} pl-4`}>
+            <option value="">Je ne sais pas encore</option>
+            {teams.map((t) => (
+              <option key={t}>{t}</option>
+            ))}
+          </select>
+        </label>
+        <label className="block">
+          <span className="mb-1.5 block text-sm font-semibold text-navy-900">Disponibilités</span>
+          <select name="availability" defaultValue="" className={`${inputClass} pl-4`}>
+            <option value="">À discuter</option>
+            <option>Chaque semaine</option>
+            <option>Une ou deux fois par mois</option>
+            <option>Ponctuellement (événements)</option>
+          </select>
+        </label>
+      </div>
+      <label className="block">
+        <span className="mb-1.5 block text-sm font-semibold text-navy-900">Parlez-nous de vous (optionnel)</span>
+        <textarea name="message" rows={3} maxLength={500} placeholder="Vos talents, votre expérience, vos questions…" className={`${inputClass} resize-y pl-4`} />
+      </label>
+      <label className="flex items-start gap-3 text-sm text-muted">
+        <input type="checkbox" name="consent" required className="mt-0.5 h-4 w-4 accent-gold-500" />
+        <span>J’accepte que MKMI Québec utilise ces informations pour me recontacter au sujet du bénévolat. *</span>
+      </label>
+      <Honeypot />
+      <Result state={state} />
+      <Submit pending={pending}>Je veux m’impliquer</Submit>
     </form>
   )
 }

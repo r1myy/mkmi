@@ -16,6 +16,7 @@ import * as migration_20260929_075739_membres from './20260929_075739_membres';
 import * as migration_20260929_115757_messages_predications from './20260929_115757_messages_predications';
 import * as migration_20260929_221234_messages_reactions from './20260929_221234_messages_reactions';
 import * as migration_20260930_030150_page_visite from './20260930_030150_page_visite';
+import * as migration_20260930_041041_pages_temoignages_foi from './20260930_041041_pages_temoignages_foi';
 
 export const migrations = [
   {
@@ -106,6 +107,11 @@ export const migrations = [
   {
     up: migration_20260930_030150_page_visite.up,
     down: migration_20260930_030150_page_visite.down,
-    name: '20260930_030150_page_visite'
+    name: '20260930_030150_page_visite',
+  },
+  {
+    up: migration_20260930_041041_pages_temoignages_foi.up,
+    down: migration_20260930_041041_pages_temoignages_foi.down,
+    name: '20260930_041041_pages_temoignages_foi'
   },
 ];
