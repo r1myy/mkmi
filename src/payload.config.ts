@@ -103,11 +103,13 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    // En ligne (Vercel), les fichiers sont stockés dans Supabase Storage (compatible S3).
+    // En ligne, les fichiers sont stockés dans Supabase Storage (compatible S3).
     // Le bucket reste privé : Payload sert les fichiers et applique les droits d’accès (documents internes).
     s3Storage({
       enabled: Boolean(process.env.S3_BUCKET),
-      // Envoi direct du navigateur vers le stockage : évite la limite de 4,5 Mo des fonctions Vercel.
+      // Mêmes colonnes en local et en ligne : le schéma (et les migrations) ne dépend pas du stockage choisi.
+      alwaysInsertFields: true,
+      // Envoi direct du navigateur vers le stockage : les gros fichiers (vidéos, PDF) ne passent pas par le serveur.
       clientUploads: true,
       collections: { media: { prefix: 'media' }, documents: { prefix: 'documents' } },
       bucket: process.env.S3_BUCKET || '',

@@ -54,11 +54,13 @@ dans l’administration, sans toucher au code.
 
 ## Production
 
-- Base : Supabase (PostgreSQL). Les migrations (`src/migrations`) s’appliquent au démarrage ;
-  après une modification du modèle : `pnpm payload migrate:create`.
-- Hébergement : Vercel. Variables : `DATABASE_URL`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL`.
-- Les médias sont stockés localement par défaut ; sur Vercel, il faudra brancher un stockage
-  (Supabase Storage / S3 via `@payloadcms/storage-s3`).
+En ligne sur **https://mkmi.pixora.ca** : Hostinger (application Node.js reliée à GitHub) +
+Supabase (base PostgreSQL et stockage des fichiers). Marche à suivre complète : [DEPLOIEMENT.md](DEPLOIEMENT.md).
+
+- Les migrations (`src/migrations`) s’appliquent au démarrage ; après une modification du modèle :
+  `pnpm payload migrate:create`.
+- Variables : voir `.env.production.example`.
+- Premier transfert du contenu local vers la production : `node scripts/transfert-production.mjs`.
 
 ## Sauvegarde et transfert du contenu
 

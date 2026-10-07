@@ -285,6 +285,8 @@ export interface Media {
         | 'autres'
       )
     | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -715,6 +717,8 @@ export interface Document {
         | 'autres'
       )
     | null;
+  prefix?: string | null;
+  _objectKey?: string | null;
   updatedAt: string;
   createdAt: string;
   url?: string | null;
@@ -1255,6 +1259,8 @@ export interface NewsletterSubscribersSelect<T extends boolean = true> {
 export interface MediaSelect<T extends boolean = true> {
   alt?: T;
   folder?: T;
+  prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
@@ -1299,6 +1305,8 @@ export interface DocumentsSelect<T extends boolean = true> {
   title?: T;
   description?: T;
   folder?: T;
+  prefix?: T;
+  _objectKey?: T;
   updatedAt?: T;
   createdAt?: T;
   url?: T;
