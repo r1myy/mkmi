@@ -1,0 +1,259 @@
+// Habillage MKMI de l’administration (maquettes « Tableau de bord » et suivantes)
+// Les styles de Payload sont dans @layer payload-default : ces règles hors couche passent devant.
+
+:root {
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --mk-nav-bg: #0b1628;
+  --mk-gold: #f5bf4f;
+  --nav-width: 260px;
+}
+
+html[data-theme='light'] {
+  --theme-bg: #f4f6fa;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Manrope Variable', var(--font-body);
+}
+
+// ---------- Menu latéral ----------
+.nav {
+  background: var(--mk-nav-bg) !important;
+  border-right: 0 !important;
+  color: #fff;
+
+  .nav__header,
+  .nav__controls {
+    background: var(--mk-nav-bg);
+  }
+
+  .nav__wrap {
+    padding-top: 20px;
+  }
+
+  .nav-group {
+    margin-bottom: 10px;
+  }
+
+  .nav-group__toggle {
+    color: rgba(255, 255, 255, 0.55) !important;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+
+    .stroke {
+      stroke: rgba(255, 255, 255, 0.4) !important;
+    }
+  }
+
+  .nav__link {
+    position: relative;
+    display: flex;
+    align-items: center;
+    min-height: 40px;
+    margin: 1px 0;
+    padding: 8px 12px !important;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-size: 15px;
+    transition: background 0.15s, color 0.15s;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff !important;
+    }
+  }
+
+  .nav__link-indicator {
+    display: none;
+  }
+
+  // Lien actif : pastille dorée
+  .nav__link:has(.nav__link-indicator) {
+    background: var(--mk-gold);
+    color: #0b1628 !important;
+    font-weight: 700;
+  }
+
+  .nav__controls {
+    button,
+    a {
+      color: rgba(255, 255, 255, 0.8);
+    }
+  }
+}
+
+.mk-nav-brand {
+  margin-bottom: 18px;
+
+  &__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff !important;
+    text-decoration: none;
+
+    span {
+      display: grid;
+      line-height: 1;
+    }
+
+    strong {
+      font-family: 'Manrope Variable', var(--font-body);
+      font-size: 26px;
+      font-weight: 800;
+      letter-spacing: -0.02em;
+    }
+
+    small {
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.35em;
+    }
+  }
+
+  &__tagline {
+    margin: 8px 0 22px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.7);
+  }
+
+  &__group {
+    margin: 0 0 6px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.55);
+  }
+
+  &__home {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 12px;
+    border-radius: 10px;
+    color: rgba(255, 255, 255, 0.85) !important;
+    text-decoration: none;
+    font-size: 15px;
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    svg {
+      flex: none;
+      opacity: 0.85;
+    }
+
+    &.is-active {
+      background: var(--mk-gold);
+      color: #0b1628 !important;
+      font-weight: 700;
+      box-shadow: 0 10px 24px -14px rgba(245, 191, 79, 0.9);
+
+      svg {
+        opacity: 1;
+      }
+    }
+
+    &:focus-visible {
+      outline: 2px solid var(--mk-gold);
+      outline-offset: 2px;
+    }
+  }
+}
+
+// Menu MKMI complet : les groupes par défaut de Payload sont masqués
+.nav .nav-group {
+  display: none;
+}
+
+.mk-menu-nav {
+  display: grid;
+  gap: 14px;
+
+  ul {
+    display: grid;
+    gap: 2px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+}
+
+.mk-nav-settings {
+  margin-top: 14px;
+}
+
+.mk-nav-site {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 18px 0 8px;
+  padding: 11px 14px;
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  border-radius: 10px;
+  color: #fff !important;
+  font-weight: 600;
+  text-decoration: none;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.08);
+  }
+}
+
+// ---------- Barre du haut et contenu ----------
+.app-header {
+  background: var(--theme-elevation-0);
+  border-bottom: 1px solid var(--theme-elevation-100);
+}
+
+// Boutons principaux en or (Publier, Créer, Enregistrer)
+.btn--style-primary {
+  background: var(--mk-gold) !important;
+  color: #0b1628 !important;
+  border-color: var(--mk-gold) !important;
+  font-weight: 700;
+
+  &:hover {
+    background: #f8d27f !important;
+  }
+}
+
+// Listes et formulaires plus aérés, coins arrondis
+.table {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.tabs-field__tab-button--active {
+  color: #0b1628;
+}
+
+// ---------- Page de connexion ----------
+.mk-login-logo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+
+  span {
+    display: grid;
+    line-height: 1.2;
+  }
+
+  strong {
+    font-family: 'Manrope Variable', var(--font-body);
+    font-size: 26px;
+    font-weight: 800;
+  }
+
+  small {
+    color: var(--theme-elevation-600);
+  }
+}

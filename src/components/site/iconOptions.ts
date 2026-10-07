@@ -1,0 +1,30 @@
+/** Icônes proposées dans l’éditeur de pages (valeur → libellé). Le rendu est dans icons.ts. */
+export const iconOptions = [
+  { value: 'heart', label: 'Cœur' },
+  { value: 'users', label: 'Personnes' },
+  { value: 'users-round', label: 'Groupe' },
+  { value: 'book', label: 'Bible / livre' },
+  { value: 'globe', label: 'Globe' },
+  { value: 'church', label: 'Église' },
+  { value: 'hand-heart', label: 'Main et cœur' },
+  { value: 'hands', label: 'Mains jointes (prière)' },
+  { value: 'handshake', label: 'Poignée de main' },
+  { value: 'sprout', label: 'Pousse' },
+  { value: 'megaphone', label: 'Mégaphone' },
+  { value: 'music', label: 'Musique' },
+  { value: 'calendar', label: 'Calendrier' },
+  { value: 'map-pin', label: 'Lieu' },
+  { value: 'lock', label: 'Cadenas' },
+  { value: 'shield', label: 'Bouclier' },
+  { value: 'target', label: 'Cible' },
+  { value: 'compass', label: 'Boussole' },
+  { value: 'gem', label: 'Diamant' },
+  { value: 'sparkles', label: 'Étincelles' },
+  { value: 'baby', label: 'Enfant' },
+  { value: 'gift', label: 'Cadeau' },
+  { value: 'plane', label: 'Avion' },
+  { value: 'message', label: 'Bulle de message' },
+  { value: 'star', label: 'Étoile' },
+]
+
+export type IconName = (typeof iconOptions)[number]['value']
